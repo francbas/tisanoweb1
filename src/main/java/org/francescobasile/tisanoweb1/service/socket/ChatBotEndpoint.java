@@ -1,14 +1,5 @@
 package org.francescobasile.tisanoweb1.service.socket;
 
-import jakarta.websocket.*;
-import jakarta.websocket.server.ServerEndpoint;
-
-import java.io.IOException;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 //@ServerEndpoint("/chatbot")
 public class ChatBotEndpoint {
 //    private static final Logger logger = Logger.getLogger("ChatBotEndpoint");

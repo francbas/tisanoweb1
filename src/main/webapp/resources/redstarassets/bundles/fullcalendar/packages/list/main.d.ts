@@ -4,32 +4,60 @@
 
 declare module '@fullcalendar/list' {
     import ListView from '@fullcalendar/list/ListView';
-    export { ListView };
+    export {ListView};
     const _default: import("@fullcalendar/core").PluginDef;
     export default _default;
 }
 
 declare module '@fullcalendar/list/ListView' {
-    import { View, ViewProps, ScrollComponent, DateMarker, DateRange, ComponentContext, EventUiHash, EventRenderRange, EventStore, Seg, ViewSpec } from '@fullcalendar/core';
-    export { ListView as default, ListView };
+    import {
+        ComponentContext,
+        DateMarker,
+        DateRange,
+        EventRenderRange,
+        EventStore,
+        EventUiHash,
+        ScrollComponent,
+        Seg,
+        View,
+        ViewProps,
+        ViewSpec
+    } from '@fullcalendar/core';
+    export {ListView as default, ListView};
+
     class ListView extends View {
         scroller: ScrollComponent;
         contentEl: HTMLElement;
         dayDates: DateMarker[];
+
         constructor(viewSpec: ViewSpec, parentEl: HTMLElement);
+
         firstContext(context: ComponentContext): void;
+
         render(props: ViewProps, context: ComponentContext): void;
+
         destroy(): void;
+
         _renderSkeleton(context: ComponentContext): void;
+
         _unrenderSkeleton(): void;
+
         updateSize(isResize: any, viewHeight: any, isAuto: any): void;
+
         computeScrollerHeight(viewHeight: any): number;
+
         _eventStoreToSegs(eventStore: EventStore, eventUiBases: EventUiHash, dayRanges: DateRange[]): Seg[];
+
         eventRangesToSegs(eventRanges: EventRenderRange[], dayRanges: DateRange[]): any[];
+
         eventRangeToSegs(eventRange: EventRenderRange, dayRanges: DateRange[]): any[];
+
         renderEmptyMessage(): void;
+
         renderSegList(allSegs: any): void;
+
         groupSegsByDay(segs: any): any[];
+
         buildDayHeaderRow(dayDate: any): HTMLTableRowElement;
     }
 }

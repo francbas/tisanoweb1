@@ -6,9 +6,8 @@ import jakarta.persistence.PersistenceContextType;
 
 import javax.naming.InitialContext;
 
-@PersistenceContext(name = "entityManager", unitName = "tisano-pu", type = PersistenceContextType.TRANSACTION)
+@PersistenceContext(name = "entityManager", unitName = "tisanotest-pu-jta", type = PersistenceContextType.TRANSACTION)
 public class JpaUtils {
-
     public static EntityManager getEntityManager() throws Exception {
         InitialContext context = new InitialContext();
         EntityManager entityManager = (EntityManager) context.lookup("java:comp/env/entityManager");

@@ -4,8 +4,8 @@ Docs & License: https://fullcalendar.io/
 (c) 2019 Adam Shaw
 */
 
-import { DateTime, Duration } from 'luxon';
-import { createPlugin, Calendar, NamedTimeZoneImpl } from '@fullcalendar/core';
+import {DateTime, Duration} from 'luxon';
+import {Calendar, createPlugin, NamedTimeZoneImpl} from '@fullcalendar/core';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -23,20 +23,28 @@ PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 /* global Reflect, Promise */
 
-var extendStatics = function(d, b) {
+var extendStatics = function (d, b) {
     extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        ({__proto__: []} instanceof Array && function (d, b) {
+            d.__proto__ = b;
+        }) ||
+        function (d, b) {
+            for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        };
     return extendStatics(d, b);
 };
 
 function __extends(d, b) {
     extendStatics(d, b);
-    function __() { this.constructor = d; }
+
+    function __() {
+        this.constructor = d;
+    }
+
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
-var __assign = function() {
+var __assign = function () {
     __assign = Object.assign || function __assign(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
@@ -56,17 +64,21 @@ function toDateTime(date, calendar) {
         locale: calendar.dateEnv.locale.codes[0]
     });
 }
+
 function toDuration(duration, calendar) {
     if (!(calendar instanceof Calendar)) {
         throw new Error('must supply a Calendar instance');
     }
-    return Duration.fromObject(__assign({}, duration, { locale: calendar.dateEnv.locale.codes[0] }));
+    return Duration.fromObject(__assign({}, duration, {locale: calendar.dateEnv.locale.codes[0]}));
 }
+
 var LuxonNamedTimeZone = /** @class */ (function (_super) {
     __extends(LuxonNamedTimeZone, _super);
+
     function LuxonNamedTimeZone() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+
     LuxonNamedTimeZone.prototype.offsetForArray = function (a) {
         return arrayToLuxon(a, this.timeZoneName).offset;
     };
@@ -77,6 +89,7 @@ var LuxonNamedTimeZone = /** @class */ (function (_super) {
     };
     return LuxonNamedTimeZone;
 }(NamedTimeZoneImpl));
+
 function formatWithCmdStr(cmdStr, arg) {
     var cmd = parseCmdStr(cmdStr);
     if (arg.end) {
@@ -86,10 +99,12 @@ function formatWithCmdStr(cmdStr, arg) {
     }
     return arrayToLuxon(arg.date.array, arg.timeZone, arg.localeCodes[0]).toFormat(cmd.whole);
 }
+
 var main = createPlugin({
     cmdFormatter: formatWithCmdStr,
     namedTimeZonedImpl: LuxonNamedTimeZone
 });
+
 function luxonToArray(datetime) {
     return [
         datetime.year,
@@ -101,6 +116,7 @@ function luxonToArray(datetime) {
         datetime.millisecond
     ];
 }
+
 function arrayToLuxon(arr, timeZone, locale) {
     return DateTime.fromObject({
         zone: timeZone,
@@ -114,6 +130,7 @@ function arrayToLuxon(arr, timeZone, locale) {
         millisecond: arr[6]
     });
 }
+
 function parseCmdStr(cmdStr) {
     var parts = cmdStr.match(/^(.*?)\{(.*)\}(.*)$/); // TODO: lookbehinds for escape characters
     if (parts) {
@@ -124,8 +141,7 @@ function parseCmdStr(cmdStr) {
             tail: parts[3],
             whole: parts[1] + middle.whole + parts[3]
         };
-    }
-    else {
+    } else {
         return {
             head: null,
             middle: null,
@@ -134,6 +150,7 @@ function parseCmdStr(cmdStr) {
         };
     }
 }
+
 function formatRange(cmd, formatStart, formatEnd, separator) {
     if (cmd.middle) {
         var startHead = formatStart(cmd.head);
@@ -152,11 +169,10 @@ function formatRange(cmd, formatStart, formatEnd, separator) {
     var endWhole = formatEnd(cmd.whole);
     if (startWhole === endWhole) {
         return startWhole;
-    }
-    else {
+    } else {
         return startWhole + separator + endWhole;
     }
 }
 
 export default main;
-export { toDateTime, toDuration };
+export {toDateTime, toDuration};

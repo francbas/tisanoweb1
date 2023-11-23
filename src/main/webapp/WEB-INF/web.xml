@@ -25,19 +25,19 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-        <filter>
-            <filter-name>RouterRequestFilter</filter-name>
-            <filter-class>org.francescobasile.tisanoweb1.web.filter.RouterRequestFilter</filter-class>
-            <display-name>MainServletFilter</display-name>
-            <init-param>
-                <param-name>BASE_DIR</param-name>
-                <param-value>WEB-INF/classes/templates/redstar/light/</param-value>
-            </init-param>
-            <init-param>
-                <param-name>SUFFIX</param-name>
-                <param-value>.html</param-value>
-            </init-param>
-        </filter>
+    <filter>
+        <filter-name>RouterRequestFilter</filter-name>
+        <filter-class>org.francescobasile.tisanoweb1.web.filter.RouterRequestFilter</filter-class>
+        <display-name>MainServletFilter</display-name>
+        <init-param>
+            <param-name>BASE_DIR</param-name>
+            <param-value>WEB-INF/classes/templates/redstar/light/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>SUFFIX</param-name>
+            <param-value>.html</param-value>
+        </init-param>
+    </filter>
     <filter-mapping>
         <filter-name>RouterRequestFilter</filter-name>
         <url-pattern>/*</url-pattern>

@@ -5,14 +5,14 @@
  *
  **/
 $("#summernote").summernote({
-  placeholder: "",
-  tabsize: 2,
-  tooltip: false,
-  height: 150,
+    placeholder: "",
+    tabsize: 2,
+    tooltip: false,
+    height: 150,
 });
 $("#formsummernote").summernote({
-  placeholder: "",
-  tabsize: 2,
-  tooltip: false,
-  height: 500,
+    placeholder: "",
+    tabsize: 2,
+    tooltip: false,
+    height: 500,
 });

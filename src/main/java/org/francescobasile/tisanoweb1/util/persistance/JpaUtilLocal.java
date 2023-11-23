@@ -5,20 +5,24 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-public class LocalEntityRepository {
-
-    static private EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("tisano-pu");
+public class JpaUtilLocal {
+    static private String PERSISTANCE_UNIT = "tisanotest-pu"; // default provider
+    static private EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT);
     static private EntityManager entityManager = managerFactory.createEntityManager();
 
-    private static EntityManager openEm() {
+    public static EntityManager getEntityManager() {
         if (entityManager.isOpen()) return entityManager;
-        managerFactory = Persistence.createEntityManagerFactory("tisano-pu");
+        managerFactory = Persistence.createEntityManagerFactory(PERSISTANCE_UNIT);
         entityManager = managerFactory.createEntityManager();
         return entityManager;
     }
 
+    public static void registraPersistanceProvider(String pu) {
+        PERSISTANCE_UNIT = pu;
+    }
+
     public static <T> void save(T entity) {
-        entityManager = openEm();
+        entityManager = getEntityManager();
         EntityTransaction tx = entityManager.getTransaction();
         try {
             tx.begin();
@@ -33,7 +37,7 @@ public class LocalEntityRepository {
     }
 
     public static <T> void merge(T entity) {
-        entityManager = openEm();
+        entityManager = getEntityManager();
         entityManager.merge(entity);
     }
 
@@ -44,7 +48,7 @@ public class LocalEntityRepository {
     }
 
     public static <T> T find(Class<T> classe, Object o) {
-        entityManager = openEm();
+        entityManager = getEntityManager();
         return entityManager.find(classe, o);
     }
 

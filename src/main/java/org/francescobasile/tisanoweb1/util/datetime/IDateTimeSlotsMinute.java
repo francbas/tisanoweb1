@@ -2,8 +2,7 @@ package org.francescobasile.tisanoweb1.util.datetime;
 
 public interface IDateTimeSlotsMinute {
     /**
-     * @param slice
-     * Restituisce un'istanza di DateTimeSlots nel formato minuti
+     * @param slice Restituisce un'istanza di DateTimeSlots nel formato minuti
      */
     void render(Integer slice);
 
@@ -12,8 +11,7 @@ public interface IDateTimeSlotsMinute {
 
 class DateTimeSlotsMinuteV1 implements IDateTimeSlotsMinute {
     /**
-     * @param slice
-     * Genera un'istanza della versione 1 ottmizzata per Web
+     * @param slice Genera un'istanza della versione 1 ottmizzata per Web
      */
     @Override
     public void render(Integer slice) {

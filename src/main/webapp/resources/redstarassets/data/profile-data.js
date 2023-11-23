@@ -5,18 +5,19 @@
  *
  **/
 
-var Profile = function() {
+var Profile = function () {
     return {
-        init: function() {
+        init: function () {
             Profile.initMiniCharts()
         },
-        initMiniCharts: function() {
-            App.isIE8() && !Function.prototype.bind && (Function.prototype.bind = function(t) {
+        initMiniCharts: function () {
+            App.isIE8() && !Function.prototype.bind && (Function.prototype.bind = function (t) {
                 if ("function" != typeof this) throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
                 var i = Array.prototype.slice.call(arguments, 1),
                     r = this,
-                    n = function() {},
-                    o = function() {
+                    n = function () {
+                    },
+                    o = function () {
                         return r.apply(this instanceof n && t ? this : t, i.concat(Array.prototype.slice.call(arguments)))
                     };
                 return n.prototype = this.prototype, o.prototype = new n, o
@@ -38,7 +39,7 @@ var Profile = function() {
         }
     }
 }();
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     'use strict';
     Profile.init()
 });

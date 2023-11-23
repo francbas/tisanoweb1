@@ -1,4 +1,4 @@
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     'use strict';
     new Morris.Line({
         element: "morris_chart_1",
@@ -105,7 +105,7 @@ jQuery(document).ready(function() {
         xkey: "y",
         ykeys: ["a", "b"],
         labels: ["Series A", "Series B"],
-        barColors: function(a, b, c) {
+        barColors: function (a, b, c) {
             return "a" == b.key ? "#1F77B4" : "#FF7F0E"
         }
     }), new Morris.Donut({

@@ -2,7 +2,7 @@ package org.francescobasile.tisanoweb1.util;
 
 public class TextWrap {
 
-    private static String[] decorators = new String[]{"\n ****** ", " ******\n"};
+    private static String[] decorators = new String[]{"\t\t****** ", " ******"};
 
     /**
      * Decommentre l'esempio all'interno della classe dove si vuole customizzare i delimitatori

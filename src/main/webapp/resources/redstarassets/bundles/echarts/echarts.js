@@ -80,8 +80,7 @@
             svgSupported: false,
             touchEventsSupported: true
         };
-    }
-    else if (typeof document === 'undefined' && typeof self !== 'undefined') {
+    } else if (typeof document === 'undefined' && typeof self !== 'undefined') {
         // In worker
         env = {
             browser: {},
@@ -90,8 +89,7 @@
             worker: true,
             canvasSupported: true
         };
-    }
-    else if (typeof navigator === 'undefined') {
+    } else if (typeof navigator === 'undefined') {
         // In node
         env = {
             browser: {},
@@ -102,8 +100,7 @@
             canvasSupported: true,
             svgSupported: true
         };
-    }
-    else {
+    } else {
         env = detect(navigator.userAgent);
     }
 
@@ -234,18 +231,18 @@
      * @module zrender/core/util
      */
 
-    // 用于处理merge时无法遍历Date等对象的问题
+        // 用于处理merge时无法遍历Date等对象的问题
     var BUILTIN_OBJECT = {
-        '[object Function]': 1,
-        '[object RegExp]': 1,
-        '[object Date]': 1,
-        '[object Error]': 1,
-        '[object CanvasGradient]': 1,
-        '[object CanvasPattern]': 1,
-        // For node-canvas
-        '[object Image]': 1,
-        '[object Canvas]': 1
-    };
+            '[object Function]': 1,
+            '[object RegExp]': 1,
+            '[object Date]': 1,
+            '[object Error]': 1,
+            '[object CanvasGradient]': 1,
+            '[object CanvasPattern]': 1,
+            // For node-canvas
+            '[object Image]': 1,
+            '[object Canvas]': 1
+        };
 
     var TYPED_ARRAY = {
         '[object Int8Array]': 1,
@@ -311,22 +308,19 @@
                     result[i] = clone(source[i]);
                 }
             }
-        }
-        else if (TYPED_ARRAY[typeStr]) {
+        } else if (TYPED_ARRAY[typeStr]) {
             if (!isPrimitive(source)) {
                 var Ctor = source.constructor;
                 if (source.constructor.from) {
                     result = Ctor.from(source);
-                }
-                else {
+                } else {
                     result = new Ctor(source.length);
                     for (var i = 0, len = source.length; i < len; i++) {
                         result[i] = clone(source[i]);
                     }
                 }
             }
-        }
-        else if (!BUILTIN_OBJECT[typeStr] && !isPrimitive(source) && !isDom(source)) {
+        } else if (!BUILTIN_OBJECT[typeStr] && !isPrimitive(source) && !isDom(source)) {
             result = {};
             for (var key in source) {
                 if (source.hasOwnProperty(key)) {
@@ -369,8 +363,7 @@
                 ) {
                     // 如果需要递归覆盖，就递归调用merge
                     merge(targetProp, sourceProp, overwrite);
-                }
-                else if (overwrite || !(key in target)) {
+                } else if (overwrite || !(key in target)) {
                     // 否则只处理overwrite为true，或者在目标对象中没有此属性的情况
                     // NOTE，在 target[key] 不存在的时候也是直接覆盖
                     target[key] = clone(source[key], true);
@@ -472,7 +465,10 @@
      */
     function inherits(clazz, baseClazz) {
         var clazzPrototype = clazz.prototype;
-        function F() { }
+
+        function F() {
+        }
+
         F.prototype = baseClazz.prototype;
         clazz.prototype = new F();
 
@@ -523,13 +519,11 @@
         }
         if (obj.forEach && obj.forEach === nativeForEach) {
             obj.forEach(cb, context);
-        }
-        else if (obj.length === +obj.length) {
+        } else if (obj.length === +obj.length) {
             for (var i = 0, len = obj.length; i < len; i++) {
                 cb.call(context, obj[i], i, obj);
             }
-        }
-        else {
+        } else {
             for (var key in obj) {
                 if (obj.hasOwnProperty(key)) {
                     cb.call(context, obj[key], key, obj);
@@ -552,8 +546,7 @@
         }
         if (obj.map && obj.map === nativeMap) {
             return obj.map(cb, context);
-        }
-        else {
+        } else {
             var result = [];
             for (var i = 0, len = obj.length; i < len; i++) {
                 result.push(cb.call(context, obj[i], i, obj));
@@ -576,8 +569,7 @@
         }
         if (obj.reduce && obj.reduce === nativeReduce) {
             return obj.reduce(cb, memo, context);
-        }
-        else {
+        } else {
             for (var i = 0, len = obj.length; i < len; i++) {
                 memo = cb.call(context, memo, obj[i], i, obj);
             }
@@ -599,8 +591,7 @@
         }
         if (obj.filter && obj.filter === nativeFilter) {
             return obj.filter(cb, context);
-        }
-        else {
+        } else {
             var result = [];
             for (var i = 0, len = obj.length; i < len; i++) {
                 if (cb.call(context, obj[i], i, obj)) {
@@ -788,8 +779,7 @@
         if (len === 2) {
             // vertical | horizontal
             return [val[0], val[1], val[0], val[1]];
-        }
-        else if (len === 3) {
+        } else if (len === 3) {
             // top | horizontal | bottom
             return [val[0], val[1], val[2], val[1]];
         }
@@ -815,16 +805,15 @@
     function trim(str) {
         if (str == null) {
             return null;
-        }
-        else if (typeof str.trim === 'function') {
+        } else if (typeof str.trim === 'function') {
             return str.trim();
-        }
-        else {
+        } else {
             return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
         }
     }
 
     var primitiveKey = '__ec_primitive__';
+
     /**
      * Set an object as primitive to be ignored traversing children in clone or merge
      */
@@ -899,7 +888,8 @@
     }
 
 
-    function noop() { }
+    function noop() {
+    }
 
 
     var zrUtil = (Object.freeze || Object)({
@@ -1049,6 +1039,7 @@
     function len(v) {
         return Math.sqrt(lenSquare(v));
     }
+
     var length = len; // jshint ignore:line
 
     /**
@@ -1059,6 +1050,7 @@
     function lenSquare(v) {
         return v[0] * v[0] + v[1] * v[1];
     }
+
     var lengthSquare = lenSquare;
 
     /**
@@ -1117,8 +1109,7 @@
         if (d === 0) {
             out[0] = 0;
             out[1] = 0;
-        }
-        else {
+        } else {
             out[0] = v[0] / d;
             out[1] = v[1] / d;
         }
@@ -1137,6 +1128,7 @@
             + (v1[1] - v2[1]) * (v1[1] - v2[1])
         );
     }
+
     var dist = distance;
 
     /**
@@ -1149,6 +1141,7 @@
         return (v1[0] - v2[0]) * (v1[0] - v2[0])
             + (v1[1] - v2[1]) * (v1[1] - v2[1]);
     }
+
     var distSquare = distanceSquare;
 
     /**
@@ -1323,7 +1316,7 @@
     };
 
     function param(target, e) {
-        return { target: target, topTarget: e && e.topTarget };
+        return {target: target, topTarget: e && e.topTarget};
     }
 
     /**
@@ -1450,8 +1443,7 @@
                 if (_h[event] && _h[event].length === 0) {
                     delete _h[event];
                 }
-            }
-            else {
+            } else {
                 delete _h[event];
             }
 
@@ -1495,8 +1487,7 @@
                     if (_h[i]['one']) {
                         _h.splice(i, 1);
                         len--;
-                    }
-                    else {
+                    } else {
                         i++;
                     }
                 }
@@ -1542,8 +1533,7 @@
                     if (_h[i]['one']) {
                         _h.splice(i, 1);
                         len--;
-                    }
-                    else {
+                    } else {
                         i++;
                     }
                 }
@@ -1576,8 +1566,11 @@
         };
     }
 
-    function EmptyProxy() { }
-    EmptyProxy.prototype.dispose = function () { };
+    function EmptyProxy() {
+    }
+
+    EmptyProxy.prototype.dispose = function () {
+    };
 
     var handlerNames = [
         'click', 'dblclick', 'mousewheel', 'mouseout',
@@ -1711,7 +1704,7 @@
                 innerDom = element === this.painterRoot
             ));
 
-            !innerDom && this.trigger('globalout', { event: event });
+            !innerDom && this.trigger('globalout', {event: event});
         },
 
         /**
@@ -1740,7 +1733,7 @@
 
             this.storage =
                 this.proxy =
-                this.painter = null;
+                    this.painter = null;
         },
 
         /**
@@ -1771,7 +1764,7 @@
 
             while (el) {
                 el[eventHandler]
-                    && (eventPacket.cancelBubble = el[eventHandler].call(el, eventPacket));
+                && (eventPacket.cancelBubble = el[eventHandler].call(el, eventPacket));
 
                 el.trigger(eventName, eventPacket);
 
@@ -1808,7 +1801,7 @@
          */
         findHover: function (x, y, exclude) {
             var list = this.storage.getDisplayList();
-            var out = { x: x, y: y };
+            var out = {x: x, y: y};
 
             for (var i = list.length - 1; i >= 0; i--) {
                 var hoverCheckResult;
@@ -1841,11 +1834,9 @@
                 this._downPoint = [event.zrX, event.zrY];
                 // In case click triggered before mouseup
                 this._upEl = hoveredTarget;
-            }
-            else if (name === 'mouseup') {
+            } else if (name === 'mouseup') {
                 this._upEl = hoveredTarget;
-            }
-            else if (name === 'click') {
+            } else if (name === 'click') {
                 if (this._downEl !== this._upEl
                     // Original click event is triggered on the whole canvas element,
                     // including the case that `mousedown` - `mousemove` - `mouseup`,
@@ -2156,8 +2147,7 @@
 
         if (needLocalTransform) {
             this.getLocalTransform(m);
-        }
-        else {
+        } else {
             mIdentity(m);
         }
 
@@ -2165,8 +2155,7 @@
         if (parentHasTransform) {
             if (needLocalTransform) {
                 mul$1(m, parent.transform, m);
-            }
-            else {
+            } else {
                 copy$1(m, parent.transform);
             }
         }
@@ -2190,8 +2179,7 @@
         var dpr = ctx.dpr || 1;
         if (m) {
             ctx.setTransform(dpr * m[0], dpr * m[1], dpr * m[2], dpr * m[3], dpr * m[4], dpr * m[5]);
-        }
-        else {
+        } else {
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
     };
@@ -2336,31 +2324,31 @@
      */
     var easing = {
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         linear: function (k) {
             return k;
         },
 
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         quadraticIn: function (k) {
             return k * k;
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         quadraticOut: function (k) {
             return k * (2 - k);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         quadraticInOut: function (k) {
             if ((k *= 2) < 1) {
                 return 0.5 * k * k;
@@ -2370,23 +2358,23 @@
 
         // 三次方的缓动（t^3）
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         cubicIn: function (k) {
             return k * k * k;
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         cubicOut: function (k) {
             return --k * k * k + 1;
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         cubicInOut: function (k) {
             if ((k *= 2) < 1) {
                 return 0.5 * k * k * k;
@@ -2396,23 +2384,23 @@
 
         // 四次方的缓动（t^4）
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         quarticIn: function (k) {
             return k * k * k * k;
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         quarticOut: function (k) {
             return 1 - (--k * k * k * k);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         quarticInOut: function (k) {
             if ((k *= 2) < 1) {
                 return 0.5 * k * k * k * k;
@@ -2422,23 +2410,23 @@
 
         // 五次方的缓动（t^5）
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         quinticIn: function (k) {
             return k * k * k * k * k;
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         quinticOut: function (k) {
             return --k * k * k * k * k + 1;
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         quinticInOut: function (k) {
             if ((k *= 2) < 1) {
                 return 0.5 * k * k * k * k * k;
@@ -2448,46 +2436,46 @@
 
         // 正弦曲线的缓动（sin(t)）
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         sinusoidalIn: function (k) {
             return 1 - Math.cos(k * Math.PI / 2);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         sinusoidalOut: function (k) {
             return Math.sin(k * Math.PI / 2);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         sinusoidalInOut: function (k) {
             return 0.5 * (1 - Math.cos(Math.PI * k));
         },
 
         // 指数曲线的缓动（2^t）
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         exponentialIn: function (k) {
             return k === 0 ? 0 : Math.pow(1024, k - 1);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         exponentialOut: function (k) {
             return k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         exponentialInOut: function (k) {
             if (k === 0) {
                 return 0;
@@ -2503,23 +2491,23 @@
 
         // 圆形曲线的缓动（sqrt(1-t^2)）
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         circularIn: function (k) {
             return 1 - Math.sqrt(1 - k * k);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         circularOut: function (k) {
             return Math.sqrt(1 - (--k * k));
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         circularInOut: function (k) {
             if ((k *= 2) < 1) {
                 return -0.5 * (Math.sqrt(1 - k * k) - 1);
@@ -2529,9 +2517,9 @@
 
         // 创建类似于弹簧在停止前来回振荡的动画
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         elasticIn: function (k) {
             var s;
             var a = 0.1;
@@ -2543,18 +2531,18 @@
                 return 1;
             }
             if (!a || a < 1) {
-                a = 1; s = p / 4;
-            }
-            else {
+                a = 1;
+                s = p / 4;
+            } else {
                 s = p * Math.asin(1 / a) / (2 * Math.PI);
             }
             return -(a * Math.pow(2, 10 * (k -= 1)) *
                 Math.sin((k - s) * (2 * Math.PI) / p));
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         elasticOut: function (k) {
             var s;
             var a = 0.1;
@@ -2566,18 +2554,18 @@
                 return 1;
             }
             if (!a || a < 1) {
-                a = 1; s = p / 4;
-            }
-            else {
+                a = 1;
+                s = p / 4;
+            } else {
                 s = p * Math.asin(1 / a) / (2 * Math.PI);
             }
             return (a * Math.pow(2, -10 * k) *
                 Math.sin((k - s) * (2 * Math.PI) / p) + 1);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         elasticInOut: function (k) {
             var s;
             var a = 0.1;
@@ -2589,9 +2577,9 @@
                 return 1;
             }
             if (!a || a < 1) {
-                a = 1; s = p / 4;
-            }
-            else {
+                a = 1;
+                s = p / 4;
+            } else {
                 s = p * Math.asin(1 / a) / (2 * Math.PI);
             }
             if ((k *= 2) < 1) {
@@ -2605,25 +2593,25 @@
 
         // 在某一动画开始沿指示的路径进行动画处理前稍稍收回该动画的移动
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         backIn: function (k) {
             var s = 1.70158;
             return k * k * ((s + 1) * k - s);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         backOut: function (k) {
             var s = 1.70158;
             return --k * k * ((s + 1) * k + s) + 1;
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         backInOut: function (k) {
             var s = 1.70158 * 1.525;
             if ((k *= 2) < 1) {
@@ -2634,34 +2622,31 @@
 
         // 创建弹跳效果
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         bounceIn: function (k) {
             return 1 - easing.bounceOut(1 - k);
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         bounceOut: function (k) {
             if (k < (1 / 2.75)) {
                 return 7.5625 * k * k;
-            }
-            else if (k < (2 / 2.75)) {
+            } else if (k < (2 / 2.75)) {
                 return 7.5625 * (k -= (1.5 / 2.75)) * k + 0.75;
-            }
-            else if (k < (2.5 / 2.75)) {
+            } else if (k < (2.5 / 2.75)) {
                 return 7.5625 * (k -= (2.25 / 2.75)) * k + 0.9375;
-            }
-            else {
+            } else {
                 return 7.5625 * (k -= (2.625 / 2.75)) * k + 0.984375;
             }
         },
         /**
-        * @param {number} k
-        * @return {number}
-        */
+         * @param {number} k
+         * @return {number}
+         */
         bounceInOut: function (k) {
             if (k < 0.5) {
                 return easing.bounceIn(k * 2) * 0.5;
@@ -2829,8 +2814,7 @@
     linkedListProto.insertEntry = function (entry) {
         if (!this.head) {
             this.head = this.tail = entry;
-        }
-        else {
+        } else {
             this.tail.next = entry;
             entry.prev = this.tail;
             entry.next = null;
@@ -2848,15 +2832,13 @@
         var next = entry.next;
         if (prev) {
             prev.next = next;
-        }
-        else {
+        } else {
             // Is head
             this.head = next;
         }
         if (next) {
             next.prev = prev;
-        }
-        else {
+        } else {
             // Is tail
             this.tail = prev;
         }
@@ -2944,8 +2926,7 @@
 
             if (entry) {
                 entry.value = value;
-            }
-            else {
+            } else {
                 entry = new Entry(value);
             }
             entry.key = key;
@@ -3090,8 +3071,7 @@
     function cssHueToRgb(m1, m2, h) {
         if (h < 0) {
             h += 1;
-        }
-        else if (h > 1) {
+        } else if (h > 1) {
             h -= 1;
         }
 
@@ -3112,11 +3092,18 @@
     }
 
     function setRgba(out, r, g, b, a) {
-        out[0] = r; out[1] = g; out[2] = b; out[3] = a;
+        out[0] = r;
+        out[1] = g;
+        out[2] = b;
+        out[3] = a;
         return out;
     }
+
     function copyRgba(out, a) {
-        out[0] = a[0]; out[1] = a[1]; out[2] = a[2]; out[3] = a[3];
+        out[0] = a[0];
+        out[1] = a[1];
+        out[2] = a[2];
+        out[3] = a[3];
         return out;
     }
 
@@ -3176,8 +3163,7 @@
                 );
                 putToCache(colorStr, rgbaArr);
                 return rgbaArr;
-            }
-            else if (str.length === 7) {
+            } else if (str.length === 7) {
                 var iv = parseInt(str.substr(1), 16);  // TODO(deanm): Stricter parsing.
                 if (!(iv >= 0 && iv <= 0xffffff)) {
                     setRgba(rgbaArr, 0, 0, 0, 1);
@@ -3301,12 +3287,10 @@
         if (delta === 0) {
             H = 0;
             S = 0;
-        }
-        else {
+        } else {
             if (L < 0.5) {
                 S = delta / (vMax + vMin);
-            }
-            else {
+            } else {
                 S = delta / (2 - vMax - vMin);
             }
 
@@ -3316,11 +3300,9 @@
 
             if (R === vMax) {
                 H = deltaB - deltaG;
-            }
-            else if (G === vMax) {
+            } else if (G === vMax) {
                 H = (1 / 3) + deltaR - deltaB;
-            }
-            else if (B === vMax) {
+            } else if (B === vMax) {
                 H = (2 / 3) + deltaG - deltaR;
             }
 
@@ -3354,14 +3336,12 @@
             for (var i = 0; i < 3; i++) {
                 if (level < 0) {
                     colorArr[i] = colorArr[i] * (1 - level) | 0;
-                }
-                else {
+                } else {
                     colorArr[i] = ((255 - colorArr[i]) * level + colorArr[i]) | 0;
                 }
                 if (colorArr[i] > 255) {
                     colorArr[i] = 255;
-                }
-                else if (color[i] < 0) {
+                } else if (color[i] < 0) {
                     colorArr[i] = 0;
                 }
             }
@@ -3576,8 +3556,7 @@
             for (var i = 0; i < len; i++) {
                 out[i] = interpolateNumber(p0[i], p1[i], percent);
             }
-        }
-        else {
+        } else {
             var len2 = len && p0[0].length;
             for (var i = 0; i < len; i++) {
                 for (var j = 0; j < len2; j++) {
@@ -3600,8 +3579,7 @@
             if (isPreviousLarger) {
                 // Cut the previous
                 arr0.length = arr1Len;
-            }
-            else {
+            } else {
                 // Fill the previous
                 for (var i = arr0Len; i < arr1Len; i++) {
                     arr0.push(
@@ -3617,8 +3595,7 @@
                 if (isNaN(arr0[i])) {
                     arr0[i] = arr1[i];
                 }
-            }
-            else {
+            } else {
                 for (var j = 0; j < len2; j++) {
                     if (isNaN(arr0[i][j])) {
                         arr0[i][j] = arr1[i][j];
@@ -3648,8 +3625,7 @@
                     return false;
                 }
             }
-        }
-        else {
+        } else {
             var len2 = arr0[0].length;
             for (var i = 0; i < len; i++) {
                 for (var j = 0; j < len2; j++) {
@@ -3684,8 +3660,7 @@
                     p0[i], p1[i], p2[i], p3[i], t, t2, t3
                 );
             }
-        }
-        else {
+        } else {
             var len2 = p0[0].length;
             for (var i = 0; i < len; i++) {
                 for (var j = 0; j < len2; j++) {
@@ -3796,8 +3771,7 @@
                 if (colorArray) {
                     value = colorArray;
                     isValueColor = true;
-                }
-                else {
+                } else {
                     isValueString = true;
                 }
             }
@@ -3812,8 +3786,7 @@
         for (var i = 0; i < trackLen - 1; i++) {
             if (isValueArray) {
                 fillArr(kfValues[i], lastValue, arrDim);
-            }
-            else {
+            } else {
                 if (isNaN(kfValues[i]) && !isNaN(lastValue) && !isValueString && !isValueColor) {
                     kfValues[i] = lastValue;
                 }
@@ -3844,8 +3817,7 @@
             // In the easing function like elasticOut, percent may less than 0
             if (percent < 0) {
                 frame = 0;
-            }
-            else if (percent < lastFramePercent) {
+            } else if (percent < lastFramePercent) {
                 // Start from next key
                 // PENDING start from lastFrame ?
                 start = Math.min(lastFrame + 1, trackLen - 1);
@@ -3856,8 +3828,7 @@
                 }
                 // PENDING really need to do this ?
                 frame = Math.min(frame, trackLen - 2);
-            }
-            else {
+            } else {
                 for (frame = lastFrame; frame < trackLen; frame++) {
                     if (kfPercents[frame] > percent) {
                         break;
@@ -3871,8 +3842,7 @@
             var range = (kfPercents[frame + 1] - kfPercents[frame]);
             if (range === 0) {
                 return;
-            }
-            else {
+            } else {
                 w = (percent - kfPercents[frame]) / range;
             }
             if (useSpline) {
@@ -3886,8 +3856,7 @@
                         getter(target, propName),
                         arrDim
                     );
-                }
-                else {
+                } else {
                     var value;
                     if (isValueColor) {
                         value = catmullRomInterpolateArray(
@@ -3895,12 +3864,10 @@
                             rgba, 1
                         );
                         value = rgba2String(rgba);
-                    }
-                    else if (isValueString) {
+                    } else if (isValueString) {
                         // String is step(0.5)
                         return interpolateString(p1, p2, w);
-                    }
-                    else {
+                    } else {
                         value = catmullRomInterpolate(
                             p0, p1, p2, p3, w, w * w, w * w * w
                         );
@@ -3911,16 +3878,14 @@
                         value
                     );
                 }
-            }
-            else {
+            } else {
                 if (isValueArray) {
                     interpolateArray(
                         kfValues[frame], kfValues[frame + 1], w,
                         getter(target, propName),
                         arrDim
                     );
-                }
-                else {
+                } else {
                     var value;
                     if (isValueColor) {
                         interpolateArray(
@@ -3928,12 +3893,10 @@
                             rgba, 1
                         );
                         value = rgba2String(rgba);
-                    }
-                    else if (isValueString) {
+                    } else if (isValueString) {
                         // String is step(0.5)
                         return interpolateString(kfValues[frame], kfValues[frame + 1], w);
-                    }
-                    else {
+                    } else {
                         value = interpolateNumber(kfValues[frame], kfValues[frame + 1], w);
                     }
                     setter(
@@ -4209,8 +4172,7 @@
                 throw new Error(arguments[k]);
             }
         };
-    }
-    else if (debugMode > 1) {
+    } else if (debugMode > 1) {
         log = function () {
             for (var k in arguments) {
                 console.log(arguments[k]);
@@ -4268,8 +4230,7 @@
                 if (prop) {
                     target = prop;
                 }
-            }
-            else {
+            } else {
                 target = el;
             }
 
@@ -4385,6 +4346,7 @@
             // if there is nothing to animate
             var animators = this.animators.slice();
             var count = animators.length;
+
             function done() {
                 count--;
                 if (!count) {
@@ -4448,19 +4410,16 @@
                             time,
                             delay
                         );
-                    }
-                    else {
+                    } else {
                         objShallow[name] = target[name];
                         propertyCount++;
                     }
-                }
-                else if (target[name] != null) {
+                } else if (target[name] != null) {
                     // Attr directly if not has property
                     // FIXME, if some property not needed for element ?
                     if (!path) {
                         this.attr(name, target[name]);
-                    }
-                    else {  // Shape or style
+                    } else {  // Shape or style
                         var props = {};
                         props[path] = {};
                         props[path][name] = target[name];
@@ -4576,11 +4535,13 @@
         /**
          * Hook before update
          */
-        beforeUpdate: function () { },
+        beforeUpdate: function () {
+        },
         /**
          * Hook after update
          */
-        afterUpdate: function () { },
+        afterUpdate: function () {
+        },
         /**
          * Update each frame
          */
@@ -4592,7 +4553,8 @@
          * @param  {Function} cb
          * @param  {}   context
          */
-        traverse: function (cb, context) { },
+        traverse: function (cb, context) {
+        },
 
         /**
          * @protected
@@ -4608,8 +4570,7 @@
                     target[0] = value[0];
                     target[1] = value[1];
                 }
-            }
-            else {
+            } else {
                 this[key] = value;
             }
         },
@@ -4637,8 +4598,7 @@
         attr: function (key, value) {
             if (typeof key === 'string') {
                 this.attrKV(key, value);
-            }
-            else if (isObject$1(key)) {
+            } else if (isObject$1(key)) {
                 for (var name in key) {
                     if (key.hasOwnProperty(name)) {
                         this.attrKV(name, key[name]);
@@ -5225,8 +5185,7 @@
                     tmpRect.applyTransform(transform);
                     rect = rect || tmpRect.clone();
                     rect.union(tmpRect);
-                }
-                else {
+                } else {
                     rect = rect || childRect.clone();
                     rect.union(childRect);
                 }
@@ -5266,8 +5225,7 @@
             }
 
             reverseRun(array, lo, runHi);
-        }
-        else {
+        } else {
             while (runHi < hi && compare(array[runHi], array[runHi - 1]) >= 0) {
                 runHi++;
             }
@@ -5303,8 +5261,7 @@
 
                 if (compare(pivot, array[mid]) < 0) {
                     right = mid;
-                }
-                else {
+                } else {
                     left = mid + 1;
                 }
             }
@@ -5355,8 +5312,7 @@
 
             lastOffset += hint;
             offset += hint;
-        }
-        else {
+        } else {
             maxOffset = hint + 1;
             while (offset < maxOffset && compare(value, array[start + hint - offset]) <= 0) {
                 lastOffset = offset;
@@ -5381,8 +5337,7 @@
 
             if (compare(value, array[start + m]) > 0) {
                 lastOffset = m + 1;
-            }
-            else {
+            } else {
                 offset = m;
             }
         }
@@ -5413,8 +5368,7 @@
             var tmp = lastOffset;
             lastOffset = hint - offset;
             offset = hint - tmp;
-        }
-        else {
+        } else {
             maxOffset = length - hint;
 
             while (offset < maxOffset && compare(value, array[start + hint + offset]) >= 0) {
@@ -5441,8 +5395,7 @@
 
             if (compare(value, array[start + m]) < 0) {
                 offset = m;
-            }
-            else {
+            } else {
                 lastOffset = m + 1;
             }
         }
@@ -5475,8 +5428,7 @@
                     if (runLength[n - 1] < runLength[n + 1]) {
                         n--;
                     }
-                }
-                else if (runLength[n] > runLength[n + 1]) {
+                } else if (runLength[n] > runLength[n + 1]) {
                     break;
                 }
                 mergeAt(n);
@@ -5526,8 +5478,7 @@
 
             if (length1 <= length2) {
                 mergeLow(start1, length1, start2, length2);
-            }
-            else {
+            } else {
                 mergeHigh(start1, length1, start2, length2);
             }
         }
@@ -5578,8 +5529,7 @@
                             exit = true;
                             break;
                         }
-                    }
-                    else {
+                    } else {
                         array[dest++] = tmp[cursor1++];
                         count1++;
                         count2 = 0;
@@ -5664,12 +5614,10 @@
                     array[dest + i] = array[cursor2 + i];
                 }
                 array[dest + length2] = tmp[cursor1];
-            }
-            else if (length1 === 0) {
+            } else if (length1 === 0) {
                 throw new Error();
                 // throw new Error('mergeLow preconditions were not respected');
-            }
-            else {
+            } else {
                 for (i = 0; i < length1; i++) {
                     array[dest + i] = tmp[cursor1 + i];
                 }
@@ -5731,8 +5679,7 @@
                             exit = true;
                             break;
                         }
-                    }
-                    else {
+                    } else {
                         array[dest--] = tmp[cursor2--];
                         count2++;
                         count1 = 0;
@@ -5831,12 +5778,10 @@
                 }
 
                 array[dest] = tmp[cursor2];
-            }
-            else if (length2 === 0) {
+            } else if (length2 === 0) {
                 throw new Error();
                 // throw new Error('mergeHigh preconditions were not respected');
-            }
-            else {
+            } else {
                 customCursor = dest - (length2 - 1);
                 for (i = 0; i < length2; i++) {
                     array[customCursor + i] = tmp[i];
@@ -5914,6 +5859,7 @@
         }
         return a.zlevel - b.zlevel;
     }
+
     /**
      * 内容仓库 (M)
      * @alias module:zrender/Storage
@@ -5999,8 +5945,7 @@
                 // FIXME 效率影响
                 if (clipPaths) {
                     clipPaths = clipPaths.slice();
-                }
-                else {
+                } else {
                     clipPaths = [];
                 }
 
@@ -6037,8 +5982,7 @@
                 // Mark group clean here
                 el.__dirty = false;
 
-            }
-            else {
+            } else {
                 el.__clipPaths = clipPaths;
 
                 this._displayList[this._displayListLen++] = el;
@@ -6579,8 +6523,7 @@
         set: function (obj, value) {
             if (typeof obj === 'string') {
                 this[obj] = value;
-            }
-            else {
+            } else {
                 this.extendFrom(obj, true);
             }
         },
@@ -6893,8 +6836,7 @@
         if (typeof newImageOrSrc === 'string') {
             var cachedImgObj = globalImageCache.get(newImageOrSrc);
             return cachedImgObj && cachedImgObj.image;
-        }
-        else {
+        } else {
             return newImageOrSrc;
         }
     }
@@ -6913,8 +6855,7 @@
     function createOrUpdateImage(newImageOrSrc, image, hostEl, cb, cbPayload) {
         if (!newImageOrSrc) {
             return image;
-        }
-        else if (typeof newImageOrSrc === 'string') {
+        } else if (typeof newImageOrSrc === 'string') {
 
             // Image should not be loaded repeatly.
             if ((image && image.__zrImageSrc === newImageOrSrc) || !hostEl) {
@@ -6925,13 +6866,12 @@
             // is different, this method is responsible for load.
             var cachedImgObj = globalImageCache.get(newImageOrSrc);
 
-            var pendingWrap = { hostEl: hostEl, cb: cb, cbPayload: cbPayload };
+            var pendingWrap = {hostEl: hostEl, cb: cb, cbPayload: cbPayload};
 
             if (cachedImgObj) {
                 image = cachedImgObj.image;
                 !isImageReady(image) && cachedImgObj.pending.push(pendingWrap);
-            }
-            else {
+            } else {
                 !image && (image = new Image());
                 image.onload = imageOnLoad;
 
@@ -7079,8 +7019,7 @@
         // FIXME Right to left language
         if (textAlign === 'right') {
             x -= width;
-        }
-        else if (textAlign === 'center') {
+        } else if (textAlign === 'center') {
             x -= width / 2;
         }
         return x;
@@ -7096,8 +7035,7 @@
     function adjustTextY(y, height, textVerticalAlign) {
         if (textVerticalAlign === 'middle') {
             y -= height / 2;
-        }
-        else if (textVerticalAlign === 'bottom') {
+        } else if (textVerticalAlign === 'bottom') {
             y -= height;
         }
         return y;
@@ -7375,13 +7313,12 @@
             if (truncOuterHeight != null && outerHeight > truncOuterHeight) {
                 text = '';
                 lines = [];
-            }
-            else if (truncOuterWidth != null) {
+            } else if (truncOuterWidth != null) {
                 var options = prepareTruncateOptions(
                     truncOuterWidth - (padding ? padding[1] + padding[3] : 0),
                     font,
                     truncate.ellipsis,
-                    { minChar: truncate.minChar, placeholder: truncate.placeholder }
+                    {minChar: truncate.minChar, placeholder: truncate.placeholder}
                 );
 
                 // FIXME
@@ -7431,7 +7368,7 @@
      * If styleName is undefined, it is plain text.
      */
     function parseRichText(text, style) {
-        var contentBlock = { lines: [], width: 0, height: 0 };
+        var contentBlock = {lines: [], width: 0, height: 0};
 
         text != null && (text += '');
         if (!text) {
@@ -7500,7 +7437,7 @@
                 token.textVerticalAlign = tokenStyle && tokenStyle.textVerticalAlign || 'middle';
 
                 if (truncateHeight != null && contentHeight + token.lineHeight > truncateHeight) {
-                    return { lines: [], width: 0, height: 0 };
+                    return {lines: [], width: 0, height: 0};
                 }
 
                 token.textWidth = getWidth(token.text, font);
@@ -7515,8 +7452,7 @@
                     tokenWidth = 0;
                     // Do not truncate in this case, because there is no user case
                     // and it is too complicated.
-                }
-                else {
+                } else {
                     if (tokenWidthNotSpecified) {
                         tokenWidth = token.textWidth;
 
@@ -7552,11 +7488,10 @@
                         if (!tokenWidthNotSpecified || remianTruncWidth < paddingW) {
                             token.text = '';
                             token.textWidth = tokenWidth = 0;
-                        }
-                        else {
+                        } else {
                             token.text = truncateText(
                                 token.text, remianTruncWidth - paddingW, font, truncate.ellipsis,
-                                { minChar: truncate.minChar }
+                                {minChar: truncate.minChar}
                             );
                             token.textWidth = getWidth(token.text, font);
                             tokenWidth = token.textWidth + paddingW;
@@ -7607,7 +7542,7 @@
 
             // The first token should be appended to the last line.
             if (!i) {
-                var tokens = (lines[lines.length - 1] || (lines[0] = { tokens: [] })).tokens;
+                var tokens = (lines[lines.length - 1] || (lines[0] = {tokens: []})).tokens;
 
                 // Consider cases:
                 // (1) ''.split('\n') => ['', '\n', ''], the '' at the first item
@@ -7626,7 +7561,7 @@
             // Other tokens always start a new line.
             else {
                 // If there is '', insert it as a placeholder.
-                lines.push({ tokens: [token] });
+                lines.push({tokens: [token]});
             }
         }
     }
@@ -7667,28 +7602,23 @@
 
         if (typeof r === 'number') {
             r1 = r2 = r3 = r4 = r;
-        }
-        else if (r instanceof Array) {
+        } else if (r instanceof Array) {
             if (r.length === 1) {
                 r1 = r2 = r3 = r4 = r[0];
-            }
-            else if (r.length === 2) {
+            } else if (r.length === 2) {
                 r1 = r3 = r[0];
                 r2 = r4 = r[1];
-            }
-            else if (r.length === 3) {
+            } else if (r.length === 3) {
                 r1 = r[0];
                 r2 = r4 = r[1];
                 r3 = r[2];
-            }
-            else {
+            } else {
                 r1 = r[0];
                 r2 = r[1];
                 r3 = r[2];
                 r4 = r[3];
             }
-        }
-        else {
+        } else {
             r1 = r2 = r3 = r4 = 0;
         }
 
@@ -7725,8 +7655,8 @@
     }
 
     // TODO: Have not support 'start', 'end' yet.
-    var VALID_TEXT_ALIGN = { left: 1, right: 1, center: 1 };
-    var VALID_TEXT_VERTICAL_ALIGN = { top: 1, bottom: 1, middle: 1 };
+    var VALID_TEXT_ALIGN = {left: 1, right: 1, center: 1};
+    var VALID_TEXT_VERTICAL_ALIGN = {top: 1, bottom: 1, middle: 1};
 
     /**
      * @param {module:zrender/graphic/Style} style
@@ -7911,7 +7841,7 @@
             while (
                 leftIndex < tokenCount
                 && (token = tokens[leftIndex], !token.textAlign || token.textAlign === 'left')
-            ) {
+                ) {
                 placeToken(hostEl, ctx, token, style, lineHeight, lineTop, lineXLeft, 'left');
                 usedWidth -= token.width;
                 lineXLeft += token.width;
@@ -7921,7 +7851,7 @@
             while (
                 rightIndex >= 0
                 && (token = tokens[rightIndex], token.textAlign === 'right')
-            ) {
+                ) {
                 placeToken(hostEl, ctx, token, style, lineHeight, lineTop, lineXRight, 'right');
                 usedWidth -= token.width;
                 lineXRight -= token.width;
@@ -7949,8 +7879,7 @@
             if (origin === 'center') {
                 x = rect.width / 2 + rect.x;
                 y = rect.height / 2 + rect.y;
-            }
-            else if (origin) {
+            } else if (origin) {
                 x = origin[0] + rect.x;
                 y = origin[1] + rect.y;
             }
@@ -7971,8 +7900,7 @@
         var y = lineTop + lineHeight / 2;
         if (textVerticalAlign === 'top') {
             y = lineTop + token.height / 2;
-        }
-        else if (textVerticalAlign === 'bottom') {
+        } else if (textVerticalAlign === 'bottom') {
             y = lineTop + lineHeight - token.height / 2;
         }
 
@@ -8047,8 +7975,7 @@
             var textBorderRadius = style.textBorderRadius;
             if (!textBorderRadius) {
                 ctx.rect(x, y, width, height);
-            }
-            else {
+            } else {
                 buildPath(ctx, {
                     x: x, y: y, width: width, height: height, r: textBorderRadius
                 });
@@ -8059,8 +7986,7 @@
         if (isPlainBg) {
             setCtx(ctx, 'fillStyle', textBackgroundColor);
             ctx.fill();
-        }
-        else if (isObject$1(textBackgroundColor)) {
+        } else if (isObject$1(textBackgroundColor)) {
             var image = textBackgroundColor.image;
 
             image = createOrUpdateImage(
@@ -8097,8 +8023,7 @@
                 // Percent
                 baseX = rect.x + parsePercent(textPosition[0], rect.width);
                 baseY = rect.y + parsePercent(textPosition[1], rect.height);
-            }
-            else {
+            } else {
                 var res = adjustTextPositionOnRect(
                     textPosition, rect, style.textDistance
                 );
@@ -8193,7 +8118,8 @@
 
     var tmpRect$1 = new BoundingRect();
 
-    var RectText = function () { };
+    var RectText = function () {
+    };
 
     RectText.prototype = {
 
@@ -8232,8 +8158,7 @@
                     tmpRect$1.applyTransform(transform);
                     rect = tmpRect$1;
                 }
-            }
-            else {
+            } else {
                 this.setTransform(ctx);
             }
 
@@ -8389,23 +8314,27 @@
         // inplace is used with incremental
         inplace: false,
 
-        beforeBrush: function (ctx) { },
+        beforeBrush: function (ctx) {
+        },
 
-        afterBrush: function (ctx) { },
+        afterBrush: function (ctx) {
+        },
 
         /**
          * 图形绘制方法
          * @param {CanvasRenderingContext2D} ctx
          */
         // Interface
-        brush: function (ctx, prevEl) { },
+        brush: function (ctx, prevEl) {
+        },
 
         /**
          * 获取最小包围盒
          * @return {module:zrender/core/BoundingRect}
          */
         // Interface
-        getBoundingRect: function () { },
+        getBoundingRect: function () {
+        },
 
         /**
          * 判断坐标 x, y 是否在图形上
@@ -8477,8 +8406,7 @@
         attrKV: function (key, value) {
             if (key !== 'style') {
                 Element.prototype.attrKV.call(this, key, value);
-            }
-            else {
+            } else {
                 this.style.set(value);
             }
         },
@@ -8558,11 +8486,9 @@
             if (width == null && height != null) {
                 // Keep image/height ratio
                 width = height * aspect;
-            }
-            else if (height == null && width != null) {
+            } else if (height == null && width != null) {
                 height = width / aspect;
-            }
-            else if (width == null && height == null) {
+            } else if (width == null && height == null) {
                 width = image.width;
                 height = image.height;
             }
@@ -8578,8 +8504,7 @@
                     sx, sy, style.sWidth, style.sHeight,
                     x, y, width, height
                 );
-            }
-            else if (style.sx && style.sy) {
+            } else if (style.sx && style.sy) {
                 var sx = style.sx;
                 var sy = style.sy;
                 var sWidth = width - sx;
@@ -8589,8 +8514,7 @@
                     sx, sy, sWidth, sHeight,
                     x, y, width, height
                 );
-            }
-            else {
+            } else {
                 ctx.drawImage(image, x, y, width, height);
             }
 
@@ -8645,6 +8569,7 @@
 
     var tmpRect = new BoundingRect(0, 0, 0, 0);
     var viewRect = new BoundingRect(0, 0, 0, 0);
+
     function isDisplayableCulled(el, width, height) {
         tmpRect.copy(el.getBoundingRect());
         if (el.transform) {
@@ -8739,7 +8664,7 @@
             rootStyle['-webkit-tap-highlight-color'] = 'transparent';
             rootStyle['-webkit-user-select'] =
                 rootStyle['user-select'] =
-                rootStyle['-webkit-touch-callout'] = 'none';
+                    rootStyle['-webkit-touch-callout'] = 'none';
 
             root.innerHTML = '';
         }
@@ -8780,8 +8705,7 @@
                 this._width, this._height
             );
             root.appendChild(domRoot);
-        }
-        else {
+        } else {
             var width = root.width;
             var height = root.height;
 
@@ -9036,8 +8960,7 @@
                 // All elements in this layer are cleared.
                 if (layer.__startIndex === layer.__endIndex) {
                     layer.clear(false, clearColor);
-                }
-                else if (start === layer.__startIndex) {
+                } else if (start === layer.__startIndex) {
                     var firstEl = list[start];
                     if (!firstEl.incremental || !firstEl.notClear || paintAll) {
                         layer.clear(false, clearColor);
@@ -9216,16 +9139,13 @@
                             layer.dom,
                             prevDom.nextSibling
                         );
-                    }
-                    else {
+                    } else {
                         domRoot.appendChild(layer.dom);
                     }
-                }
-                else {
+                } else {
                     if (domRoot.firstChild) {
                         domRoot.insertBefore(layer.dom, domRoot.firstChild);
-                    }
-                    else {
+                    } else {
                         domRoot.appendChild(layer.dom);
                     }
                 }
@@ -9318,8 +9238,7 @@
                     layer = this.getLayer(zlevel + INCREMENTAL_INC, this._needsManuallyCompositing);
                     layer.incremental = true;
                     incrementalLayerCount = 1;
-                }
-                else {
+                } else {
                     layer = this.getLayer(zlevel + (incrementalLayerCount > 0 ? EL_AFTER_INCREMENTAL_INC : 0), this._needsManuallyCompositing);
                 }
 
@@ -9335,8 +9254,7 @@
                     layer.__startIndex = i;
                     if (!layer.incremental) {
                         layer.__drawIndex = i;
-                    }
-                    else {
+                    } else {
                         // Mark layer draw index needs to update.
                         layer.__drawIndex = -1;
                     }
@@ -9398,8 +9316,7 @@
                 var layerConfig = this._layerConfig;
                 if (!layerConfig[zlevel]) {
                     layerConfig[zlevel] = config;
-                }
-                else {
+                } else {
                     merge(layerConfig[zlevel], config, true);
                 }
 
@@ -9442,8 +9359,7 @@
                 this._height = height;
 
                 this.getLayer(CANVAS_ZLEVEL).resize(width, height);
-            }
-            else {
+            } else {
                 var domRoot = this._domRoot;
                 // FIXME Why ?
                 domRoot.style.display = 'none';
@@ -9502,8 +9418,8 @@
             this.root =
                 this.storage =
 
-                this._domRoot =
-                this._layers = null;
+                    this._domRoot =
+                        this._layers = null;
         },
 
         /**
@@ -9531,15 +9447,13 @@
                 this.eachLayer(function (layer) {
                     if (layer.__builtin__) {
                         ctx.drawImage(layer.dom, 0, 0, width, height);
-                    }
-                    else if (layer.renderToCanvas) {
+                    } else if (layer.renderToCanvas) {
                         imageLayer.ctx.save();
                         layer.renderToCanvas(imageLayer.ctx);
                         imageLayer.ctx.restore();
                     }
                 });
-            }
-            else {
+            } else {
                 // PENDING, echarts-gl and incremental rendering.
                 var scope = {};
                 var displayList = this.storage.getDisplayList(true);
@@ -9663,7 +9577,7 @@
 
     function getBoundingClientRect(el) {
         // BlackBerry 5, iOS 3 (original iPhone) don't have getBoundingRect
-        return el.getBoundingClientRect ? el.getBoundingClientRect() : { left: 0, top: 0 };
+        return el.getBoundingClientRect ? el.getBoundingClientRect() : {left: 0, top: 0};
     }
 
     // `calculate` is optional, default false
@@ -9684,12 +9598,12 @@
         if (calculate || !env$1.canvasSupported) {
             defaultGetZrXY(el, e, out);
         }
-        // Caution: In FireFox, layerX/layerY Mouse position relative to the closest positioned
-        // ancestor element, so we should make sure el is positioned (e.g., not position:static).
-        // BTW1, Webkit don't return the same results as FF in non-simple cases (like add
-        // zoom-factor, overflow / opacity layers, transforms ...)
-        // BTW2, (ev.offsetY || ev.pageY - $(ev.target).offset().top) is not correct in preserve-3d.
-        // <https://bugs.jquery.com/ticket/8523#comment:14>
+            // Caution: In FireFox, layerX/layerY Mouse position relative to the closest positioned
+            // ancestor element, so we should make sure el is positioned (e.g., not position:static).
+            // BTW1, Webkit don't return the same results as FF in non-simple cases (like add
+            // zoom-factor, overflow / opacity layers, transforms ...)
+            // BTW2, (ev.offsetY || ev.pageY - $(ev.target).offset().top) is not correct in preserve-3d.
+            // <https://bugs.jquery.com/ticket/8523#comment:14>
         // BTW3, In ff, offsetX/offsetY is always 0.
         else if (env$1.browser.firefox && e.layerX != null && e.layerX !== e.offsetX) {
             out.zrX = e.layerX;
@@ -9733,8 +9647,7 @@
         if (!isTouch) {
             clientToLocal(el, e, e, calculate);
             e.zrDelta = (e.wheelDelta) ? e.wheelDelta / 120 : -(e.detail || 0) / 3;
-        }
-        else {
+        } else {
             var touch = eventType != 'touchend'
                 ? e.targetTouches[0]
                 : e.changedTouches[0];
@@ -9782,8 +9695,7 @@
             //     : void 0;
             // el.addEventListener(name, handler /* , opts */);
             el.addEventListener(name, handler);
-        }
-        else {
+        } else {
             el.attachEvent('on' + name, handler);
         }
     }
@@ -9791,8 +9703,7 @@
     function removeEventListener(el, name, handler) {
         if (isDomLevel2) {
             el.removeEventListener(name, handler);
-        }
-        else {
+        } else {
             el.detachEvent('on' + name, handler);
         }
     }
@@ -9866,7 +9777,8 @@
 
         this.stage = options.stage || {};
 
-        this.onframe = options.onframe || function () { };
+        this.onframe = options.onframe || function () {
+        };
 
         // private properties
         this._clips = [];
@@ -9953,8 +9865,7 @@
                     clips[i] = clips[len - 1];
                     clips.pop();
                     len--;
-                }
-                else {
+                } else {
                     i++;
                 }
             }
@@ -10232,7 +10143,7 @@
             var type = gestureInfo.type;
             event.gestureEvent = type;
 
-            proxy.handler.dispatchToElement({ target: gestureInfo.target }, type, gestureInfo.event);
+            proxy.handler.dispatchToElement({target: gestureInfo.target}, type, gestureInfo.event);
         }
     }
 
@@ -10516,8 +10427,7 @@
             //     (this._msGesture = new MSGesture()).target = dom; // jshint ignore:line
             //     dom.addEventListener('MSGestureChange', onMSGestureChange);
             // }
-        }
-        else {
+        } else {
             if (env$1.touchEventsSupported) {
                 mountHandlers(touchHandlerNames, this);
                 // Handler of 'mouseout' event is needed in touch mode, which will be mounted below.
@@ -10601,8 +10511,7 @@
     function dispose$1(zr) {
         if (zr) {
             zr.dispose();
-        }
-        else {
+        } else {
             for (var key in instances$1) {
                 if (instances$1.hasOwnProperty(key)) {
                     instances$1[key].dispose();
@@ -10669,8 +10578,7 @@
                 throw new Error('You need to require \'zrender/vml/vml\' to support IE8');
             }
             rendererType = 'vml';
-        }
-        else if (!rendererType || !painterCtors[rendererType]) {
+        } else if (!rendererType || !painterCtors[rendererType]) {
             rendererType = 'canvas';
         }
         var painter = new painterCtors[rendererType](dom, storage, opts, id);
@@ -10751,7 +10659,7 @@
          * @param {string} [config.clearColor=0] Clear color
          * @param {string} [config.motionBlur=false] If enable motion blur
          * @param {number} [config.lastFrameAlpha=0.7] Motion blur factor. Larger value cause longer trailer
-        */
+         */
         configLayer: function (zLevel, config) {
             if (this.painter.configLayer) {
                 this.painter.configLayer(zLevel, config);
@@ -10991,13 +10899,12 @@
 
             this.animation =
                 this.storage =
-                this.painter =
-                this.handler = null;
+                    this.painter =
+                        this.handler = null;
 
             delInstance(this.id);
         }
     };
-
 
 
     var zrender = (Object.freeze || Object)({
@@ -11144,7 +11051,7 @@
         newCptOptions = (newCptOptions || []).slice();
 
         var result = map(exists || [], function (obj, index) {
-            return { exist: obj };
+            return {exist: obj};
         });
 
         // Mapping by id or name if specified.
@@ -11210,7 +11117,7 @@
             }
 
             if (i >= result.length) {
-                result.push({ option: cptOption });
+                result.push({option: cptOption});
             }
         });
 
@@ -11282,11 +11189,9 @@
 
             if (existCpt) {
                 keyInfo.id = existCpt.id;
-            }
-            else if (opt.id != null) {
+            } else if (opt.id != null) {
                 keyInfo.id = opt.id + '';
-            }
-            else {
+            } else {
                 // Consider this situatoin:
                 //  optionA: [{name: 'a'}, {name: 'a'}, {..}]
                 //  optionB [{..}, {name: 'a'}, {name: 'a'}]
@@ -11348,8 +11253,7 @@
 
                     if (otherDataIndices && otherDataIndices[dataIndex]) {
                         otherDataIndices[dataIndex] = null;
-                    }
-                    else {
+                    } else {
                         (map$$1[seriesId] || (map$$1[seriesId] = {}))[dataIndex] = 1;
                     }
                 }
@@ -11362,10 +11266,9 @@
                 if (map$$1.hasOwnProperty(i) && map$$1[i] != null) {
                     if (isData) {
                         result.push(+i);
-                    }
-                    else {
+                    } else {
                         var dataIndices = mapToArray(map$$1[i], true);
-                        dataIndices.length && result.push({ seriesId: i, dataIndex: dataIndices });
+                        dataIndices.length && result.push({seriesId: i, dataIndex: dataIndices});
                     }
                 }
             }
@@ -11382,15 +11285,13 @@
     function queryDataIndex(data, payload) {
         if (payload.dataIndexInside != null) {
             return payload.dataIndexInside;
-        }
-        else if (payload.dataIndex != null) {
+        } else if (payload.dataIndex != null) {
             return isArray(payload.dataIndex)
                 ? map(payload.dataIndex, function (value) {
                     return data.indexOfRawIndex(value);
                 })
                 : data.indexOfRawIndex(payload.dataIndex);
-        }
-        else if (payload.name != null) {
+        } else if (payload.name != null) {
             return isArray(payload.name)
                 ? map(payload.name, function (value) {
                     return data.indexOfName(value);
@@ -11426,6 +11327,7 @@
             return hostObj[key] || (hostObj[key] = {});
         };
     }
+
     var innerUniqueIndex = 0;
 
     /**
@@ -11503,7 +11405,7 @@
                 return;
             }
 
-            var queryParam = { mainType: mainType };
+            var queryParam = {mainType: mainType};
             if (queryType !== 'index' || value !== 'all') {
                 queryParam[queryType] = value;
             }
@@ -11559,7 +11461,7 @@
      * @public
      */
     function parseClassType$1(componentType) {
-        var ret = { main: '', sub: '' };
+        var ret = {main: '', sub: ''};
         if (componentType) {
             componentType = componentType.split(TYPE_DELIMITER);
             ret.main = componentType[0] || '';
@@ -11601,8 +11503,7 @@
             var ExtendedClass = function () {
                 if (!proto.$constructor) {
                     superClass.apply(this, arguments);
-                }
-                else {
+                } else {
                     proto.$constructor.apply(this, arguments);
                 }
             };
@@ -11685,8 +11586,7 @@
                         }
                     }
                     storage[componentType.main] = Clazz;
-                }
-                else if (componentType.sub !== IS_CONTAINER) {
+                } else if (componentType.sub !== IS_CONTAINER) {
                     var container = makeContainer(componentType);
                     container[componentType.sub] = Clazz;
                 }
@@ -11722,8 +11622,7 @@
                 each$1(obj, function (o, type) {
                     type !== IS_CONTAINER && result.push(o);
                 });
-            }
-            else {
+            } else {
                 result.push(obj);
             }
 
@@ -11942,9 +11841,11 @@
     function isAroundZero(val) {
         return val > -EPSILON$1 && val < EPSILON$1;
     }
+
     function isNotAroundZero$1(val) {
         return val > EPSILON$1 || val < -EPSILON$1;
     }
+
     /**
      * 计算三次贝塞尔值
      * @memberOf module:zrender/core/curve
@@ -12006,15 +11907,13 @@
         if (isAroundZero(A) && isAroundZero(B)) {
             if (isAroundZero(b)) {
                 roots[0] = 0;
-            }
-            else {
+            } else {
                 var t1 = -c / b;  //t1, t2, t3, b is not zero
                 if (t1 >= 0 && t1 <= 1) {
                     roots[n++] = t1;
                 }
             }
-        }
-        else {
+        } else {
             var disc = B * B - 4 * A * C;
 
             if (isAroundZero(disc)) {
@@ -12027,29 +11926,25 @@
                 if (t2 >= 0 && t2 <= 1) {
                     roots[n++] = t2;
                 }
-            }
-            else if (disc > 0) {
+            } else if (disc > 0) {
                 var discSqrt = mathSqrt$2(disc);
                 var Y1 = A * b + 1.5 * a * (-B + discSqrt);
                 var Y2 = A * b + 1.5 * a * (-B - discSqrt);
                 if (Y1 < 0) {
                     Y1 = -mathPow(-Y1, ONE_THIRD);
-                }
-                else {
+                } else {
                     Y1 = mathPow(Y1, ONE_THIRD);
                 }
                 if (Y2 < 0) {
                     Y2 = -mathPow(-Y2, ONE_THIRD);
-                }
-                else {
+                } else {
                     Y2 = mathPow(Y2, ONE_THIRD);
                 }
                 var t1 = (-b - (Y1 + Y2)) / (3 * a);
                 if (t1 >= 0 && t1 <= 1) {
                     roots[n++] = t1;
                 }
-            }
-            else {
+            } else {
                 var T = (2 * A * b - 3 * a * B) / (2 * mathSqrt$2(A * A * A));
                 var theta = Math.acos(T) / 3;
                 var ASqrt = mathSqrt$2(A);
@@ -12095,13 +11990,11 @@
                     extrema[n++] = t1;
                 }
             }
-        }
-        else {
+        } else {
             var disc = b * b - 4 * a * c;
             if (isAroundZero(disc)) {
                 extrema[0] = -b / (2 * a);
-            }
-            else if (disc > 0) {
+            } else if (disc > 0) {
                 var discSqrt = mathSqrt$2(disc);
                 var t1 = (-b + discSqrt) / (2 * a);
                 var t2 = (-b - discSqrt) / (2 * a);
@@ -12208,8 +12101,7 @@
             if (prev >= 0 && d1 < d) {
                 t = prev;
                 d = d1;
-            }
-            else {
+            } else {
                 // t + interval
                 _v2[0] = cubicAt(x0, x1, x2, x3, next);
                 _v2[1] = cubicAt(y0, y1, y2, y3, next);
@@ -12218,8 +12110,7 @@
                 if (next <= 1 && d2 < d) {
                     t = next;
                     d = d2;
-                }
-                else {
+                } else {
                     interval *= 0.5;
                 }
             }
@@ -12280,16 +12171,14 @@
                     roots[n++] = t1;
                 }
             }
-        }
-        else {
+        } else {
             var disc = b * b - 4 * a * c;
             if (isAroundZero(disc)) {
                 var t1 = -b / (2 * a);
                 if (t1 >= 0 && t1 <= 1) {
                     roots[n++] = t1;
                 }
-            }
-            else if (disc > 0) {
+            } else if (disc > 0) {
                 var discSqrt = mathSqrt$2(disc);
                 var t1 = (-b + discSqrt) / (2 * a);
                 var t2 = (-b - discSqrt) / (2 * a);
@@ -12317,8 +12206,7 @@
         if (divider === 0) {
             // p1 is center of p0 and p2
             return 0.5;
-        }
-        else {
+        } else {
             return (p0 - p1) / divider;
         }
     }
@@ -12403,8 +12291,7 @@
             if (prev >= 0 && d1 < d) {
                 t = prev;
                 d = d1;
-            }
-            else {
+            } else {
                 // t + interval
                 _v2[0] = quadraticAt(x0, x1, x2, next);
                 _v2[1] = quadraticAt(y0, y1, y2, next);
@@ -12412,8 +12299,7 @@
                 if (next <= 1 && d2 < d) {
                     t = next;
                     d = d2;
-                }
-                else {
+                } else {
                     interval *= 0.5;
                 }
             }
@@ -12491,6 +12377,7 @@
 
     var xDim = [];
     var yDim = [];
+
     /**
      * 从三阶贝塞尔曲线(p0, p1, p2, p3)中计算出最小包围盒，写入`min`和`max`中
      * @memberOf module:zrender/core/bbox
@@ -12627,8 +12514,7 @@
 
         if (startAngle > endAngle && !anticlockwise) {
             endAngle += PI2;
-        }
-        else if (startAngle < endAngle && anticlockwise) {
+        } else if (startAngle < endAngle && anticlockwise) {
             startAngle += PI2;
         }
         if (anticlockwise) {
@@ -12658,18 +12544,18 @@
      * @author Yi Shen (http://www.github.com/pissang)
      */
 
-    // TODO getTotalLength, getPointAtLength
+        // TODO getTotalLength, getPointAtLength
 
     var CMD = {
-        M: 1,
-        L: 2,
-        C: 3,
-        Q: 4,
-        A: 5,
-        Z: 6,
-        // Rect
-        R: 7
-    };
+            M: 1,
+            L: 2,
+            C: 3,
+            Q: 4,
+            A: 5,
+            Z: 6,
+            // Rect
+            R: 7
+        };
 
     // var CMD_MEM_SIZE = {
     //     M: 3,
@@ -13090,7 +12976,7 @@
             y -= offset * dy;
 
             while ((dx > 0 && x <= x1) || (dx < 0 && x >= x1)
-                || (dx == 0 && ((dy > 0 && y <= y1) || (dy < 0 && y >= y1)))) {
+            || (dx == 0 && ((dy > 0 && y <= y1) || (dy < 0 && y >= y1)))) {
                 idx = this._dashIdx;
                 dash = lineDash[idx];
                 x += dx * dash;
@@ -13399,8 +13285,7 @@
                             ctx.scale(1 / scaleX, 1 / scaleY);
                             ctx.rotate(-psi);
                             ctx.translate(-cx, -cy);
-                        }
-                        else {
+                        } else {
                             ctx.arc(cx, cy, r, theta, endAngle, 1 - fs);
                         }
 
@@ -13460,8 +13345,7 @@
         if (x0 !== x1) {
             _a = (y0 - y1) / (x0 - x1);
             _b = (x0 * y1 - x1 * y0) / (x0 - x1);
-        }
-        else {
+        } else {
             return Math.abs(x - x0) <= _l / 2;
         }
         var tmp = _a * x - y + _b;
@@ -13657,8 +13541,7 @@
         var nRoots = cubicRootAt(y0, y1, y2, y3, y, roots);
         if (nRoots === 0) {
             return 0;
-        }
-        else {
+        } else {
             var w = 0;
             var nExtrema = -1;
             var y0_, y1_;
@@ -13686,20 +13569,16 @@
                     // 分成三段单调函数
                     if (t < extrema[0]) {
                         w += y0_ < y0 ? unit : -unit;
-                    }
-                    else if (t < extrema[1]) {
+                    } else if (t < extrema[1]) {
                         w += y1_ < y0_ ? unit : -unit;
-                    }
-                    else {
+                    } else {
                         w += y3 < y1_ ? unit : -unit;
                     }
-                }
-                else {
+                } else {
                     // 分成两段单调函数
                     if (t < extrema[0]) {
                         w += y0_ < y0 ? unit : -unit;
-                    }
-                    else {
+                    } else {
                         w += y3 < y0_ ? unit : -unit;
                     }
                 }
@@ -13719,8 +13598,7 @@
         var nRoots = quadraticRootAt(y0, y1, y2, y, roots);
         if (nRoots === 0) {
             return 0;
-        }
-        else {
+        } else {
             var t = quadraticExtremum(y0, y1, y2);
             if (t >= 0 && t <= 1) {
                 var w = 0;
@@ -13735,14 +13613,12 @@
                     }
                     if (roots[i] < t) {
                         w += y_ < y0 ? unit : -unit;
-                    }
-                    else {
+                    } else {
                         w += y2 < y_ ? unit : -unit;
                     }
                 }
                 return w;
-            }
-            else {
+            } else {
                 // Remove one endpoint.
                 var unit = (roots[0] === 0 || roots[0] === 1) ? 0.5 : 1;
 
@@ -13788,8 +13664,7 @@
             var tmp = startAngle;
             startAngle = normalizeRadian(endAngle);
             endAngle = normalizeRadian(tmp);
-        }
-        else {
+        } else {
             startAngle = normalizeRadian(startAngle);
             endAngle = normalizeRadian(endAngle);
         }
@@ -13867,8 +13742,7 @@
                         if (containStroke$1(xi, yi, data[i], data[i + 1], lineWidth, x, y)) {
                             return true;
                         }
-                    }
-                    else {
+                    } else {
                         // NOTE 在第一个命令为 L, C, Q 的时候会计算出 NaN
                         w += windingLine(xi, yi, data[i], data[i + 1], x, y) || 0;
                     }
@@ -13883,8 +13757,7 @@
                         )) {
                             return true;
                         }
-                    }
-                    else {
+                    } else {
                         w += windingCubic(
                             xi, yi,
                             data[i++], data[i++], data[i++], data[i++], data[i], data[i + 1],
@@ -13902,8 +13775,7 @@
                         )) {
                             return true;
                         }
-                    }
-                    else {
+                    } else {
                         w += windingQuadratic(
                             xi, yi,
                             data[i++], data[i++], data[i], data[i + 1],
@@ -13929,8 +13801,7 @@
                     // 不是直接使用 arc 命令
                     if (i > 1) {
                         w += windingLine(xi, yi, x1, y1, x, y);
-                    }
-                    else {
+                    } else {
                         // 第一个命令起点还未定义
                         x0 = x1;
                         y0 = y1;
@@ -13944,8 +13815,7 @@
                         )) {
                             return true;
                         }
-                    }
-                    else {
+                    } else {
                         w += windingArc(
                             cx, cy, ry, theta, theta + dTheta, anticlockwise,
                             _x, y
@@ -13969,8 +13839,7 @@
                         ) {
                             return true;
                         }
-                    }
-                    else {
+                    } else {
                         // FIXME Clockwise ?
                         w += windingLine(x1, y0, x1, y1, x, y);
                         w += windingLine(x0, y1, x0, y0, x, y);
@@ -13983,8 +13852,7 @@
                         )) {
                             return true;
                         }
-                    }
-                    else {
+                    } else {
                         // Close a subpath
                         w += windingLine(xi, yi, x0, y0, x, y);
                         // 如果被任何一个 subpath 包含
@@ -14017,6 +13885,7 @@
     var abs = Math.abs;
 
     var pathProxyForDraw = new PathProxy(true);
+
     /**
      * @alias module:zrender/graphic/Path
      * @extends module:zrender/graphic/Displayable
@@ -14074,14 +13943,12 @@
             if (hasFillGradient) {
                 // PENDING If may have affect the state
                 ctx.fillStyle = this._fillGradient;
-            }
-            else if (hasFillPattern) {
+            } else if (hasFillPattern) {
                 ctx.fillStyle = getCanvasPattern.call(fill, ctx);
             }
             if (hasStrokeGradient) {
                 ctx.strokeStyle = this._strokeGradient;
-            }
-            else if (hasStrokePattern) {
+            } else if (hasStrokePattern) {
                 ctx.strokeStyle = getCanvasPattern.call(stroke, ctx);
             }
 
@@ -14116,8 +13983,7 @@
                 if (this.path) {
                     this.__dirtyPath = false;
                 }
-            }
-            else {
+            } else {
                 // Replay path building
                 ctx.beginPath();
                 this.path.rebuildPath(ctx);
@@ -14148,7 +14014,8 @@
 
         // When bundling path, some shape may decide if use moveTo to begin a new subpath or closePath
         // Like in circle
-        buildPath: function (ctx, shapeCfg, inBundle) { },
+        buildPath: function (ctx, shapeCfg, inBundle) {
+        },
 
         createPathProxy: function () {
             this.path = new PathProxy();
@@ -14275,8 +14142,7 @@
                 this.setShape(value);
                 this.__dirtyPath = true;
                 this._rect = null;
-            }
-            else {
+            } else {
                 Displayable.prototype.attrKV.call(this, key, value);
             }
         },
@@ -14295,8 +14161,7 @@
                             shape[name] = key[name];
                         }
                     }
-                }
-                else {
+                } else {
                     shape[key] = value;
                 }
                 this.dirty(true);
@@ -14501,7 +14366,7 @@
             * mathSqrt((((rx * rx) * (ry * ry))
                 - ((rx * rx) * (yp * yp))
                 - ((ry * ry) * (xp * xp))) / ((rx * rx) * (yp * yp)
-                    + (ry * ry) * (xp * xp))
+                + (ry * ry) * (xp * xp))
             ) || 0;
 
         var cxp = f * rx * yp / ry;
@@ -14793,8 +14658,7 @@
                 if (ctx) {
                     path.rebuildPath(ctx);
                 }
-            }
-            else {
+            } else {
                 var ctx = path;
                 pathProxy.rebuildPath(ctx);
             }
@@ -15180,8 +15044,7 @@
                 p0 = points[idx === 0 ? idx : idx - 1];
                 p2 = points[idx > len$$1 - 2 ? len$$1 - 1 : idx + 1];
                 p3 = points[idx > len$$1 - 3 ? len$$1 - 1 : idx + 2];
-            }
-            else {
+            } else {
                 p0 = points[(idx - 1 + len$$1) % len$$1];
                 p2 = points[(idx + 1) % len$$1];
                 p3 = points[(idx + 2) % len$$1];
@@ -15245,13 +15108,11 @@
             if (isLoop) {
                 prevPoint = points[i ? i - 1 : len$$1 - 1];
                 nextPoint = points[(i + 1) % len$$1];
-            }
-            else {
+            } else {
                 if (i === 0 || i === len$$1 - 1) {
                     cps.push(clone$1(points[i]));
                     continue;
-                }
-                else {
+                } else {
                     prevPoint = points[i - 1];
                     nextPoint = points[i + 1];
                 }
@@ -15310,8 +15171,7 @@
                         cp1[0], cp1[1], cp2[0], cp2[1], p[0], p[1]
                     );
                 }
-            }
-            else {
+            } else {
                 if (smooth === 'spline') {
                     points = smoothSpline(points, closePath);
                 }
@@ -15405,8 +15265,7 @@
             var height = shape.height;
             if (!shape.r) {
                 ctx.rect(x, y, width, height);
-            }
-            else {
+            } else {
                 buildPath(ctx, shape);
             }
             ctx.closePath();
@@ -15488,8 +15347,7 @@
                 (isTangent ? cubicDerivativeAt : cubicAt)(shape.x1, shape.cpx1, shape.cpx2, shape.x2, t),
                 (isTangent ? cubicDerivativeAt : cubicAt)(shape.y1, shape.cpy1, shape.cpy2, shape.y2, t)
             ];
-        }
-        else {
+        } else {
             return [
                 (isTangent ? quadraticDerivativeAt : quadraticAt)(shape.x1, shape.cpx1, shape.x2, t),
                 (isTangent ? quadraticDerivativeAt : quadraticAt)(shape.y1, shape.cpy1, shape.y2, t)
@@ -15554,8 +15412,7 @@
                     cpx1, cpy1,
                     x2, y2
                 );
-            }
-            else {
+            } else {
                 if (percent < 1) {
                     cubicSubdivide(
                         x1, cpx1, cpx2, x2, percent, out
@@ -15833,8 +15690,7 @@
     IncrementalDisplayble.prototype.addDisplayable = function (displayable, notPersistent) {
         if (notPersistent) {
             this._temporaryDisplayables.push(displayable);
-        }
-        else {
+        } else {
             this._displayables.push(displayable);
         }
         this.dirty();
@@ -16032,8 +15888,7 @@
         var height;
         if (width <= rect.width) {
             height = rect.height;
-        }
-        else {
+        } else {
             width = rect.width;
             height = width / aspect;
         }
@@ -16192,8 +16047,7 @@
 
         if (el.useHoverLayer) {
             el.__zr && el.__zr.addHover(el, el.__hoverStl);
-        }
-        else {
+        } else {
             var style = el.style;
             var insideRollbackOpt = style.insideRollbackOpt;
 
@@ -16251,8 +16105,7 @@
         var normalStl = el.__normalStl;
         if (el.useHoverLayer) {
             el.__zr && el.__zr.removeHover(el);
-        }
-        else {
+        } else {
             // Consider null/undefined value, should use
             // `setStyle` but not `extendFrom(stl, true)`.
             normalStl && el.setStyle(normalStl);
@@ -16474,13 +16327,12 @@
      *        If set as false, it will be processed as a emphasis style.
      */
     function setText(textStyle, labelModel, defaultColor) {
-        var opt = { isRectText: true };
+        var opt = {isRectText: true};
         var isEmphasis;
 
         if (defaultColor === false) {
             isEmphasis = true;
-        }
-        else {
+        } else {
             // Support setting color as 'auto' to get visual color.
             opt.autoColor = defaultColor;
         }
@@ -16753,8 +16605,7 @@
             duration > 0
                 ? el.animateTo(props, duration, animationDelay || 0, animationEasing, cb, !!cb)
                 : (el.stopAnimation(), el.attr(props), cb && cb());
-        }
-        else {
+        } else {
             el.stopAnimation();
             el.attr(props);
             cb && cb();
@@ -16887,6 +16738,7 @@
             });
             return elMap;
         }
+
         function getAnimatableProps(el) {
             var obj = {
                 position: clone$1(el.position),
@@ -16897,6 +16749,7 @@
             }
             return obj;
         }
+
         var elMap1 = getElMap(g1);
 
         g2.traverse(function (el) {
@@ -16961,16 +16814,16 @@
      * @return {module:zrender/Element} Icon path or image element.
      */
     function createIcon(iconStr, opt, rect) {
-        opt = extend({ rectHover: true }, opt);
-        var style = opt.style = { strokeNoScale: true };
-        rect = rect || { x: -1, y: -1, width: 2, height: 2 };
+        opt = extend({rectHover: true}, opt);
+        var style = opt.style = {strokeNoScale: true};
+        rect = rect || {x: -1, y: -1, width: 2, height: 2};
 
         if (iconStr) {
             return iconStr.indexOf('image://') === 0
                 ? (
                     style.image = iconStr.slice(8),
-                    defaults(style, rect),
-                    new ZImage(opt)
+                        defaults(style, rect),
+                        new ZImage(opt)
                 )
                 : (
                     makePath(
@@ -16982,8 +16835,6 @@
                 );
         }
     }
-
-
 
 
     var graphic = (Object.freeze || Object)({
@@ -17278,7 +17129,8 @@
             return this.option == null;
         },
 
-        restoreData: function () { },
+        restoreData: function () {
+        },
 
         // Pending
         clone: function () {
@@ -17311,8 +17163,7 @@
             if (!env$1.node) {
                 if (this.option.animation != null) {
                     return !!this.option.animation;
-                }
-                else if (this.parentModel) {
+                } else if (this.parentModel) {
                     return this.parentModel.isAnimationEnabled();
                 }
             }
@@ -17516,12 +17367,12 @@
                 });
             });
 
-            return { graph: graph, noEntryList: noEntryList };
+            return {graph: graph, noEntryList: noEntryList};
         }
 
         function createDependencyGraphItem(graph, name) {
             if (!graph[name]) {
-                graph[name] = { predecessor: [], successor: [] };
+                graph[name] = {predecessor: [], successor: []};
             }
             return graph[name];
         }
@@ -17588,21 +17439,17 @@
             if (subDomain > 0) {
                 if (val <= domain[0]) {
                     return range[0];
-                }
-                else if (val >= domain[1]) {
+                } else if (val >= domain[1]) {
                     return range[1];
                 }
-            }
-            else {
+            } else {
                 if (val >= domain[0]) {
                     return range[0];
-                }
-                else if (val <= domain[1]) {
+                } else if (val <= domain[1]) {
                     return range[1];
                 }
             }
-        }
-        else {
+        } else {
             if (val === domain[0]) {
                 return range[0];
             }
@@ -17708,8 +17555,7 @@
         if (eIndex > 0) {
             var precision = +str.slice(eIndex + 1);
             return precision < 0 ? -precision : 0;
-        }
-        else {
+        } else {
             var dotIndex = str.indexOf('.');
             return dotIndex < 0 ? 0 : str.length - 1 - dotIndex;
         }
@@ -17835,8 +17681,7 @@
     function parseDate(value) {
         if (value instanceof Date) {
             return value;
-        }
-        else if (typeof value === 'string') {
+        } else if (typeof value === 'string') {
             // Different browsers parse date in different way, so we parse it manually.
             // Some other issues:
             // new Date('1970-01-01') is UTC,
@@ -17863,12 +17708,12 @@
                     +match[7] || 0
                 );
             }
-            // Timezoneoffset of Javascript Date has considered DST (Daylight Saving Time,
-            // https://tc39.github.io/ecma262/#sec-daylight-saving-time-adjustment).
-            // For example, system timezone is set as "Time Zone: America/Toronto",
-            // then these code will get different result:
-            // `new Date(1478411999999).getTimezoneOffset();  // get 240`
-            // `new Date(1478412000000).getTimezoneOffset();  // get 300`
+                // Timezoneoffset of Javascript Date has considered DST (Daylight Saving Time,
+                // https://tc39.github.io/ecma262/#sec-daylight-saving-time-adjustment).
+                // For example, system timezone is set as "Time Zone: America/Toronto",
+                // then these code will get different result:
+                // `new Date(1478411999999).getTimezoneOffset();  // get 240`
+                // `new Date(1478412000000).getTimezoneOffset();  // get 300`
             // So we should not use `new Date`, but use `Date.UTC`.
             else {
                 var hour = +match[4] || 0;
@@ -17885,8 +17730,7 @@
                     +match[7] || 0
                 ));
             }
-        }
-        else if (value == null) {
+        } else if (value == null) {
             return new Date(NaN);
         }
 
@@ -17924,18 +17768,29 @@
         var f = val / exp10; // 1 <= f < 10
         var nf;
         if (round) {
-            if (f < 1.5) { nf = 1; }
-            else if (f < 2.5) { nf = 2; }
-            else if (f < 4) { nf = 3; }
-            else if (f < 7) { nf = 5; }
-            else { nf = 10; }
-        }
-        else {
-            if (f < 1) { nf = 1; }
-            else if (f < 2) { nf = 2; }
-            else if (f < 3) { nf = 3; }
-            else if (f < 5) { nf = 5; }
-            else { nf = 10; }
+            if (f < 1.5) {
+                nf = 1;
+            } else if (f < 2.5) {
+                nf = 2;
+            } else if (f < 4) {
+                nf = 3;
+            } else if (f < 7) {
+                nf = 5;
+            } else {
+                nf = 10;
+            }
+        } else {
+            if (f < 1) {
+                nf = 1;
+            } else if (f < 2) {
+                nf = 2;
+            } else if (f < 3) {
+                nf = 3;
+            } else if (f < 5) {
+                nf = 5;
+            } else {
+                nf = 10;
+            }
         }
         val = nf * exp10;
 
@@ -17988,8 +17843,7 @@
 
             if (interval[0] === interval[1] && close[0] * close[1] !== 1) {
                 list.splice(i, 1);
-            }
-            else {
+            } else {
                 i++;
             }
         }
@@ -18176,7 +18030,7 @@
      * @return {string}
      */
     function getTooltipMarker(opt, extraCssText) {
-        opt = isString(opt) ? { color: opt, extraCssText: extraCssText } : (opt || {});
+        opt = isString(opt) ? {color: opt, extraCssText: extraCssText} : (opt || {});
         var color = opt.color;
         var type = opt.type;
         var extraCssText = opt.extraCssText;
@@ -18342,13 +18196,11 @@
                     nextX = moveX;
                     y += currentLineMaxSize + gap;
                     currentLineMaxSize = rect.height;
-                }
-                else {
+                } else {
                     // FIXME: consider rect.y is not `0`?
                     currentLineMaxSize = Math.max(currentLineMaxSize, rect.height);
                 }
-            }
-            else {
+            } else {
                 var moveY = rect.height + (nextChildRect ? (-nextChildRect.y + rect.y) : 0);
                 nextY = y + moveY;
                 // Wrap when width exceeds maxHeight or meet a `newline` group
@@ -18357,8 +18209,7 @@
                     y = 0;
                     nextY = moveY;
                     currentLineMaxSize = rect.width;
-                }
-                else {
+                } else {
                     currentLineMaxSize = Math.max(currentLineMaxSize, rect.width);
                 }
             }
@@ -18495,8 +18346,7 @@
             if (isNaN(width) && isNaN(height)) {
                 if (aspect > containerWidth / containerHeight) {
                     width = containerWidth * 0.8;
-                }
-                else {
+                } else {
                     height = containerHeight * 0.8;
                 }
             }
@@ -18606,8 +18456,7 @@
             rect = el.type === 'group'
                 ? new BoundingRect(0, 0, +positionInfo.width || 0, +positionInfo.height || 0)
                 : el.getBoundingRect();
-        }
-        else {
+        } else {
             rect = el.getBoundingRect();
             if (el.needLocalTransform()) {
                 var transform = el.getLocalTransform();
@@ -18621,7 +18470,7 @@
         // The real width and height can not be specified but calculated by the given el.
         positionInfo = getLayoutRect(
             defaults(
-                { width: rect.width, height: rect.height },
+                {width: rect.width, height: rect.height},
                 positionInfo
             ),
             containerRect,
@@ -18706,8 +18555,7 @@
                 // Only one of left/right is premitted to exist.
                 if (hasValue(newOption, names[1])) {
                     merged[names[2]] = null;
-                }
-                else if (hasValue(newOption, names[2])) {
+                } else if (hasValue(newOption, names[2])) {
                     merged[names[1]] = null;
                 }
                 return merged;
@@ -18720,13 +18568,12 @@
             if (mergedValueCount === enoughParamNumber || !newValueCount) {
                 return merged;
             }
-            // Case: newOption: {width: ..., right: ...},
-            // Than we can make sure user only want those two, and ignore
+                // Case: newOption: {width: ..., right: ...},
+                // Than we can make sure user only want those two, and ignore
             // all origin params in targetOption.
             else if (newValueCount >= enoughParamNumber) {
                 return newParams;
-            }
-            else {
+            } else {
                 // Chose another param from targetOption by priority.
                 for (var i = 0; i < names.length; i++) {
                     var name = names[i];
@@ -18949,7 +18796,8 @@
         },
 
         // Hooker after init or mergeOption
-        optionUpdated: function (newCptOption, isInit) { },
+        optionUpdated: function (newCptOption, isInit) {
+        },
 
         getDefaultOption: function () {
             var fields = inner$1(this);
@@ -18999,7 +18847,7 @@
 
     // Add capability of registerClass, getClass, hasClass, registerSubTypeDefaulter and so on.
     enableClassManagement(
-        ComponentModel, { registerWhenExtend: true }
+        ComponentModel, {registerWhenExtend: true}
     );
     enableSubTypeDefaulter(ComponentModel);
 
@@ -19556,34 +19404,29 @@
 
         if (isTypedArray(data)) {
             sourceFormat = SOURCE_FORMAT_TYPED_ARRAY;
-        }
-        else if (isArray(data)) {
+        } else if (isArray(data)) {
             // FIXME Whether tolerate null in top level array?
             for (var i = 0, len = data.length; i < len; i++) {
                 var item = data[i];
 
                 if (item == null) {
                     continue;
-                }
-                else if (isArray(item)) {
+                } else if (isArray(item)) {
                     sourceFormat = SOURCE_FORMAT_ARRAY_ROWS;
                     break;
-                }
-                else if (isObject$1(item)) {
+                } else if (isObject$1(item)) {
                     sourceFormat = SOURCE_FORMAT_OBJECT_ROWS;
                     break;
                 }
             }
-        }
-        else if (isObject$1(data)) {
+        } else if (isObject$1(data)) {
             for (var key in data) {
                 if (data.hasOwnProperty(key) && isArrayLike(data[key])) {
                     sourceFormat = SOURCE_FORMAT_KEYED_COLUMNS;
                     break;
                 }
             }
-        }
-        else if (data != null) {
+        } else if (data != null) {
             throw new Error('Invalid data');
         }
 
@@ -19695,7 +19538,7 @@
     // return {startIndex, dimensionsDefine, dimensionsCount}
     function completeBySourceData(data, sourceFormat, seriesLayoutBy, sourceHeader, dimensionsDefine) {
         if (!data) {
-            return { dimensionsDefine: normalizeDimensionsDefine(dimensionsDefine) };
+            return {dimensionsDefine: normalizeDimensionsDefine(dimensionsDefine)};
         }
 
         var dimensionsDetectCount;
@@ -19713,15 +19556,13 @@
                     if (val != null && val !== '-') {
                         if (isString(val)) {
                             startIndex == null && (startIndex = 1);
-                        }
-                        else {
+                        } else {
                             startIndex = 0;
                         }
                     }
                     // 10 is an experience number, avoid long loop.
                 }, seriesLayoutBy, data, 10);
-            }
-            else {
+            } else {
                 startIndex = sourceHeader ? 1 : 0;
             }
 
@@ -19739,14 +19580,12 @@
                     : data[0]
                         ? data[0].length
                         : null;
-        }
-        else if (sourceFormat === SOURCE_FORMAT_OBJECT_ROWS) {
+        } else if (sourceFormat === SOURCE_FORMAT_OBJECT_ROWS) {
             if (!dimensionsDefine) {
                 dimensionsDefine = objectRowsCollectDimensions(data);
                 findPotentialName = true;
             }
-        }
-        else if (sourceFormat === SOURCE_FORMAT_KEYED_COLUMNS) {
+        } else if (sourceFormat === SOURCE_FORMAT_KEYED_COLUMNS) {
             if (!dimensionsDefine) {
                 dimensionsDefine = [];
                 findPotentialName = true;
@@ -19754,12 +19593,10 @@
                     dimensionsDefine.push(key);
                 });
             }
-        }
-        else if (sourceFormat === SOURCE_FORMAT_ORIGINAL) {
+        } else if (sourceFormat === SOURCE_FORMAT_ORIGINAL) {
             var value0 = getDataItemValue(data[0]);
             dimensionsDetectCount = isArray(value0) && value0.length || 1;
-        }
-        else if (sourceFormat === SOURCE_FORMAT_TYPED_ARRAY) {
+        } else if (sourceFormat === SOURCE_FORMAT_TYPED_ARRAY) {
             if (__DEV__) {
                 assert$1(!!dimensionsDefine, 'dimensions must be given if data is TypedArray.');
             }
@@ -19793,7 +19630,7 @@
         }
         var nameMap = createHashMap();
         return map(dimensionsDefine, function (item, index) {
-            item = extend({}, isObject$1(item) ? item : { name: item });
+            item = extend({}, isObject$1(item) ? item : {name: item});
 
             // User can set null in dimensions.
             // We dont auto specify name, othewise a given name may
@@ -19815,9 +19652,8 @@
 
             var exist = nameMap.get(item.name);
             if (!exist) {
-                nameMap.set(item.name, { count: 1 });
-            }
-            else {
+                nameMap.set(item.name, {count: 1});
+            } else {
                 item.name += '-' + exist.count++;
             }
 
@@ -19831,8 +19667,7 @@
             for (var i = 0; i < data.length && i < maxLoop; i++) {
                 cb(data[i] ? data[i][0] : null, i);
             }
-        }
-        else {
+        } else {
             var value0 = data[0] || [];
             for (var i = 0; i < value0.length && i < maxLoop; i++) {
                 cb(value0[i], i);
@@ -19843,7 +19678,8 @@
     function objectRowsCollectDimensions(data) {
         var firstIndex = 0;
         var obj;
-        while (firstIndex < data.length && !(obj = data[firstIndex++])) { } // jshint ignore: line
+        while (firstIndex < data.length && !(obj = data[firstIndex++])) {
+        } // jshint ignore: line
         if (obj) {
             var dimensions = [];
             each$1(obj, function (value, key) {
@@ -19884,7 +19720,7 @@
             var datasetMap = inner$3(ecModel).datasetMap;
             var key = datasetModel.uid + '_' + seriesLayoutBy;
             var datasetRecord = datasetMap.get(key)
-                || datasetMap.set(key, { categoryWayDim: 1, valueWayDim: 0 });
+                || datasetMap.set(key, {categoryWayDim: 1, valueWayDim: 0});
 
             // TODO
             // Auto detect first time axis and do arrangement.
@@ -19920,8 +19756,8 @@
                 }
             });
         }
-        // Do not make a complex rule! Hard to code maintain and not necessary.
-        // ??? TODO refactor: provide by series itself.
+            // Do not make a complex rule! Hard to code maintain and not necessary.
+            // ??? TODO refactor: provide by series itself.
         // [{name: ..., value: ...}, ...] like:
         else if (nSeriesMap.get(seriesType) != null) {
             // Find the first not ordinal. (5 is an experience value)
@@ -20018,8 +19854,7 @@
                         return result;
                     }
                 }
-            }
-            else {
+            } else {
                 for (var i = 0; i < data.length && i < maxLoop; i++) {
                     var row = data[startIndex + i];
                     if (row && (result = detectValue(row[dimIndex])) != null) {
@@ -20027,8 +19862,7 @@
                     }
                 }
             }
-        }
-        else if (sourceFormat === SOURCE_FORMAT_OBJECT_ROWS) {
+        } else if (sourceFormat === SOURCE_FORMAT_OBJECT_ROWS) {
             if (!dimName) {
                 return;
             }
@@ -20038,8 +19872,7 @@
                     return result;
                 }
             }
-        }
-        else if (sourceFormat === SOURCE_FORMAT_KEYED_COLUMNS) {
+        } else if (sourceFormat === SOURCE_FORMAT_KEYED_COLUMNS) {
             if (!dimName) {
                 return;
             }
@@ -20052,8 +19885,7 @@
                     return result;
                 }
             }
-        }
-        else if (sourceFormat === SOURCE_FORMAT_ORIGINAL) {
+        } else if (sourceFormat === SOURCE_FORMAT_ORIGINAL) {
             for (var i = 0; i < data.length && i < maxLoop; i++) {
                 var item = data[i];
                 var val = getDataItemValue(item);
@@ -20071,8 +19903,7 @@
             // `isFinit('')` get `true`.
             if (val != null && isFinite(val) && val !== '') {
                 return false;
-            }
-            else if (isString(val) && val !== '-') {
+            } else if (isString(val) && val !== '-') {
                 return true;
             }
         }
@@ -20174,8 +20005,7 @@
 
                 if (!this.option || type === 'recreate') {
                     initBase.call(this, baseOption);
-                }
-                else {
+                } else {
                     this.restoreData();
                     this.mergeOption(baseOption);
                 }
@@ -20225,8 +20055,7 @@
                     option[mainType] = option[mainType] == null
                         ? clone(componentOption)
                         : merge(option[mainType], componentOption, true);
-                }
-                else if (mainType) {
+                } else if (mainType) {
                     newCptTypes.push(mainType);
                 }
             });
@@ -20276,8 +20105,7 @@
                     if (!newCptOption) {
                         componentModel.mergeOption({}, this);
                         componentModel.optionUpdated({}, false);
-                    }
-                    else {
+                    } else {
                         var ComponentModelClass = ComponentModel.getClass(
                             mainType, resultItem.keyInfo.subType, true
                         );
@@ -20287,8 +20115,7 @@
                             // componentModel.settingTask && componentModel.settingTask.dirty();
                             componentModel.mergeOption(newCptOption, this);
                             componentModel.optionUpdated(newCptOption, false);
-                        }
-                        else {
+                        } else {
                             // PENDING Global as parent ?
                             var extraOpt = extend(
                                 {
@@ -20408,22 +20235,19 @@
                 }), function (val) {
                     return !!val;
                 });
-            }
-            else if (id != null) {
+            } else if (id != null) {
                 var isIdArray = isArray(id);
                 result = filter(cpts, function (cpt) {
                     return (isIdArray && indexOf(id, cpt.id) >= 0)
                         || (!isIdArray && cpt.id === id);
                 });
-            }
-            else if (name != null) {
+            } else if (name != null) {
                 var isNameArray = isArray(name);
                 result = filter(cpts, function (cpt) {
                     return (isNameArray && indexOf(name, cpt.name) >= 0)
                         || (!isNameArray && cpt.name === name);
                 });
-            }
-            else {
+            } else {
                 // Return all components with mainType
                 result = cpts.slice();
             }
@@ -20530,11 +20354,9 @@
                         cb.call(context, componentType, component, index);
                     });
                 });
-            }
-            else if (isString(mainType)) {
+            } else if (isString(mainType)) {
                 each$1(componentsMap.get(mainType), cb, context);
-            }
-            else if (isObject$1(mainType)) {
+            } else if (isObject$1(mainType)) {
                 var queryResult = this.findComponents(mainType);
                 each$1(queryResult, cb, context);
             }
@@ -20684,7 +20506,7 @@
                 function (componentType, dependencies) {
                     each$1(componentsMap.get(componentType), function (component) {
                         (componentType !== 'series' || !isNotTargetSeries(component, payload))
-                            && component.restoreData();
+                        && component.restoreData();
                     });
                 }
             );
@@ -20721,8 +20543,7 @@
                     option[name] = !option[name]
                         ? clone(themeItem)
                         : merge(option[name], themeItem, false);
-                }
-                else {
+                } else {
                     if (option[name] == null) {
                         option[name] = themeItem;
                     }
@@ -20745,7 +20566,7 @@
          * @type {Object.<string, Array.<module:echarts/model/Model>>}
          * @private
          */
-        this._componentsMap = createHashMap({ series: [] });
+        this._componentsMap = createHashMap({series: []});
 
         /**
          * Mapping between filtered series list and raw series list.
@@ -20861,6 +20682,7 @@
         'on', 'off', 'getDataURL', 'getConnectedDataURL', 'getModel', 'getOption',
         'getViewOfComponentModel', 'getViewOfSeriesModel'
     ];
+
     // And `getCoordinateSystems` and `getComponentByElement` will be injected in echarts.js
 
     function ExtensionAPI(chartInstance) {
@@ -21122,8 +20944,7 @@
                 if (newParsedOption.mediaDefault) {
                     oldOptionBackup.mediaDefault = newParsedOption.mediaDefault;
                 }
-            }
-            else {
+            } else {
                 this._optionBackup = newParsedOption;
             }
         },
@@ -21248,8 +21069,7 @@
                 if (singleMedia && singleMedia.option) {
                     if (singleMedia.query) {
                         mediaList.push(singleMedia);
-                    }
-                    else if (!mediaDefault) {
+                    } else if (!mediaDefault) {
                         // Use the first media default.
                         mediaDefault = singleMedia;
                     }
@@ -21270,9 +21090,9 @@
 
         // Preprocess.
         each$4([baseOption].concat(timelineOptions)
-            .concat(map(mediaList, function (media) {
-                return media.option;
-            })),
+                .concat(map(mediaList, function (media) {
+                    return media.option;
+                })),
             function (option) {
                 each$4(optionPreprocessorFuncs, function (preProcess) {
                     preProcess(option, isNew);
@@ -21323,11 +21143,9 @@
     function compare(real, expect, operator) {
         if (operator === 'min') {
             return real >= expect;
-        }
-        else if (operator === 'max') {
+        } else if (operator === 'max') {
             return real <= expect;
-        }
-        else { // Equals
+        } else { // Equals
             return real === expect;
         }
     }
@@ -21370,8 +21188,7 @@
 
             if (!ComponentModel.hasClass(mainType)) {
                 oldOption[mainType] = merge$1(oldCptOpt, newCptOpt, true);
-            }
-            else {
+            } else {
                 newCptOpt = normalizeToArray(newCptOpt);
                 oldCptOpt = normalizeToArray(oldCptOpt);
 
@@ -21426,8 +21243,7 @@
                 opt[styleName] = opt[styleName] || {};
                 if (!opt[styleName].normal) {
                     opt[styleName].normal = normalItemStyleOpt[styleName];
-                }
-                else {
+                } else {
                     merge(opt[styleName].normal, normalItemStyleOpt[styleName]);
                 }
                 normalItemStyleOpt[styleName] = null;
@@ -21436,8 +21252,7 @@
                 opt[styleName] = opt[styleName] || {};
                 if (!opt[styleName].emphasis) {
                     opt[styleName].emphasis = emphasisItemStyleOpt[styleName];
-                }
-                else {
+                } else {
                     merge(opt[styleName].emphasis, emphasisItemStyleOpt[styleName]);
                 }
                 emphasisItemStyleOpt[styleName] = null;
@@ -21455,8 +21270,7 @@
                 if (useExtend) {
                     opt[optType].normal = opt[optType].emphasis = null;
                     defaults(opt[optType], normalOpt);
-                }
-                else {
+                } else {
                     opt[optType] = normalOpt;
                 }
             }
@@ -21466,6 +21280,7 @@
             }
         }
     }
+
     function removeEC3NormalStatus(opt) {
         convertNormalEmphasis(opt, 'itemStyle');
         convertNormalEmphasis(opt, 'lineStyle');
@@ -21578,8 +21393,7 @@
                 if (isArray(mlData[i])) {
                     compatEC3CommonStyles(mlData[i][0]);
                     compatEC3CommonStyles(mlData[i][1]);
-                }
-                else {
+                } else {
                     compatEC3CommonStyles(mlData[i]);
                 }
             }
@@ -21590,14 +21404,12 @@
             compatTextStyle(seriesOpt, 'axisLabel');
             compatTextStyle(seriesOpt, 'title');
             compatTextStyle(seriesOpt, 'detail');
-        }
-        else if (seriesOpt.type === 'treemap') {
+        } else if (seriesOpt.type === 'treemap') {
             convertNormalEmphasis(seriesOpt.breadcrumb, 'itemStyle');
             each$1(seriesOpt.levels, function (opt) {
                 removeEC3NormalStatus(opt);
             });
-        }
-        else if (seriesOpt.type === 'tree') {
+        } else if (seriesOpt.type === 'tree') {
             removeEC3NormalStatus(seriesOpt.leaves);
         }
         // sunburst starts from ec4, so it does not need to compat levels.
@@ -21770,7 +21582,7 @@
             if (seriesType === 'gauge') {
                 var pointerColor = get(seriesOpt, 'pointer.color');
                 pointerColor != null
-                    && set$1(seriesOpt, 'itemStyle.normal.color', pointerColor);
+                && set$1(seriesOpt, 'itemStyle.normal.color', pointerColor);
             }
 
             compatLayoutProperties(seriesOpt);
@@ -21880,8 +21692,7 @@
 
                 if (isStackedByIndex) {
                     stackedDataRawIndex = targetData.getRawIndex(dataIndex);
-                }
-                else {
+                } else {
                     byValue = targetData.get(targetStackInfo.stackedByDimension, dataIndex);
                 }
 
@@ -21974,7 +21785,7 @@
             sourceFormat === SOURCE_FORMAT_ARRAY_ROWS
                 ? sourceFormat + '_' + source.seriesLayoutBy
                 : sourceFormat
-        ];
+            ];
 
         if (__DEV__) {
             assert$1(methods, 'Invalide sourceFormat: ' + sourceFormat);
@@ -22106,15 +21917,16 @@
     function countSimply() {
         return this._data.length;
     }
+
     function getItemSimply(idx) {
         return this._data[idx];
     }
+
     function appendDataSimply(newData) {
         for (var i = 0; i < newData.length; i++) {
             this._data.push(newData[i]);
         }
     }
-
 
 
     var rawValueGetters = {
@@ -22378,8 +22190,7 @@
             if (typeof formatter === 'function') {
                 params.status = status;
                 return formatter(params);
-            }
-            else if (typeof formatter === 'string') {
+            } else if (typeof formatter === 'string') {
                 var str = formatTpl(formatter, params);
 
                 // Support 'aaa{@[3]}bbb{@product}ccc'.
@@ -22552,8 +22363,7 @@
                     for (var i = 0; i < progress.length; i++) {
                         doProgress(this, progress[i], start, end, modBy, modDataCount);
                     }
-                }
-                else {
+                } else {
                     doProgress(this, progress, start, end, modBy, modDataCount);
                 }
             }
@@ -22570,8 +22380,7 @@
             }
 
             this._outputDueEnd = outputDueEnd;
-        }
-        else {
+        } else {
             // (1) Some overall task has no progress.
             // (2) Stubs, that its host overall task do not let it has progress, has no progress.
             // This should always be performed so it can be passed to downstream.
@@ -22833,7 +22642,7 @@
                 count: dataTaskCount,
                 reset: dataTaskReset
             });
-            this.dataTask.context = { model: this };
+            this.dataTask.context = {model: this};
 
             this.mergeDefaultAndTheme(option, ecModel);
 
@@ -22944,7 +22753,8 @@
          * Init a data structure from data related option in series
          * Must be overwritten
          */
-        getInitialData: function () { },
+        getInitialData: function () {
+        },
 
         /**
          * Append data to list
@@ -22972,8 +22782,7 @@
             if (task) {
                 var data = task.context.data;
                 return dataType == null ? data : data.getLinkedData(dataType);
-            }
-            else {
+            } else {
                 // When series is not alive (that may happen when click toolbox
                 // restore or setOption with not merge mode), series data may
                 // be still need to judge animation or something when graphic
@@ -23070,11 +22879,11 @@
                         return;
                     }
                     var dimType = dimInfo.type;
-                    var dimHead = getTooltipMarker({ color: color, type: 'subItem' });
+                    var dimHead = getTooltipMarker({color: color, type: 'subItem'});
                     var valStr = (vertially
-                        ? dimHead + encodeHTML(dimInfo.displayName || '-') + ': '
-                        : ''
-                    )
+                                ? dimHead + encodeHTML(dimInfo.displayName || '-') + ': '
+                                : ''
+                        )
                         // FIXME should not format time for raw data?
                         + encodeHTML(dimType === 'ordinal'
                             ? val + ''
@@ -23126,8 +22935,8 @@
             return !multipleSeries
                 ? seriesName + colorEl
                 + (name
-                    ? encodeHTML(name) + ': ' + formattedValue
-                    : formattedValue
+                        ? encodeHTML(name) + ': ' + formattedValue
+                        : formattedValue
                 )
                 : colorEl + seriesName + formattedValue;
         },
@@ -23342,11 +23151,14 @@
 
         constructor: Component,
 
-        init: function (ecModel, api) { },
+        init: function (ecModel, api) {
+        },
 
-        render: function (componentModel, ecModel, api, payload) { },
+        render: function (componentModel, ecModel, api, payload) {
+        },
 
-        dispose: function () { }
+        dispose: function () {
+        }
 
     };
 
@@ -23355,13 +23167,13 @@
         = componentProto.updateLayout
         = componentProto.updateVisual
         = function (seriesModel, ecModel, api, payload) {
-            // Do nothing;
-        };
+        // Do nothing;
+    };
     // Enable Component.extend.
     enableClassExtend(Component);
 
     // Enable capability of registerClass, getClass, hasClass, registerSubTypeDefaulter and so on.
-    enableClassManagement(Component, { registerWhenExtend: true });
+    enableClassManagement(Component, {registerWhenExtend: true});
 
     /*
     * Licensed to the Apache Software Foundation (ASF) under one
@@ -23442,7 +23254,7 @@
             plan: renderTaskPlan,
             reset: renderTaskReset
         });
-        this.renderTask.context = { view: this };
+        this.renderTask.context = {view: this};
     }
 
     Chart.prototype = {
@@ -23454,7 +23266,8 @@
          * @param  {module:echarts/model/Global} ecModel
          * @param  {module:echarts/ExtensionAPI} api
          */
-        init: function (ecModel, api) { },
+        init: function (ecModel, api) {
+        },
 
         /**
          * Render the chart.
@@ -23463,7 +23276,8 @@
          * @param  {module:echarts/ExtensionAPI} api
          * @param  {Object} payload
          */
-        render: function (seriesModel, ecModel, api, payload) { },
+        render: function (seriesModel, ecModel, api, payload) {
+        },
 
         /**
          * Highlight series or specified data item.
@@ -23501,7 +23315,8 @@
          * @param  {module:echarts/model/Global} ecModel
          * @param  {module:echarts/ExtensionAPI} api
          */
-        dispose: function () { },
+        dispose: function () {
+        },
 
         /**
          * Rendering preparation in progressive mode.
@@ -23546,8 +23361,8 @@
         = chartProto.updateLayout
         = chartProto.updateVisual
         = function (seriesModel, ecModel, api, payload) {
-            this.render(seriesModel, ecModel, api, payload);
-        };
+        this.render(seriesModel, ecModel, api, payload);
+    };
 
     /**
      * Set state of single element
@@ -23564,6 +23379,7 @@
             }
         }
     }
+
     /**
      * @param  {module:echarts/data/List} data
      * @param  {Object} payload
@@ -23576,8 +23392,7 @@
             each$1(normalizeToArray(dataIndex), function (dataIdx) {
                 elSetState(data.getItemGraphicEl(dataIdx), state);
             });
-        }
-        else {
+        } else {
             data.eachItemGraphicEl(function (el) {
                 elSetState(el, state);
             });
@@ -23588,7 +23403,7 @@
     enableClassExtend(Chart, ['dispose']);
 
     // Add capability of registerClass, getClass, hasClass, registerSubTypeDefaulter and so on.
-    enableClassManagement(Chart, { registerWhenExtend: true });
+    enableClassManagement(Chart, {registerWhenExtend: true});
 
     Chart.markUpdateMethod = function (payload, methodName) {
         inner$5(payload).updateMethod = methodName;
@@ -23718,12 +23533,10 @@
             // state being "rolled-back".
             if (thisDebounce) {
                 timer = setTimeout(exec, thisDelay);
-            }
-            else {
+            } else {
                 if (diff >= 0) {
                     exec();
-                }
-                else {
+                } else {
                     timer = setTimeout(exec, -diff);
                 }
             }
@@ -23873,7 +23686,7 @@
                     }
                 };
 
-                return { dataEach: data.hasItemOption ? dataEach : null };
+                return {dataEach: data.hasItemOption ? dataEach : null};
             }
         }
     };
@@ -24019,8 +23832,7 @@
         var ariaModel = ecModel.getModel('aria');
         if (!ariaModel.get('show')) {
             return;
-        }
-        else if (ariaModel.get('description')) {
+        } else if (ariaModel.get('description')) {
             dom.setAttribute('aria-label', ariaModel.get('description'));
             return;
         }
@@ -24038,15 +23850,13 @@
         if (seriesCnt < 1) {
             // No series, no aria label
             return;
-        }
-        else {
+        } else {
             var title = getTitle();
             if (title) {
                 ariaLabel = replace(getConfig('general.withTitle'), {
                     title: title
                 });
-            }
-            else {
+            } else {
                 ariaLabel = getConfig('general.withoutTitle');
             }
 
@@ -24054,7 +23864,7 @@
             var prefix = seriesCnt > 1
                 ? 'series.multiple.prefix'
                 : 'series.single.prefix';
-            ariaLabel += replace(getConfig(prefix), { seriesCount: seriesCnt });
+            ariaLabel += replace(getConfig(prefix), {seriesCount: seriesCnt});
 
             ecModel.eachSeries(function (seriesModel, idx) {
                 if (idx < displaySeriesCnt) {
@@ -24080,8 +23890,7 @@
                         seriesLabel += replace(getConfig('data.partialData'), {
                             displayCnt: maxDataCnt
                         });
-                    }
-                    else {
+                    } else {
                         seriesLabel += getConfig('data.allData');
                     }
 
@@ -24104,7 +23913,7 @@
                         }
                     }
                     seriesLabel += dataLabels
-                        .join(getConfig('data.separator.middle'))
+                            .join(getConfig('data.separator.middle'))
                         + getConfig('data.separator.end');
 
                     seriesLabels.push(seriesLabel);
@@ -24112,7 +23921,7 @@
             });
 
             ariaLabel += seriesLabels
-                .join(getConfig('series.multiple.separator.middle'))
+                    .join(getConfig('series.multiple.separator.middle'))
                 + getConfig('series.multiple.separator.end');
 
             dom.setAttribute('aria-label', ariaLabel);
@@ -24142,8 +23951,7 @@
                     result = result[pathArr[i]];
                 }
                 return result;
-            }
-            else {
+            } else {
                 return userConfig;
             }
         }
@@ -24386,7 +24194,7 @@
         var modDataCount = pCtx && pCtx.modDataCount;
         var modBy = modDataCount != null ? Math.ceil(modDataCount / step) : null;
 
-        return { step: step, modBy: modBy, modDataCount: modDataCount };
+        return {step: step, modBy: modBy, modDataCount: modDataCount};
     };
 
     proto.getPipeline = function (pipelineId) {
@@ -24480,7 +24288,7 @@
 
     proto.performDataProcessorTasks = function (ecModel, payload) {
         // If we do not use `block` here, it should be considered when to update modes.
-        performStageTasks(this, this._dataProcessorHandlers, ecModel, payload, { block: true });
+        performStageTasks(this, this._dataProcessorHandlers, ecModel, payload, {block: true});
     };
 
     // opt
@@ -24523,8 +24331,7 @@
                     stub.perform(performArgs);
                 });
                 unfinished |= overallTask.perform(performArgs);
-            }
-            else if (seriesTaskMap) {
+            } else if (seriesTaskMap) {
                 seriesTaskMap.each(function (task, pipelineId) {
                     if (needSetDirty(opt, task)) {
                         task.dirty();
@@ -24586,11 +24393,9 @@
         // it works but it may cause other irrelevant charts blocked.
         if (stageHandler.createOnAllSeries) {
             ecModel.eachRawSeries(create);
-        }
-        else if (seriesType) {
+        } else if (seriesType) {
             ecModel.eachRawSeriesByType(seriesType, create);
-        }
-        else if (getTargetSeries) {
+        } else if (getTargetSeries) {
             getTargetSeries(ecModel, api).each(create);
         }
 
@@ -24630,7 +24435,7 @@
     function createOverallStageTask(scheduler, stageHandler, stageHandlerRecord, ecModel, api) {
         var overallTask = stageHandlerRecord.overallTask = stageHandlerRecord.overallTask
             // For overall task, the function only be called on reset stage.
-            || createTask({ reset: overallTaskReset });
+            || createTask({reset: overallTaskReset});
 
         overallTask.context = {
             ecModel: ecModel,
@@ -24653,13 +24458,12 @@
         // we set the pipeline block.
         if (seriesType) {
             ecModel.eachRawSeriesByType(seriesType, createStub);
-        }
-        else if (getTargetSeries) {
+        } else if (getTargetSeries) {
             getTargetSeries(ecModel, api).each(createStub);
         }
-        // Otherwise, (usually it is legancy case), the overall task will only be
-        // executed when upstream dirty. Otherwise the progressive rendering of all
-        // pipelines will be disabled unexpectedly. But it still needs stubs to receive
+            // Otherwise, (usually it is legancy case), the overall task will only be
+            // executed when upstream dirty. Otherwise the progressive rendering of all
+            // pipelines will be disabled unexpectedly. But it still needs stubs to receive
         // dirty info from upsteam.
         else {
             overallProgress = false;
@@ -24671,7 +24475,7 @@
             var stub = agentStubMap.get(pipelineId);
             if (!stub) {
                 stub = agentStubMap.set(pipelineId, createTask(
-                    { reset: stubReset, onDirty: stubOnDirty }
+                    {reset: stubReset, onDirty: stubOnDirty}
                 ));
                 // When the result of `getTargetSeries` changed, the overallTask
                 // should be set as dirty and re-performed.
@@ -24751,8 +24555,7 @@
                 for (var i = params.start; i < params.end; i++) {
                     resetDefine.dataEach(data, i);
                 }
-            }
-            else if (resetDefine && resetDefine.progress) {
+            } else if (resetDefine && resetDefine.progress) {
                 resetDefine.progress(params, data);
             }
         };
@@ -24787,7 +24590,6 @@
     };
 
 
-
     /**
      * Only some legacy stage handlers (usually in echarts extensions) are pure function.
      * To ensure that they can work normally, they should work in block mode, that is,
@@ -24800,8 +24602,7 @@
         try {
             // Assume there is no async when calling `eachSeriesByType`.
             legacyFunc(ecModelMock, apiMock);
-        }
-        catch (e) {
+        } catch (e) {
         }
         return seriesType;
     }
@@ -25151,6 +24952,7 @@
     function MessageCenter() {
         Eventful.call(this);
     }
+
     MessageCenter.prototype.on = createRegisterEventWithLowercaseName('on');
     MessageCenter.prototype.off = createRegisterEventWithLowercaseName('off');
     MessageCenter.prototype.one = createRegisterEventWithLowercaseName('one');
@@ -25257,6 +25059,7 @@
         function prioritySortFunc(a, b) {
             return a.__prio - b.__prio;
         }
+
         sort(visualFuncs, prioritySortFunc);
         sort(dataProcessorFuncs, prioritySortFunc);
 
@@ -25410,10 +25213,9 @@
         this._model.setOption(option, optionPreprocessorFuncs);
 
         if (lazyUpdate) {
-            this[OPTION_UPDATED] = { silent: silent };
+            this[OPTION_UPDATED] = {silent: silent};
             this[IN_MAIN_PROCESS] = false;
-        }
-        else {
+        } else {
             prepare(this);
 
             updateMethods.update.call(this);
@@ -25621,8 +25423,7 @@
             zr.refreshImmediately();
 
             return targetCanvas.toDataURL('image/' + (opts && opts.type || 'png'));
-        }
-        else {
+        } else {
             return this.getDataURL(opts);
         }
     };
@@ -25718,22 +25519,19 @@
                 var coordSys = model.coordinateSystem;
                 if (coordSys && coordSys.containPoint) {
                     result |= !!coordSys.containPoint(value);
-                }
-                else if (key === 'seriesModels') {
+                } else if (key === 'seriesModels') {
                     var view = this._chartsMap[model.__viewId];
                     if (view && view.containPoint) {
                         result |= view.containPoint(value, model);
-                    }
-                    else {
+                    } else {
                         if (__DEV__) {
                             console.warn(key + ': ' + (view
-                                ? 'The found component do not support containPoint.'
-                                : 'No view mapping to the found component.'
+                                    ? 'The found component do not support containPoint.'
+                                    : 'No view mapping to the found component.'
                             ));
                         }
                     }
-                }
-                else {
+                } else {
                     if (__DEV__) {
                         console.warn(key + ': containPoint is not supported');
                     }
@@ -25762,7 +25560,7 @@
     echartsProto.getVisual = function (finder, visualType) {
         var ecModel = this._model;
 
-        finder = parseFinder(ecModel, finder, { defaultMainType: 'series' });
+        finder = parseFinder(ecModel, finder, {defaultMainType: 'series'});
 
         var seriesModel = finder.seriesModel;
 
@@ -25868,8 +25666,7 @@
                 if (colorArr[3] === 0) {
                     backgroundColor = 'transparent';
                 }
-            }
-            else {
+            } else {
                 zr.setBackgroundColor(backgroundColor);
             }
 
@@ -25901,8 +25698,7 @@
                     if (componentView.updateTransform) {
                         var result = componentView.updateTransform(componentModel, ecModel, api, payload);
                         result && result.update && componentDirtyList.push(componentView);
-                    }
-                    else {
+                    } else {
                         componentDirtyList.push(componentView);
                     }
                 }
@@ -25914,8 +25710,7 @@
                 if (chartView.updateTransform) {
                     var result = chartView.updateTransform(seriesModel, ecModel, api, payload);
                     result && result.update && seriesDirtyMap.set(seriesModel.uid, 1);
-                }
-                else {
+                } else {
                     seriesDirtyMap.set(seriesModel.uid, 1);
                 }
             });
@@ -25924,7 +25719,7 @@
             // Keep pipe to the exist pipeline because it depends on the render task of the full pipeline.
             // this._scheduler.performVisualTasks(ecModel, payload, 'layout', true);
             this._scheduler.performVisualTasks(
-                ecModel, payload, { setDirty: true, dirtyMap: seriesDirtyMap }
+                ecModel, payload, {setDirty: true, dirtyMap: seriesDirtyMap}
             );
 
             // Currently, not call render of components. Geo render cost a lot.
@@ -25951,7 +25746,7 @@
             clearColorPalette(ecModel);
 
             // Keep pipe to the exist pipeline because it depends on the render task of the full pipeline.
-            this._scheduler.performVisualTasks(ecModel, payload, { setDirty: true });
+            this._scheduler.performVisualTasks(ecModel, payload, {setDirty: true});
 
             render(this, this._model, this._api, payload);
 
@@ -26045,7 +25840,7 @@
         query[mainType + 'Index'] = payload[mainType + 'Index'];
         query[mainType + 'Name'] = payload[mainType + 'Name'];
 
-        var condition = { mainType: mainType, query: query };
+        var condition = {mainType: mainType, query: query};
         subType && (condition.subType = subType); // subType may be '' by parseClassType;
 
         var excludeSeriesId = payload.excludeSeriesId;
@@ -26058,7 +25853,7 @@
             if (!excludeSeriesId || excludeSeriesId.get(model.id) == null) {
                 callView(ecIns[
                     mainType === 'series' ? '_chartsMap' : '_componentsMap'
-                ][model.__viewId]);
+                    ][model.__viewId]);
             }
         }, ecIns);
 
@@ -26174,7 +25969,7 @@
      */
     echartsProto.dispatchAction = function (payload, opt) {
         if (!isObject(opt)) {
-            opt = { silent: !!opt };
+            opt = {silent: !!opt};
         }
 
         if (!actions[payload.type]) {
@@ -26196,8 +25991,7 @@
 
         if (opt.flush) {
             this._zr.flush(true);
-        }
-        else if (opt.flush !== false && env$1.browser.weChat) {
+        } else if (opt.flush !== false && env$1.browser.weChat) {
             // In WeChat embeded browser, `requestAnimationFrame` and `setInterval`
             // hang when sliding page (on touch event), which cause that zr does not
             // refresh util user interaction finished, which is not expected.
@@ -26252,8 +26046,7 @@
             if (isHighDown) {
                 // method, payload, mainType, subType
                 updateDirectly(this, updateMethod, batchItem, 'series');
-            }
-            else if (cptType) {
+            } else if (cptType) {
                 updateDirectly(this, updateMethod, batchItem, cptType.main, cptType.sub);
             }
         }, this);
@@ -26265,8 +26058,7 @@
                 prepare(this);
                 updateMethods.update.call(this, payload);
                 this[OPTION_UPDATED] = false;
-            }
-            else {
+            } else {
                 updateMethods[updateMethod].call(this, payload);
             }
         }
@@ -26278,8 +26070,7 @@
                 escapeConnect: escapeConnect,
                 batch: eventObjBatch
             };
-        }
-        else {
+        } else {
             eventObj = eventObjBatch[0];
         }
 
@@ -26432,8 +26223,7 @@
                 viewList.splice(i, 1);
                 delete viewMap[view.__id];
                 view.__id = view.group.__ecComponentInfo = null;
-            }
-            else {
+            } else {
                 i++;
             }
         }
@@ -26557,8 +26347,7 @@
                 // no e.target when 'globalout'.
                 if (eveName === 'globalout') {
                     params = {};
-                }
-                else if (el && el.dataIndex != null) {
+                } else if (el && el.dataIndex != null) {
                     var dataModel = el.dataModel || ecModel.getSeriesByIndex(el.seriesIndex);
                     params = dataModel && dataModel.getDataParams(el.dataIndex, el.dataType) || {};
                 }
@@ -26594,7 +26383,7 @@
      * Clear
      */
     echartsProto.clear = function () {
-        this.setOption({ series: [] }, true);
+        this.setOption({series: []}, true);
     };
 
     /**
@@ -26909,8 +26698,7 @@
     function dispose(chart) {
         if (typeof chart === 'string') {
             chart = instances[chart];
-        }
-        else if (!(chart instanceof ECharts)) {
+        } else if (!(chart instanceof ECharts)) {
             // Try to treat as dom
             chart = getInstanceByDom(chart);
         }
@@ -27001,7 +26789,7 @@
         assert(ACTION_REG.test(actionType) && ACTION_REG.test(eventName));
 
         if (!actions[actionType]) {
-            actions[actionType] = { action: action, actionInfo: actionInfo };
+            actions[actionType] = {action: action, actionInfo: actionInfo};
         }
         eventActionMap[eventName] = actionType;
     }
@@ -27319,13 +27107,11 @@
                     if (len) {
                         len === 1 && (newDataIndexMap[key] = null);
                         idx = idx.unshift();
-                    }
-                    else {
+                    } else {
                         newDataIndexMap[key] = null;
                     }
                     this._update && this._update(idx, i);
-                }
-                else {
+                } else {
                     this._remove && this._remove(i);
                 }
             }
@@ -27340,8 +27126,7 @@
                     // idx can never be empty array here. see 'set null' logic above.
                     if (!idx.length) {
                         this._add && this._add(idx);
-                    }
-                    else {
+                    } else {
                         for (var j = 0, len = idx.length; j < len; j++) {
                             this._add && this._add(idx[j]);
                         }
@@ -27359,8 +27144,7 @@
             if (existence == null) {
                 keyArr.push(key);
                 map[key] = i;
-            }
-            else {
+            } else {
                 if (!existence.length) {
                     map[key] = existence = [existence];
                 }
@@ -27469,8 +27253,7 @@
         var encodeTooltip = encode.tooltip;
         if (encodeTooltip && encodeTooltip.length) {
             defaultedTooltip = encodeTooltip.slice();
-        }
-        else if (!defaultedTooltip.length) {
+        } else if (!defaultedTooltip.length) {
             defaultedTooltip = defaultedLabel.slice();
         }
 
@@ -27592,9 +27375,6 @@
     }
 
 
-
-
-
     /**
      * @constructor
      * @alias module:echarts/data/List
@@ -27621,7 +27401,7 @@
             var dimensionInfo = dimensions[i];
 
             if (isString(dimensionInfo)) {
-                dimensionInfo = { name: dimensionInfo };
+                dimensionInfo = {name: dimensionInfo};
             }
 
             var dimensionName = dimensionInfo.name;
@@ -27912,7 +27692,7 @@
          */
         this.defaultDimValueGetter = defaultDimValueGetters[
             this._rawData.getSource().sourceFormat
-        ];
+            ];
 
         // Default dim value getter
         this._dimValueGetter = dimValueGetter = dimValueGetter
@@ -28046,8 +27826,7 @@
                         // There is no other place to persistent dataItem.name,
                         // so save it to nameList.
                         nameList[idx] = name = dataItem.name;
-                    }
-                    else if (nameDimIdx != null) {
+                    } else if (nameDimIdx != null) {
                         var nameDim = dimensions[nameDimIdx];
                         var nameDimChunk = storage[nameDim][chunkIndex];
                         if (nameDimChunk) {
@@ -28153,12 +27932,10 @@
                 for (var i = 0; i < thisCount; i++) {
                     newIndices[i] = indices[i];
                 }
-            }
-            else {
+            } else {
                 newIndices = new Ctor(indices.buffer, 0, thisCount);
             }
-        }
-        else {
+        } else {
             var Ctor = getIndicesCtor(this);
             var newIndices = new Ctor(this.count());
             for (var i = 0; i < newIndices.length; i++) {
@@ -28518,11 +28295,9 @@
             var mid = (left + right) / 2 | 0;
             if (indices[mid] < rawIndex) {
                 left = mid + 1;
-            }
-            else if (indices[mid] > rawIndex) {
+            } else if (indices[mid] > rawIndex) {
                 right = mid - 1;
-            }
-            else {
+            } else {
                 return mid;
             }
         }
@@ -28600,8 +28375,7 @@
                 val.push(this.get(dim, idx));
             }
             return val;
-        }
-        else {
+        } else {
             return this._rawData.getItem(this.getRawIndex(idx));
         }
     };
@@ -28764,12 +28538,10 @@
             // Simple optimization
             if (dimSize === 0) {
                 keep = cb.call(context, i);
-            }
-            else if (dimSize === 1) {
+            } else if (dimSize === 1) {
                 var val = this._getFast(dim0, rawIdx);
                 keep = cb.call(context, val, i);
-            }
-            else {
+            } else {
                 for (var k = 0; k < dimSize; k++) {
                     value[k] = this._getFast(dim0, rawIdx);
                 }
@@ -28856,8 +28628,7 @@
                     }
                 }
                 quickFinished = true;
-            }
-            else if (dimSize === 2) {
+            } else if (dimSize === 2) {
                 var dimStorage = this._storage[dim0];
                 var dimStorage2 = this._storage[dimensions[1]];
                 var min2 = range[dimensions[1]][0];
@@ -28871,8 +28642,8 @@
                         var val2 = chunkStorage2[i];
                         // Do not filter NaN, see comment above.
                         if ((
-                            (val >= min && val <= max) || isNaN(val)
-                        )
+                                (val >= min && val <= max) || isNaN(val)
+                            )
                             && (
                                 (val2 >= min2 && val2 <= max2) || isNaN(val2)
                             )
@@ -28897,8 +28668,7 @@
                         newIndices[offset++] = rawIndex;
                     }
                 }
-            }
-            else {
+            } else {
                 for (var i = 0; i < originalCount; i++) {
                     var keep = true;
                     var rawIndex = this.getRawIndex(i);
@@ -28980,8 +28750,7 @@
                     storage[dim] = cloneDimStore(originalStorage[dim]);
                     list._rawExtent[dim] = getInitialExtent();
                     list._extent[dim] = null;
-                }
-                else {
+                } else {
                     // Direct reference for other dimensions
                     storage[dim] = originalStorage[dim];
                 }
@@ -29379,8 +29148,7 @@
         if (this._indices) {
             var Ctor = this._indices.constructor;
             list._indices = new Ctor(this._indices);
-        }
-        else {
+        } else {
             list._indices = null;
         }
         list.getRawIndex = list._indices ? getRawIndexWithIndices : getRawIndexWithoutIndices;
@@ -29502,10 +29270,10 @@
         // Apply user defined dims (`name` and `type`) and init result.
         for (var i = 0; i < dimCount; i++) {
             var dimDefItem = dimsDef[i] = extend(
-                {}, isObject$1(dimsDef[i]) ? dimsDef[i] : { name: dimsDef[i] }
+                {}, isObject$1(dimsDef[i]) ? dimsDef[i] : {name: dimsDef[i]}
             );
             var userDimName = dimDefItem.name;
-            var resultItem = result[i] = { otherDims: {} };
+            var resultItem = result[i] = {otherDims: {}};
             // Name will be applied later for avoiding duplication.
             if (userDimName != null && dataDimNameMap.get(userDimName) == null) {
                 // Only if `series.dimensions` is defined in option
@@ -29542,8 +29310,7 @@
             if (isString(sysDimItem)) {
                 coordDim = sysDimItem;
                 sysDimItem = {};
-            }
-            else {
+            } else {
                 coordDim = sysDimItem.name;
                 var ordinalMeta = sysDimItem.ordinalMeta;
                 sysDimItem.ordinalMeta = null;
@@ -29573,7 +29340,7 @@
                 applyDim(defaults(resultItem, sysDimItem), coordDim, coordDimIndex);
                 if (resultItem.name == null && sysDimItemDimsDef) {
                     var sysDimItemDimsDefItem = sysDimItemDimsDef[coordDimIndex];
-                    !isObject$1(sysDimItemDimsDefItem) && (sysDimItemDimsDefItem = { name: sysDimItemDimsDefItem });
+                    !isObject$1(sysDimItemDimsDefItem) && (sysDimItemDimsDefItem = {name: sysDimItemDimsDefItem});
                     resultItem.name = resultItem.displayName = sysDimItemDimsDefItem.name;
                     resultItem.defaultTooltip = sysDimItemDimsDefItem.defaultTooltip;
                 }
@@ -29585,8 +29352,7 @@
         function applyDim(resultItem, coordDim, coordDimIndex) {
             if (OTHER_DIMENSIONS.get(coordDim) != null) {
                 resultItem.otherDims[coordDim] = coordDimIndex;
-            }
-            else {
+            } else {
                 resultItem.coordDim = coordDim;
                 resultItem.coordDimIndex = coordDimIndex;
                 coordDimNameMap.set(coordDim, true);
@@ -29765,7 +29531,7 @@
 
         each$1(dimensionInfoList, function (dimensionInfo, index) {
             if (isString(dimensionInfo)) {
-                dimensionInfoList[index] = dimensionInfo = { name: dimensionInfo };
+                dimensionInfoList[index] = dimensionInfo = {name: dimensionInfo};
             }
 
             if (mayStack && !dimensionInfo.isExtraCoord) {
@@ -29896,7 +29662,7 @@
 
         if (coordSysDefine) {
             coordSysDimDefs = map(coordSysDefine.coordSysDims, function (dim) {
-                var dimInfo = { name: dim };
+                var dimInfo = {name: dim};
                 var axisModel = coordSysDefine.axisMap.get(dim);
                 if (axisModel) {
                     var axisType = axisModel.get('type');
@@ -30261,8 +30027,7 @@
                 index = this.categories.length;
                 this.categories[index] = category;
                 map$$1.set(category, index);
-            }
-            else {
+            } else {
                 index = NaN;
             }
         }
@@ -30280,8 +30045,7 @@
     function getName(obj) {
         if (isObject$1(obj) && obj.value != null) {
             return obj.value;
-        }
-        else {
+        } else {
             return obj + '';
         }
     }
@@ -30312,7 +30076,7 @@
      * http://en.wikipedia.org/wiki/Level_of_measurement
      */
 
-    // FIXME only one data
+        // FIXME only one data
 
     var scaleProto = Scale.prototype;
 
@@ -30327,7 +30091,7 @@
             // Caution: Should not use instanceof, consider ec-extensions using
             // import approach to get OrdinalMeta class.
             if (!ordinalMeta || isArray(ordinalMeta)) {
-                ordinalMeta = new OrdinalMeta({ categories: ordinalMeta });
+                ordinalMeta = new OrdinalMeta({categories: ordinalMeta});
             }
             this._ordinalMeta = ordinalMeta;
             this._extent = extent || [0, ordinalMeta.categories.length - 1];
@@ -30637,8 +30401,7 @@
 
             if (precision == null) {
                 precision = getPrecisionSafe(data) || 0;
-            }
-            else if (precision === 'auto') {
+            } else if (precision === 'auto') {
                 // Should be more precise then tick.
                 precision = this._intervalPrecision;
             }
@@ -30704,12 +30467,10 @@
                     if (!opt.fixMax) {
                         extent[1] += expandSize / 2;
                         extent[0] -= expandSize / 2;
-                    }
-                    else {
+                    } else {
                         extent[0] -= expandSize / 2;
                     }
-                }
-                else {
+                } else {
                     extent[1] = 1;
                 }
             }
@@ -31064,8 +30825,7 @@
                         width = (width < 0 ? -1 : 1) * barMinHeight;
                     }
                     stacked && (lastStackCoords[stackId][baseValue][sign] += width);
-                }
-                else {
+                } else {
                     var coord = cartesian.dataToPoint([baseValue, value]);
                     x = coord[0] + columnOffset;
                     y = baseCoord;
@@ -31118,7 +30878,7 @@
                 barWidth = LARGE_BAR_MIN_WIDTH;
             }
 
-            return { progress: progress };
+            return {progress: progress};
 
             function progress(params, data) {
                 var largePoints = new LargeArr(params.count * 2);
@@ -31207,8 +30967,7 @@
             var mid = lo + hi >>> 1;
             if (a[mid][1] < x) {
                 lo = mid + 1;
-            }
-            else {
+            } else {
                 hi = mid;
             }
         }
@@ -31369,7 +31128,7 @@
      * @return {module:echarts/scale/Time}
      */
     TimeScale.create = function (model) {
-        return new TimeScale({ useUTC: model.ecModel.get('useUTC') });
+        return new TimeScale({useUTC: model.ecModel.get('useUTC')});
     };
 
     /*
@@ -31396,7 +31155,7 @@
      * @module echarts/scale/Log
      */
 
-    // Use some method of IntervalScale
+        // Use some method of IntervalScale
     var scaleProto$1 = Scale.prototype;
     var intervalScaleProto$1 = IntervalScale.prototype;
 
@@ -31608,8 +31367,7 @@
         var span;
         if (scaleType === 'ordinal') {
             axisDataLen = model.getCategories().length;
-        }
-        else {
+        } else {
             boundaryGap = model.get('boundaryGap');
             if (!isArray(boundaryGap)) {
                 boundaryGap = [boundaryGap || 0, boundaryGap || 0];
@@ -31657,8 +31415,7 @@
 
         if (min === 'dataMin') {
             min = originalExtent[0];
-        }
-        else if (typeof min === 'function') {
+        } else if (typeof min === 'function') {
             min = min({
                 min: originalExtent[0],
                 max: originalExtent[1]
@@ -31667,8 +31424,7 @@
 
         if (max === 'dataMax') {
             max = originalExtent[1];
-        }
-        else if (typeof max === 'function') {
+        } else if (typeof max === 'function') {
             max = max({
                 min: originalExtent[0],
                 max: originalExtent[1]
@@ -31737,7 +31493,7 @@
         // Get bars on current base axis and calculate min and max overflow
         var barsOnCurrentAxis = retrieveColumnLayout(barWidthAndOffset, model.axis);
         if (barsOnCurrentAxis === undefined) {
-            return { min: min, max: max };
+            return {min: min, max: max};
         }
 
         var minOverflow = Infinity;
@@ -31760,7 +31516,7 @@
         max += overflowBuffer * (maxOverflow / totalOverFlow);
         min -= overflowBuffer * (minOverflow / totalOverFlow);
 
-        return { min: min, max: max };
+        return {min: min, max: max};
     }
 
     function niceScaleExtent(scale, model) {
@@ -31852,8 +31608,7 @@
             })(labelFormatter);
             // Consider empty array
             return labelFormatter;
-        }
-        else if (typeof labelFormatter === 'function') {
+        } else if (typeof labelFormatter === 'function') {
             return function (tickValue, idx) {
                 // The original intention of `idx` is "the index of the tick in all ticks".
                 // But the previous implementation of category axis do not consider the
@@ -31866,8 +31621,7 @@
                 }
                 return labelFormatter(getAxisRawValue(axis, tickValue), idx);
             };
-        }
-        else {
+        } else {
             return function (tick) {
                 return axis.scale.getLabel(tick);
             };
@@ -31902,8 +31656,7 @@
         // Optimize for large category data, avoid call `getTicks()`.
         if (isCategory) {
             tickCount = scale.count();
-        }
-        else {
+        } else {
             realNumberScaleTicks = scale.getTicks();
             tickCount = realNumberScaleTicks.length;
         }
@@ -32337,12 +32090,10 @@
             var symbolShape = this.shape;
             if (symbolShape && symbolShape.symbolType === 'line') {
                 symbolStyle.stroke = color;
-            }
-            else if (this.__isEmptyBrush) {
+            } else if (this.__isEmptyBrush) {
                 symbolStyle.stroke = color;
                 symbolStyle.fill = innerColor || '#fff';
-            }
-            else {
+            } else {
                 // FIXME 判断图形默认是填充还是描边，使用 onlyStroke ?
                 symbolStyle.fill && (symbolStyle.fill = color);
                 symbolStyle.stroke && (symbolStyle.stroke = color);
@@ -32377,16 +32128,14 @@
                 new BoundingRect(x, y, w, h),
                 keepAspect ? 'center' : 'cover'
             );
-        }
-        else if (symbolType.indexOf('path://') === 0) {
+        } else if (symbolType.indexOf('path://') === 0) {
             symbolPath = makePath(
                 symbolType.slice(7),
                 {},
                 new BoundingRect(x, y, w, h),
                 keepAspect ? 'center' : 'cover'
             );
-        }
-        else {
+        } else {
             symbolPath = new SymbolClz({
                 shape: {
                     symbolType: symbolType,
@@ -32564,8 +32313,7 @@
                 rect.x + rect.width / 2,
                 rect.y + rect.height / 2
             ];
-        }
-        else {
+        } else {
             cp = [cp[0], cp[1]];
         }
         /**
@@ -32651,8 +32399,7 @@
             var aspect = rect.width / rect.height;
             if (!width) {
                 width = aspect * height;
-            }
-            else if (!height) {
+            } else if (!height) {
                 height = width / aspect;
             }
             var target = new BoundingRect(x, y, width, height);
@@ -32734,8 +32481,7 @@
                         encodeOffsets[c],
                         encodeScale
                     );
-                }
-                else if (geometry.type === 'MultiPolygon') {
+                } else if (geometry.type === 'MultiPolygon') {
                     for (var c2 = 0; c2 < coordinate.length; c2++) {
                         var polygon = coordinate[c2];
                         coordinate[c2] = decodePolygon(
@@ -32879,7 +32625,7 @@
         // Only ordinal scale support tick interval
         return axis.type === 'category'
             ? makeCategoryTicks(axis, tickModel)
-            : { ticks: axis.scale.getTicks() };
+            : {ticks: axis.scale.getTicks()};
     }
 
     function makeCategoryLabels(axis) {
@@ -32898,11 +32644,9 @@
 
         if (!labelModel.get('show') || axis.scale.isBlank()) {
             labels = [];
-        }
-        else if (isFunction$1(optionLabelInterval)) {
+        } else if (isFunction$1(optionLabelInterval)) {
             labels = makeLabelsByCustomizedCategoryInterval(axis, optionLabelInterval);
-        }
-        else {
+        } else {
             numericLabelInterval = optionLabelInterval === 'auto'
                 ? makeAutoCategoryInterval(axis) : optionLabelInterval;
             labels = makeLabelsByNumericCategoryInterval(axis, numericLabelInterval);
@@ -32944,8 +32688,7 @@
                     ticks = map(labelsResult.labels, function (labelItem) {
                         return labelItem.tickValue;
                     });
-                }
-                else {
+                } else {
                     numericTickInterval = makeAutoCategoryInterval(axis, true);
                 }
             }
@@ -32991,7 +32734,7 @@
     }
 
     function listCacheSet(cache, key, value) {
-        cache.push({ key: key, value: value });
+        cache.push({key: key, value: value});
         return value;
     }
 
@@ -33088,7 +32831,7 @@
         ) {
             interval = lastAutoInterval;
         }
-        // Only update cache if cache not used, otherwise the
+            // Only update cache if cache not used, otherwise the
         // changing of interval is too insensitive.
         else {
             cache.lastTickCount = tickCount;
@@ -33498,9 +33241,8 @@
         var last;
         if (ticksLen === 1) {
             ticksCoords[0].coord = axisExtent[0];
-            last = ticksCoords[1] = { coord: axisExtent[0] };
-        }
-        else {
+            last = ticksCoords[1] = {coord: axisExtent[0]};
+        } else {
             var shift = (ticksCoords[1].coord - ticksCoords[0].coord);
             each$1(ticksCoords, function (ticksItem) {
                 ticksItem.coord -= shift / 2;
@@ -33510,7 +33252,7 @@
                     ticksItem.coord -= shift / ((tickCategoryInterval + 1) * 2);
                 }
             });
-            last = { coord: ticksCoords[ticksLen - 1].coord + shift };
+            last = {coord: ticksCoords[ticksLen - 1].coord + shift};
             ticksCoords.push(last);
         }
 
@@ -33520,13 +33262,13 @@
             clamp ? (ticksCoords[0].coord = axisExtent[0]) : ticksCoords.shift();
         }
         if (clamp && littleThan(axisExtent[0], ticksCoords[0].coord)) {
-            ticksCoords.unshift({ coord: axisExtent[0] });
+            ticksCoords.unshift({coord: axisExtent[0]});
         }
         if (littleThan(axisExtent[1], last.coord)) {
             clamp ? (last.coord = axisExtent[1]) : ticksCoords.pop();
         }
         if (clamp && littleThan(last.coord, axisExtent[1])) {
-            ticksCoords.push({ coord: axisExtent[1] });
+            ticksCoords.push({coord: axisExtent[1]});
         }
 
         function littleThan(a, b) {
@@ -33561,10 +33303,10 @@
 
     var ecUtil = {};
     each$1([
-        'map', 'each', 'filter', 'indexOf', 'inherits', 'reduce', 'filter',
-        'bind', 'curry', 'isArray', 'isString', 'isObject', 'isFunction',
-        'extend', 'defaults', 'clone', 'merge'
-    ],
+            'map', 'each', 'filter', 'indexOf', 'inherits', 'reduce', 'filter',
+            'bind', 'curry', 'isArray', 'isString', 'isObject', 'isFunction',
+            'extend', 'defaults', 'clone', 'merge'
+        ],
         function (name) {
             ecUtil[name] = zrUtil[name];
         }
@@ -33701,8 +33443,7 @@
         // Simple optimization (in lots of cases, label dims length is 1)
         if (len === 1) {
             return retrieveRawValue(data, dataIndex, labelDims[0]);
-        }
-        else if (len) {
+        } else if (len) {
             var vals = [];
             for (var i = 0; i < labelDims.length; i++) {
                 var val = retrieveRawValue(data, dataIndex, labelDims[i]);
@@ -33893,8 +33634,7 @@
         if (isInit) {
             var keepAspect = data.getItemVisual(idx, 'symbolKeepAspect');
             this._createSymbol(symbolType, data, idx, symbolSize, keepAspect);
-        }
-        else {
+        } else {
             var symbolPath = this.childAt(0);
             symbolPath.silent = false;
             updateProps(symbolPath, {
@@ -33908,8 +33648,8 @@
             var symbolPath = this.childAt(0);
             var fadeIn = seriesScope && seriesScope.fadeIn;
 
-            var target = { scale: symbolPath.scale.slice() };
-            fadeIn && (target.style = { opacity: symbolPath.style.opacity });
+            var target = {scale: symbolPath.scale.slice()};
+            fadeIn && (target.style = {opacity: symbolPath.style.opacity});
 
             symbolPath.scale = [0, 0];
             fadeIn && (symbolPath.style.opacity = 0);
@@ -33969,8 +33709,7 @@
             hoverLabelModel = itemModel.getModel(emphasisLabelAccessPath);
             hoverAnimation = itemModel.getShallow('hoverAnimation');
             cursorStyle = itemModel.getShallow('cursor');
-        }
-        else {
+        } else {
             hoverItemStyle = extend({}, hoverItemStyle);
         }
 
@@ -34004,8 +33743,7 @@
                 symbolPath.__z2Origin = symbolPath.z2;
                 symbolPath.z2 += liftZ;
             }
-        }
-        else if (z2Origin != null) {
+        } else if (z2Origin != null) {
             symbolPath.z2 = z2Origin;
             symbolPath.__z2Origin = null;
         }
@@ -34086,7 +33824,7 @@
         updateProps(
             symbolPath,
             {
-                style: { opacity: 0 },
+                style: {opacity: 0},
                 scale: [0, 0]
             },
             this._seriesModel,
@@ -34186,8 +33924,7 @@
                 if (!symbolEl) {
                     symbolEl = new SymbolCtor(data, newIdx);
                     symbolEl.attr('position', point);
-                }
-                else {
+                } else {
                     symbolEl.updateData(data, newIdx, seriesScope);
                     updateProps(symbolEl, {
                         position: point
@@ -34246,6 +33983,7 @@
                 el.incremental = el.useHoverLayer = true;
             }
         }
+
         for (var idx = taskParams.start; idx < taskParams.end; idx++) {
             var point = data.getItemLayout(idx);
             if (symbolNeedsDraw(data, point, idx, opt)) {
@@ -34260,7 +33998,7 @@
 
     function normalizeUpdateOpt(opt) {
         if (opt != null && !isObject$1(opt)) {
-            opt = { isIgnore: opt };
+            opt = {isIgnore: opt};
         }
         return opt || {};
     }
@@ -34275,8 +34013,7 @@
                     group.remove(el);
                 });
             });
-        }
-        else {
+        } else {
             group.removeAll();
         }
     };
@@ -34362,8 +34099,7 @@
 
         if (valueOrigin === 'start') {
             valueStart = extent[0];
-        }
-        else if (valueOrigin === 'end') {
+        } else if (valueOrigin === 'end') {
             valueStart = extent[1];
         }
         // auto
@@ -34450,13 +34186,13 @@
 
         newData.diff(oldData)
             .add(function (idx) {
-                diffResult.push({ cmd: '+', idx: idx });
+                diffResult.push({cmd: '+', idx: idx});
             })
             .update(function (newIdx, oldIdx) {
-                diffResult.push({ cmd: '=', idx: oldIdx, idx1: newIdx });
+                diffResult.push({cmd: '=', idx: oldIdx, idx1: newIdx});
             })
             .remove(function (idx) {
-                diffResult.push({ cmd: '-', idx: idx });
+                diffResult.push({cmd: '-', idx: idx});
             })
             .execute();
 
@@ -34550,8 +34286,7 @@
                         );
 
                         rawIndices.push(rawIndex);
-                    }
-                    else {
+                    } else {
                         pointAdded = false;
                     }
             }
@@ -34642,19 +34377,15 @@
             if (isMono(points, 'x')) {
                 return drawMono(ctx, points, start, segLen, allLen,
                     dir, smoothMin, smoothMax, smooth, 'x', connectNulls);
-            }
-            else if (isMono(points, 'y')) {
+            } else if (isMono(points, 'y')) {
                 return drawMono(ctx, points, start, segLen, allLen,
                     dir, smoothMin, smoothMax, smooth, 'y', connectNulls);
-            }
-            else {
+            } else {
                 return drawNonMono.apply(this, arguments);
             }
-        }
-        else if (smoothMonotone !== 'none' && isMono(points, smoothMonotone)) {
+        } else if (smoothMonotone !== 'none' && isMono(points, smoothMonotone)) {
             return drawMono.apply(this, arguments);
-        }
-        else {
+        } else {
             return drawNonMono.apply(this, arguments);
         }
     }
@@ -34720,8 +34451,7 @@
 
             if (idx === start) {
                 ctx[dir > 0 ? 'moveTo' : 'lineTo'](p[0], p[1]);
-            }
-            else {
+            } else {
                 if (smooth > 0) {
                     var prevP = points[prevIdx];
                     var dim = smoothMonotone === 'y' ? 1 : 0;
@@ -34740,8 +34470,7 @@
                         cp1[0], cp1[1],
                         p[0], p[1]
                     );
-                }
-                else {
+                } else {
                     ctx.lineTo(p[0], p[1]);
                 }
             }
@@ -34780,8 +34509,7 @@
             if (idx === start) {
                 ctx[dir > 0 ? 'moveTo' : 'lineTo'](p[0], p[1]);
                 v2Copy(cp0, p);
-            }
-            else {
+            } else {
                 if (smooth > 0) {
                     var nextIdx = idx + dir;
                     var nextP = points[nextIdx];
@@ -34799,8 +34527,7 @@
                     // Last point
                     if (!nextP || isPointNull(nextP)) {
                         v2Copy(cp1, p);
-                    }
-                    else {
+                    } else {
                         // If next data is null in not connect case
                         if (isPointNull(nextP) && !connectNulls) {
                             nextP = p;
@@ -34814,8 +34541,7 @@
                             var dim = smoothMonotone === 'x' ? 0 : 1;
                             lenPrevSeg = Math.abs(p[dim] - prevP[dim]);
                             lenNextSeg = Math.abs(p[dim] - nextP[dim]);
-                        }
-                        else {
+                        } else {
                             lenPrevSeg = dist(p, prevP);
                             lenNextSeg = dist(p, nextP);
                         }
@@ -34838,8 +34564,7 @@
                     );
                     // cp0 of next segment
                     scaleAndAdd$1(cp0, p, v, smooth * ratioNextSeg);
-                }
-                else {
+                } else {
                     ctx.lineTo(p[0], p[1]);
                 }
             }
@@ -34857,10 +34582,18 @@
         if (smoothConstraint) {
             for (var i = 0; i < points.length; i++) {
                 var pt = points[i];
-                if (pt[0] < ptMin[0]) { ptMin[0] = pt[0]; }
-                if (pt[1] < ptMin[1]) { ptMin[1] = pt[1]; }
-                if (pt[0] > ptMax[0]) { ptMax[0] = pt[0]; }
-                if (pt[1] > ptMax[1]) { ptMax[1] = pt[1]; }
+                if (pt[0] < ptMin[0]) {
+                    ptMin[0] = pt[0];
+                }
+                if (pt[1] < ptMin[1]) {
+                    ptMin[1] = pt[1];
+                }
+                if (pt[0] > ptMax[0]) {
+                    ptMax[0] = pt[0];
+                }
+                if (pt[1] > ptMax[1]) {
+                    ptMax[1] = pt[1];
+                }
             }
         }
         return {
@@ -35075,16 +34808,14 @@
             width += 0.5;
             y -= 0.5;
             height += 0.5;
-        }
-        else {
+        } else {
             var lineWidth = seriesModel.get('lineStyle.width') || 2;
             // Expand clip shape to avoid clipping when line value exceeds axis
             var expandSize = seriesModel.get('clipOverflow') ? lineWidth / 2 : Math.max(width, height);
             if (isHorizontal) {
                 y -= expandSize;
                 height += expandSize * 2;
-            }
-            else {
+            } else {
                 x -= expandSize;
                 width += expandSize * 2;
             }
@@ -35341,9 +35072,9 @@
         var step = Math.max(1, Math.round(dataLen / 5));
         for (var dataIndex = 0; dataIndex < dataLen; dataIndex += step) {
             if (SymbolClz$1.getSymbolSize(
-                data, dataIndex
-                // Only for cartesian, where `isHorizontal` exists.
-            )[categoryAxis.isHorizontal() ? 1 : 0]
+                    data, dataIndex
+                    // Only for cartesian, where `isHorizontal` exists.
+                )[categoryAxis.isHorizontal() ? 1 : 0]
                 // Empirical number
                 * 1.5 > availSize
             ) {
@@ -35441,16 +35172,14 @@
                     );
                 }
                 lineGroup.setClipPath(createClipShape(coordSys, true, false, seriesModel));
-            }
-            else {
+            } else {
                 if (isAreaChart && !polygon) {
                     // If areaStyle is added
                     polygon = this._newPolygon(
                         points, stackedOnPoints,
                         coordSys, hasAnimation
                     );
-                }
-                else if (polygon && !isAreaChart) {
+                } else if (polygon && !isAreaChart) {
                     // If areaStyle is removed
                     lineGroup.remove(polygon);
                     polygon = this._polygon = null;
@@ -35481,8 +35210,7 @@
                         this._updateAnimation(
                             data, stackedOnPoints, coordSys, api, step, valueOrigin
                         );
-                    }
-                    else {
+                    } else {
                         // Not do it in update with animation
                         if (step) {
                             // TODO If stacked series is not step
@@ -35555,7 +35283,8 @@
             this._valueOrigin = valueOrigin;
         },
 
-        dispose: function () { },
+        dispose: function () {
+        },
 
         highlight: function (seriesModel, ecModel, api, payload) {
             var data = seriesModel.getData();
@@ -35586,8 +35315,7 @@
                     this.group.add(symbol);
                 }
                 symbol.highlight();
-            }
-            else {
+            } else {
                 // Highlight whole series
                 Chart.prototype.highlight.call(
                     this, seriesModel, ecModel, api, payload
@@ -35604,13 +35332,11 @@
                     if (symbol.__temp) {
                         data.setItemGraphicEl(dataIndex, null);
                         this.group.remove(symbol);
-                    }
-                    else {
+                    } else {
                         symbol.downplay();
                     }
                 }
-            }
-            else {
+            } else {
                 // FIXME
                 // can not downplay completely.
                 // Downplay whole series
@@ -35767,10 +35493,10 @@
 
             this._polyline =
                 this._polygon =
-                this._coordSys =
-                this._points =
-                this._stackedOnPoints =
-                this._data = null;
+                    this._coordSys =
+                        this._points =
+                            this._stackedOnPoints =
+                                this._data = null;
         }
     });
 
@@ -35854,7 +35580,7 @@
                     }
                 }
 
-                return { dataEach: (data.hasItemOption || hasCallback) ? dataEach : null };
+                return {dataEach: (data.hasItemOption || hasCallback) ? dataEach : null};
             }
         };
     };
@@ -35917,8 +35643,7 @@
                         if (dimLen === 1) {
                             var x = data.get(dims[0], i);
                             point = !isNaN(x) && coordSys.dataToPoint(x, null, tmpOut);
-                        }
-                        else {
+                        } else {
                             var x = tmpIn[0] = data.get(dims[0], i);
                             var y = tmpIn[1] = data.get(dims[1], i);
                             // Also {Array.<number>}, not undefined to avoid if...else... statement
@@ -35928,8 +35653,7 @@
                         if (isLargeRender) {
                             points[offset++] = point ? point[0] : NaN;
                             points[offset++] = point ? point[1] : NaN;
-                        }
-                        else {
+                        } else {
                             data.setItemLayout(i, (point && point.slice()) || [NaN, NaN]);
                         }
                     }
@@ -35937,7 +35661,7 @@
                     isLargeRender && data.setLayout('symbolPoints', points);
                 }
 
-                return dimLen && { progress: progress };
+                return dimLen && {progress: progress};
             }
         };
     };
@@ -36033,8 +35757,7 @@
                         var sampler;
                         if (typeof sampling === 'string') {
                             sampler = samplers[sampling];
-                        }
-                        else if (typeof sampling === 'function') {
+                        } else if (typeof sampling === 'function') {
                             sampler = sampling;
                         }
                         if (sampler) {
@@ -37036,8 +36759,7 @@
                         gridRect[dim] -= labelUnionRect[dim] + margin;
                         if (axis.position === 'top') {
                             gridRect.y += labelUnionRect.height + margin;
-                        }
-                        else if (axis.position === 'left') {
+                        } else if (axis.position === 'left') {
                             gridRect.x += labelUnionRect.width + margin;
                         }
                     }
@@ -37163,14 +36885,11 @@
         if (seriesModel) {
             cartesian = seriesModel.coordinateSystem;
             indexOf(coordsList, cartesian) < 0 && (cartesian = null);
-        }
-        else if (xAxisModel && yAxisModel) {
+        } else if (xAxisModel && yAxisModel) {
             cartesian = this.getCartesian(xAxisModel.componentIndex, yAxisModel.componentIndex);
-        }
-        else if (xAxisModel) {
+        } else if (xAxisModel) {
             axis = this.getAxis('x', xAxisModel.componentIndex);
-        }
-        else if (yAxisModel) {
+        } else if (yAxisModel) {
             axis = this.getAxis('y', yAxisModel.componentIndex);
         }
         // Lowest priority.
@@ -37181,7 +36900,7 @@
             }
         }
 
-        return { cartesian: cartesian, axis: axis };
+        return {cartesian: cartesian, axis: axis};
     };
 
     /**
@@ -37262,8 +36981,7 @@
                             axisPosition = axisPosition === 'top' ? 'bottom' : 'top';
                         }
                     }
-                }
-                else {
+                } else {
                     // Fix position
                     if (axisPosition !== 'left' && axisPosition !== 'right') {
                         // Default left of Y
@@ -37365,7 +37083,7 @@
             indexOf(otherAxes, otherAxis) < 0 && otherAxes.push(otherAxis);
         });
 
-        return { baseAxes: baseAxes, otherAxes: otherAxes };
+        return {baseAxes: baseAxes, otherAxes: otherAxes};
     };
 
     /**
@@ -37393,6 +37111,7 @@
     }
 
     var axesTypes = ['xAxis', 'yAxis'];
+
     /**
      * @inner
      */
@@ -37770,8 +37489,7 @@
                     nameRotation != null ? nameRotation : opt.rotation, // Adapt to axis.
                     nameDirection
                 );
-            }
-            else {
+            } else {
                 labelLayout = endTextLayout(
                     opt, nameLocation, nameRotation || 0, extent
                 );
@@ -37797,7 +37515,7 @@
             var truncatedText = (ellipsis != null && maxWidth != null)
                 ? truncateText$1(
                     name, maxWidth, textFont, ellipsis,
-                    { minChar: 2, placeholder: truncateOpt.placeholder }
+                    {minChar: 2, placeholder: truncateOpt.placeholder}
                 )
                 : name;
 
@@ -37880,18 +37598,15 @@
         if (isRadianAroundZero(rotationDiff)) { // Label is parallel with axis line.
             textVerticalAlign = direction > 0 ? 'top' : 'bottom';
             textAlign = 'center';
-        }
-        else if (isRadianAroundZero(rotationDiff - PI$2)) { // Label is inverse parallel with axis line.
+        } else if (isRadianAroundZero(rotationDiff - PI$2)) { // Label is inverse parallel with axis line.
             textVerticalAlign = direction > 0 ? 'bottom' : 'top';
             textAlign = 'center';
-        }
-        else {
+        } else {
             textVerticalAlign = 'middle';
 
             if (rotationDiff > 0 && rotationDiff < PI$2) {
                 textAlign = direction > 0 ? 'right' : 'left';
-            }
-            else {
+            } else {
                 textAlign = direction > 0 ? 'left' : 'right';
             }
         }
@@ -37914,17 +37629,14 @@
         if (isRadianAroundZero(rotationDiff - PI$2 / 2)) {
             textVerticalAlign = onLeft ? 'bottom' : 'top';
             textAlign = 'center';
-        }
-        else if (isRadianAroundZero(rotationDiff - PI$2 * 1.5)) {
+        } else if (isRadianAroundZero(rotationDiff - PI$2 * 1.5)) {
             textVerticalAlign = onLeft ? 'top' : 'bottom';
             textAlign = 'center';
-        }
-        else {
+        } else {
             textVerticalAlign = 'middle';
             if (rotationDiff < PI$2 * 1.5 && rotationDiff > PI$2 / 2) {
                 textAlign = onLeft ? 'left' : 'right';
-            }
-            else {
+            } else {
                 textAlign = onLeft ? 'right' : 'left';
             }
         }
@@ -37971,13 +37683,11 @@
         if (showMinLabel === false) {
             ignoreEl(firstLabel);
             ignoreEl(firstTick);
-        }
-        else if (isTwoLabelOverlapped(firstLabel, nextLabel)) {
+        } else if (isTwoLabelOverlapped(firstLabel, nextLabel)) {
             if (showMinLabel) {
                 ignoreEl(nextLabel);
                 ignoreEl(nextTick);
-            }
-            else {
+            } else {
                 ignoreEl(firstLabel);
                 ignoreEl(firstTick);
             }
@@ -37986,13 +37696,11 @@
         if (showMaxLabel === false) {
             ignoreEl(lastLabel);
             ignoreEl(lastTick);
-        }
-        else if (isTwoLabelOverlapped(prevLabel, lastLabel)) {
+        } else if (isTwoLabelOverlapped(prevLabel, lastLabel)) {
             if (showMaxLabel) {
                 ignoreEl(prevLabel);
                 ignoreEl(prevTick);
-            }
-            else {
+            } else {
                 ignoreEl(lastLabel);
                 ignoreEl(lastTick);
             }
@@ -38338,7 +38046,7 @@
 
                 var groupIndex = getLinkGroupIndex(linksOption, axis);
                 if (groupIndex != null) {
-                    var linkGroup = linkGroups[groupIndex] || (linkGroups[groupIndex] = { axesInfo: {} });
+                    var linkGroup = linkGroups[groupIndex] || (linkGroups[groupIndex] = {axesInfo: {}});
                     linkGroup.axesInfo[key] = axisInfo;
                     linkGroup.mapper = linksOption[groupIndex].mapper;
                     axisInfo.linkGroup = linkGroup;
@@ -38687,7 +38395,7 @@
 
         var rect = grid.getRect();
         var rectBound = [rect.x, rect.x + rect.width, rect.y, rect.y + rect.height];
-        var idx = { left: 0, right: 1, top: 0, bottom: 1, onZero: 2 };
+        var idx = {left: 0, right: 1, top: 0, bottom: 1, onZero: 2};
         var axisOffset = axisModel.get('offset') || 0;
 
         var posBound = axisDim === 'x'
@@ -38709,7 +38417,7 @@
         layout.rotation = Math.PI / 2 * (axisDim === 'x' ? 0 : 1);
 
         // Tick and label direction, x y is axisDim
-        var dirMap = { top: -1, bottom: 1, left: -1, right: 1 };
+        var dirMap = {top: -1, bottom: 1, left: -1, right: 1};
 
         layout.labelDirection = layout.tickDirection = layout.nameDirection = dirMap[rawAxisPosition];
         layout.labelOffset = otherAxisOnZeroOf ? posBound[idx[rawAxisPosition]] - posBound[idx['onZero']] : 0;
@@ -38853,8 +38561,7 @@
                     p1[1] = gridRect.y;
                     p2[0] = tickCoord;
                     p2[1] = gridRect.y + gridRect.height;
-                }
-                else {
+                } else {
                     p1[0] = gridRect.x;
                     p1[1] = tickCoord;
                     p2[0] = gridRect.x + gridRect.width;
@@ -38939,8 +38646,7 @@
                     width = tickCoord - x;
                     height = gridRect.height;
                     prev = x + width;
-                }
-                else {
+                } else {
                     x = gridRect.x;
                     y = prev;
                     width = gridRect.width;
@@ -39337,8 +39043,7 @@
                 this._isLargeDraw
                     ? this._renderLarge(seriesModel, ecModel, api)
                     : this._renderNormal(seriesModel, ecModel, api);
-            }
-            else if (__DEV__) {
+            } else if (__DEV__) {
                 console.warn('Only cartesian2d and polar supported for bar.');
             }
 
@@ -39374,8 +39079,7 @@
 
             if (coord.type === 'cartesian2d') {
                 isHorizontalOrRadial = baseAxis.isHorizontal();
-            }
-            else if (coord.type === 'polar') {
+            } else if (coord.type === 'polar') {
                 isHorizontalOrRadial = baseAxis.dim === 'angle';
             }
 
@@ -39412,9 +39116,8 @@
                     var layout = getLayout[coord.type](data, newIndex, itemModel);
 
                     if (el) {
-                        updateProps(el, { shape: layout }, animationModel, newIndex);
-                    }
-                    else {
+                        updateProps(el, {shape: layout}, animationModel, newIndex);
+                    } else {
                         el = elementCreator[coord.type](
                             data, newIndex, itemModel, layout, isHorizontalOrRadial, animationModel, true
                         );
@@ -39433,8 +39136,7 @@
                     var el = oldData.getItemGraphicEl(dataIndex);
                     if (coord.type === 'cartesian2d') {
                         el && removeRect(dataIndex, animationModel, el);
-                    }
-                    else {
+                    } else {
                         el && removeSector(dataIndex, animationModel, el);
                     }
                 })
@@ -39465,13 +39167,11 @@
                 data.eachItemGraphicEl(function (el) {
                     if (el.type === 'sector') {
                         removeSector(el.dataIndex, ecModel, el);
-                    }
-                    else {
+                    } else {
                         removeRect(el.dataIndex, ecModel, el);
                     }
                 });
-            }
-            else {
+            } else {
                 group.removeAll();
             }
             this._data = null;
@@ -39485,7 +39185,7 @@
             data, dataIndex, itemModel, layout, isHorizontal,
             animationModel, isUpdate
         ) {
-            var rect = new Rect({ shape: extend({}, layout) });
+            var rect = new Rect({shape: extend({}, layout)});
 
             // Animation
             if (animationModel) {
@@ -39512,7 +39212,7 @@
             // or less than startAngle.
             var clockwise = layout.startAngle < layout.endAngle;
             var sector = new Sector({
-                shape: defaults({ clockwise: clockwise }, layout)
+                shape: defaults({clockwise: clockwise}, layout)
             });
 
             // Animation
@@ -39632,7 +39332,7 @@
 
         type: 'largeBar',
 
-        shape: { points: [] },
+        shape: {points: []},
 
         buildPath: function (ctx, shape) {
             // Drawing lines is more efficient than drawing
@@ -39657,7 +39357,7 @@
         startPoint[1 - valueIdx] = data.getLayout('valueAxisStart');
 
         var el = new LargePath({
-            shape: { points: data.getLayout('largePoints') },
+            shape: {points: data.getLayout('largePoints')},
             incremental: !!incremental,
             __startPoint: startPoint,
             __valueIdx: valueIdx
@@ -39745,7 +39445,7 @@
      * @return {module:echarts/data/List}
      */
     var createListSimply = function (seriesModel, opt, nameList) {
-        opt = isArray(opt) && { coordDimensions: opt } || extend({}, opt);
+        opt = isArray(opt) && {coordDimensions: opt} || extend({}, opt);
 
         var source = seriesModel.getSource();
 
@@ -40134,10 +39834,12 @@
             polyline.ignore = polyline.hoverIgnore;
             text.ignore = text.hoverIgnore;
         }
+
         function onNormal() {
             polyline.ignore = polyline.normalIgnore;
             text.ignore = text.normalIgnore;
         }
+
         this.on('emphasis', onEmphasis)
             .on('normal', onNormal)
             .on('mouseover', onEmphasis)
@@ -40178,8 +39880,7 @@
                 }, seriesModel, idx);
             }
 
-        }
-        else {
+        } else {
             updateProps(sector, {
                 shape: sectorShape
             }, seriesModel, idx);
@@ -40221,6 +39922,7 @@
                 }
             }, 300, 'elasticOut');
         }
+
         function onNormal() {
             sector.stopAnimation(true);
             sector.animateTo({
@@ -40229,6 +39931,7 @@
                 }
             }, 300, 'elasticOut');
         }
+
         sector.off('mouseover').off('mouseout').off('emphasis').off('normal');
         if (itemModel.get('hoverAnimation') && seriesModel.isAnimationEnabled()) {
             sector
@@ -40401,7 +40104,8 @@
             this._data = data;
         },
 
-        dispose: function () { },
+        dispose: function () {
+        },
 
         _createClipPath: function (
             cx, cy, r, startAngle, clockwise, cb, seriesModel
@@ -40473,7 +40177,7 @@
             registerAction(actionInfo, function (payload, ecModel) {
                 var selected = {};
                 ecModel.eachComponent(
-                    { mainType: 'series', subType: seriesType, query: payload },
+                    {mainType: 'series', subType: seriesType, query: payload},
                     function (seriesModel) {
                         if (seriesModel[actionInfo.method]) {
                             seriesModel[actionInfo.method](
@@ -40567,8 +40271,7 @@
                         if (filteredIdx != null) {
                             data.setItemVisual(filteredIdx, 'color', color);
                         }
-                    }
-                    else {
+                    } else {
                         // Set data all color for legend
                         dataAll.setItemVisual(rawIdx, 'color', singleDataColor);
                     }
@@ -40686,8 +40389,7 @@
         for (var i = 0; i < len; i++) {
             if (list[i].y >= cy) {
                 downList.push(list[i]);
-            }
-            else {
+            } else {
                 upList.push(list[i]);
             }
         }
@@ -40701,8 +40403,7 @@
         for (var i = 0; i < labelLayoutList.length; i++) {
             if (labelLayoutList[i].x < cx) {
                 leftList.push(labelLayoutList[i]);
-            }
-            else {
+            } else {
                 rightList.push(labelLayoutList[i]);
             }
         }
@@ -40716,8 +40417,7 @@
                 var dist = linePoints[1][0] - linePoints[2][0];
                 if (labelLayoutList[i].x < cx) {
                     linePoints[2][0] = labelLayoutList[i].x + 3;
-                }
-                else {
+                } else {
                     linePoints[2][0] = labelLayoutList[i].x - 3;
                 }
                 linePoints[1][1] = linePoints[2][1] = labelLayoutList[i].y;
@@ -40762,8 +40462,7 @@
                 textX = layout.cx;
                 textY = layout.cy;
                 textAlign = 'center';
-            }
-            else {
+            } else {
                 var x1 = (isLabelInside ? (layout.r + layout.r0) / 2 * dx : layout.r * dx) + cx;
                 var y1 = (isLabelInside ? (layout.r + layout.r0) / 2 * dy : layout.r * dy) + cy;
 
@@ -40915,16 +40614,14 @@
                 if (roseType !== 'area') {
                     angle = (sum === 0 && stillShowZeroSum)
                         ? unitRadian : (value * unitRadian);
-                }
-                else {
+                } else {
                     angle = PI2$4 / validDataCount;
                 }
 
                 if (angle < minAngle) {
                     angle = minAngle;
                     restAngle -= minAngle;
-                }
-                else {
+                } else {
                     valueSumLargerThanMinAngle += value;
                 }
 
@@ -40960,8 +40657,7 @@
                             layout.endAngle = startAngle + dir * (idx + 1) * angle;
                         }
                     });
-                }
-                else {
+                } else {
                     unitRadian = restAngle / valueSumLargerThanMinAngle;
                     currentAngle = startAngle;
                     data.each(valueDim, function (value, idx) {
@@ -41332,8 +41028,7 @@
                 });
             }
             this.group.add(this._incremental);
-        }
-        else {
+        } else {
             this._incremental = null;
         }
     };
@@ -41343,8 +41038,7 @@
         if (this._incremental) {
             symbolEl = new LargeSymbolPath();
             this._incremental.addDisplayable(symbolEl, true);
-        }
-        else {
+        } else {
             symbolEl = new LargeSymbolPath({
                 rectHover: true,
                 cursor: 'default',
@@ -41482,11 +41176,10 @@
                 return {
                     update: true
                 };
-            }
-            else {
+            } else {
                 var res = pointsLayout().reset(seriesModel);
                 if (res.progress) {
-                    res.progress({ start: 0, end: data.count() }, data);
+                    res.progress({start: 0, end: data.count()}, data);
                 }
 
                 this._symbolDraw.updateLayout(data);
@@ -41517,7 +41210,8 @@
             this._symbolDraw = null;
         },
 
-        dispose: function () { }
+        dispose: function () {
+        }
     });
 
     /*
@@ -41770,12 +41464,12 @@
             var f = interval / exp10;
             if (f === 2) {
                 f = 5;
-            }
-            else { // f is 2 or 5
+            } else { // f is 2 or 5
                 f *= 2;
             }
             return f * exp10;
         }
+
         // Force all the axis fixing the maxSplitNumber.
         each$1(indicatorAxes, function (indicatorAxis, idx) {
             var rawExtent = getScaleExtent(indicatorAxis.scale, indicatorAxis.model);
@@ -41793,8 +41487,7 @@
                 scale.setInterval(
                     (fixedMax - fixedMin) / splitNumber
                 );
-            }
-            else if (fixedMin != null) {
+            } else if (fixedMin != null) {
                 var max;
                 // User set min, expand extent on the other side
                 do {
@@ -41806,8 +41499,7 @@
 
                     interval = increaseInterval(interval);
                 } while (max < rawExtent[1] && isFinite(max) && isFinite(rawExtent[1]));
-            }
-            else if (fixedMax != null) {
+            } else if (fixedMax != null) {
                 var min;
                 // User set min, expand extent on the other side
                 do {
@@ -41816,8 +41508,7 @@
                     scale.setInterval(interval);
                     interval = increaseInterval(interval);
                 } while (min > rawExtent[0] && isFinite(min) && isFinite(rawExtent[0]));
-            }
-            else {
+            } else {
                 var nicedSplitNumber = scale.getTicks().length - 1;
                 if (nicedSplitNumber > splitNumber) {
                     interval = increaseInterval(interval);
@@ -41906,13 +41597,12 @@
                 // PENDING
                 if (indicatorOpt.max != null && indicatorOpt.max > 0 && !indicatorOpt.min) {
                     indicatorOpt.min = 0;
-                }
-                else if (indicatorOpt.min != null && indicatorOpt.min < 0 && !indicatorOpt.max) {
+                } else if (indicatorOpt.min != null && indicatorOpt.min < 0 && !indicatorOpt.max) {
                     indicatorOpt.max = 0;
                 }
                 var iNameTextStyle = nameTextStyle;
                 if (indicatorOpt.color != null) {
-                    iNameTextStyle = defaults({ color: indicatorOpt.color }, nameTextStyle);
+                    iNameTextStyle = defaults({color: indicatorOpt.color}, nameTextStyle);
                 }
                 // Use same configuration
                 indicatorOpt = merge(clone(indicatorOpt), {
@@ -41936,8 +41626,7 @@
                 if (typeof nameFormatter === 'string') {
                     var indName = indicatorOpt.name;
                     indicatorOpt.name = nameFormatter.replace('{value}', indName != null ? indName : '');
-                }
-                else if (typeof nameFormatter === 'function') {
+                } else if (typeof nameFormatter === 'function') {
                     indicatorOpt.name = nameFormatter(
                         indicatorOpt.name, indicatorOpt
                     );
@@ -42140,8 +41829,7 @@
                     // Close
                     if (points[0]) {
                         points.push(points[0].slice());
-                    }
-                    else {
+                    } else {
                         if (__DEV__) {
                             console.error('Can\'t draw value axis ' + i);
                         }
@@ -42367,8 +42055,7 @@
                                     position: newPoints[i]
                                 }, seriesModel, idx
                             );
-                        }
-                        else {
+                        } else {
                             symbolPath.attr('position', newPoints[i]);
                         }
                         symbolGroup.add(symbolPath);
@@ -42381,6 +42068,7 @@
                     return [polar.cx, polar.cy];
                 });
             }
+
             data.diff(oldData)
                 .add(function (idx) {
                     var points = data.getItemLayout(idx);
@@ -42523,7 +42211,8 @@
             this._data = null;
         },
 
-        dispose: function () { }
+        dispose: function () {
+        }
     });
 
     /*
@@ -42559,6 +42248,7 @@
                 points[idx] = points[idx] || [];
                 points[idx][i] = coordSys.dataToPoint(val, i);
             }
+
             var axes = coordSys.getIndicatorAxes();
             for (var i = 0; i < axes.length; i++) {
                 data.each(data.mapDimension(axes[i].dim), pointsConverter);
@@ -42609,8 +42299,7 @@
                         option.radar = [option.radar];
                     }
                     option.radar.push(polarOpt);
-                }
-                else {
+                } else {
                     polarNotRadar.push(polarOpt);
                 }
             });
@@ -42680,6 +42369,7 @@
     function TransformDummy() {
         Transformable.call(this);
     }
+
     mixin(TransformDummy, Transformable);
 
     function View(name) {
@@ -42983,7 +42673,7 @@
 
     var points$1 = [
         [[0, 3.5], [7, 11.2], [15, 11.9], [30, 7], [42, 0.7], [52, 0.7],
-        [56, 7.7], [59, 0.7], [64, 0.7], [64, 0], [5, 0], [0, 3.5]],
+            [56, 7.7], [59, 0.7], [64, 0.7], [64, 0], [5, 0], [0, 3.5]],
         [[13, 16.1], [19, 14.7], [16, 21.7], [11, 23.1], [13, 16.1]],
         [[12, 32.2], [14, 38.5], [15, 38.5], [13, 32.2], [12, 32.2]],
         [[16, 47.6], [12, 53.2], [13, 53.2], [18, 47.6], [16, 47.6]],
@@ -42995,7 +42685,7 @@
         [[52, 22.4], [55, 17.5], [56, 17.5], [53, 22.4], [52, 22.4]],
         [[58, 12.6], [62, 7], [63, 7], [60, 12.6], [58, 12.6]],
         [[0, 3.5], [0, 93.1], [64, 93.1], [64, 0], [63, 0], [63, 92.4],
-        [1, 92.4], [1, 3.5], [0, 3.5]]
+            [1, 92.4], [1, 3.5], [0, 3.5]]
     ];
 
     for (var i$1 = 0; i$1 < points$1.length; i$1++) {
@@ -43236,8 +42926,7 @@
             // https://jsperf.com/try-catch-performance-overhead
             try {
                 this.regions = geoJson ? parseGeoJson$1(geoJson) : [];
-            }
-            catch (e) {
+            } catch (e) {
                 throw 'Invalid geoJson format\n' + e.message;
             }
             specialAreas = specialAreas || {};
@@ -43429,8 +43118,7 @@
                 if (__DEV__) {
                     console.error('Invalid boundingCoords');
                 }
-            }
-            else {
+            } else {
                 this.setBoundingRect(leftTop[0], leftTop[1], rightBottom[0] - leftTop[0], rightBottom[1] - leftTop[1]);
             }
         }
@@ -43459,8 +43147,7 @@
 
             if (!isNaN(center[0]) && !isNaN(center[1]) && !isNaN(size)) {
                 useCenterAndSize = true;
-            }
-            else {
+            } else {
                 if (__DEV__) {
                     console.warn('Given layoutCenter or layoutSize data are invalid. Use left/top/width/height instead.');
                 }
@@ -43474,15 +43161,13 @@
                 // Width is same with size
                 viewRect.width = size;
                 viewRect.height = size / aspect;
-            }
-            else {
+            } else {
                 viewRect.height = size;
                 viewRect.width = size * aspect;
             }
             viewRect.y = center[1] - viewRect.height / 2;
             viewRect.x = center[0] - viewRect.width / 2;
-        }
-        else {
+        } else {
             // Use left/top/width/height
             boxLayoutOption = geoModel.getBoxLayoutParams();
 
@@ -43960,8 +43645,9 @@
      * }
      */
     registerAction(
-        { type: 'takeGlobalCursor', event: 'globalCursorTaken', update: 'update' },
-        function () { }
+        {type: 'takeGlobalCursor', event: 'globalCursorTaken', update: 'update'},
+        function () {
+        }
     );
 
     /*
@@ -44266,7 +43952,7 @@
     */
 
 
-    var IRRELEVANT_EXCLUDES = { 'axisPointer': 1, 'tooltip': 1, 'brush': 1 };
+    var IRRELEVANT_EXCLUDES = {'axisPointer': 1, 'tooltip': 1, 'brush': 1};
 
     /**
      * Avoid that: mouse click on a elements that is over geo or graph,
@@ -44384,7 +44070,7 @@
          * @type {Object} {target, zoom, zoomLimit}
          * @private
          */
-        this._controllerHost = { target: updateGroup ? group : null };
+        this._controllerHost = {target: updateGroup ? group : null};
 
         /**
          * @type {module:zrender/container/Group}
@@ -44418,7 +44104,7 @@
             // Map series has data. GEO model that controlled by map series
             // will be assigned with map data. Other GEO model has no data.
             var data = mapOrGeoModel.getData && mapOrGeoModel.getData();
-            isGeo && ecModel.eachComponent({ mainType: 'series', subType: 'map' }, function (mapSeries) {
+            isGeo && ecModel.eachComponent({mainType: 'series', subType: 'map'}, function (mapSeries) {
                 if (!data && mapSeries.getHostGeoModel() === mapOrGeoModel) {
                     data = mapSeries.getData();
                 }
@@ -44437,8 +44123,7 @@
             // No animation when first draw or in action
             if (!group.childAt(0) || payload) {
                 group.attr(groupNewProp);
-            }
-            else {
+            } else {
                 updateProps(group, groupNewProp, mapOrGeoModel);
             }
 
@@ -44563,8 +44248,7 @@
                 // are added to the rigionGroup
                 if (data) {
                     data.setItemGraphicEl(dataIdx, regionGroup);
-                }
-                else {
+                } else {
                     var regionModel = mapOrGeoModel.getRegionModel(region.name);
                     // Package custom mouse event for geo component
                     compoundPath.eventData = {
@@ -44581,7 +44265,7 @@
                 setHoverStyle(
                     regionGroup,
                     hoverItemStyle,
-                    { hoverSilentOnTouch: !!mapOrGeoModel.get('selectedMode') }
+                    {hoverSilentOnTouch: !!mapOrGeoModel.get('selectedMode')}
                 );
 
                 group.add(regionGroup);
@@ -44712,20 +44396,18 @@
                     mapDraw.draw(mapModel, ecModel, api, this, payload);
 
                     this._mapDraw = mapDraw;
-                }
-                else {
+                } else {
                     // Remove drawed map
                     this._mapDraw && this._mapDraw.remove();
                     this._mapDraw = null;
                 }
-            }
-            else {
+            } else {
                 var mapDraw = this._mapDraw;
                 mapDraw && group.add(mapDraw.group);
             }
 
             mapModel.get('showLegendSymbol') && ecModel.getComponent('legend')
-                && this._renderSymbols(mapModel, ecModel, api);
+            && this._renderSymbols(mapModel, ecModel, api);
         },
 
         remove: function () {
@@ -44802,7 +44484,7 @@
                     var onEmphasis = function () {
                         var hoverStyle = setTextStyle({}, hoverLabelModel, {
                             text: hoverLabelModel.get('show') ? emphasisText : null
-                        }, { isRectText: true, useInsideStyle: false }, true);
+                        }, {isRectText: true, useInsideStyle: false}, true);
                         circle.style.extendFrom(hoverStyle);
                         // Make label upper than others if overlaps.
                         circle.__mapOriginalZ2 = circle.z2;
@@ -44813,7 +44495,7 @@
                         setTextStyle(circle.style, labelModel, {
                             text: labelModel.get('show') ? normalText : null,
                             textPosition: labelModel.getShallow('position') || 'bottom'
-                        }, { isRectText: true, useInsideStyle: false });
+                        }, {isRectText: true, useInsideStyle: false});
 
                         if (circle.__mapOriginalZ2 != null) {
                             circle.z2 = circle.__mapOriginalZ2;
@@ -44943,7 +44625,7 @@
         var componentType = payload.componentType || 'series';
 
         ecModel.eachComponent(
-            { mainType: componentType, query: payload },
+            {mainType: componentType, query: payload},
             function (componentModel) {
                 var geo = componentModel.coordinateSystem;
                 if (geo.type !== 'geo') {
@@ -44955,10 +44637,10 @@
                 );
 
                 componentModel.setCenter
-                    && componentModel.setCenter(res.center);
+                && componentModel.setCenter(res.center);
 
                 componentModel.setZoom
-                    && componentModel.setZoom(res.zoom);
+                && componentModel.setZoom(res.zoom);
 
                 // All map series with same `map` use the same geo coordinate system
                 // So the center and zoom must be in sync. Include the series not selected by legend
@@ -45134,14 +44816,11 @@
             var result;
             if (statisticType === 'min') {
                 result = min;
-            }
-            else if (statisticType === 'max') {
+            } else if (statisticType === 'max') {
                 result = max;
-            }
-            else if (statisticType === 'average') {
+            } else if (statisticType === 'average') {
                 result = sum / len;
-            }
-            else {
+            } else {
                 result = sum;
             }
             return len === 0 ? NaN : result;
@@ -45300,8 +44979,8 @@
         var datas = opt.datas;
 
         if (!datas) {
-            datas = { main: mainData };
-            opt.datasAttr = { main: 'data' };
+            datas = {main: mainData};
+            opt.datasAttr = {main: 'data'};
         }
         opt.datas = opt.mainData = null;
 
@@ -45334,8 +45013,7 @@
             var datas = extend({}, this[DATAS]);
             datas[this.dataType] = res;
             linkAll(res, datas, opt);
-        }
-        else {
+        } else {
             // Modify the reference in main data to point newData.
             linkSingle(res, this.dataType, this[MAIN_DATA], opt);
         }
@@ -45524,7 +45202,7 @@
 
             options = options || {};
             if (isString(options)) {
-                options = { order: options };
+                options = {order: options};
             }
 
             var order = options.order || 'preorder';
@@ -45620,7 +45298,7 @@
          */
         setLayout: function (layout, merge$$1) {
             this.dataIndex >= 0
-                && this.hostTree.data.setItemLayout(this.dataIndex, layout, merge$$1);
+            && this.hostTree.data.setItemLayout(this.dataIndex, layout, merge$$1);
         },
 
         /**
@@ -45671,7 +45349,7 @@
          */
         setVisual: function (key, value) {
             this.dataIndex >= 0
-                && this.hostTree.data.setItemVisual(this.dataIndex, key, value);
+            && this.hostTree.data.setItemVisual(this.dataIndex, key, value);
         },
 
         /**
@@ -45972,7 +45650,7 @@
         getInitialData: function (option) {
 
             //create an virtual root
-            var root = { name: option.name, children: option.data };
+            var root = {name: option.name, children: option.data};
 
             var leaves = option.leaves || {};
 
@@ -46013,8 +45691,7 @@
             var orient = this.get('orient');
             if (orient === 'horizontal') {
                 orient = 'LR';
-            }
-            else if (orient === 'vertical') {
+            } else if (orient === 'vertical') {
                 orient = 'TB';
             }
             return orient;
@@ -46180,12 +45857,10 @@
             if (subtreeW) {
                 node.hierNode.prelim = subtreeW.hierNode.prelim + separation(node, subtreeW);
                 node.hierNode.modifier = node.hierNode.prelim - midPoint;
-            }
-            else {
+            } else {
                 node.hierNode.prelim = midPoint;
             }
-        }
-        else if (subtreeW) {
+        } else if (subtreeW) {
             node.hierNode.prelim = subtreeW.hierNode.prelim + separation(node, subtreeW);
         }
         node.parentNode.hierNode.defaultAncestor = apportion(node, subtreeW, node.parentNode.hierNode.defaultAncestor || siblings[0], separation);
@@ -46198,7 +45873,7 @@
      */
     function secondWalk(node) {
         var nodeX = node.hierNode.prelim + node.parentNode.hierNode.modifier;
-        node.setLayout({ x: nodeX }, true);
+        node.setLayout({x: nodeX}, true);
         node.hierNode.modifier += node.parentNode.hierNode.modifier;
     }
 
@@ -46430,8 +46105,7 @@
 
             if (layout === 'radial') {
                 group.attr('position', [layoutInfo.x + layoutInfo.width / 2, layoutInfo.y + layoutInfo.height / 2]);
-            }
-            else {
+            } else {
                 group.attr('position', [layoutInfo.x, layoutInfo.y]);
             }
 
@@ -46493,7 +46167,8 @@
             this._data = data;
         },
 
-        dispose: function () { },
+        dispose: function () {
+        },
 
         remove: function () {
             this._mainGroup.removeAll();
@@ -46520,8 +46195,7 @@
 
         if (node.isExpand === false && node.children.length !== 0) {
             seriesScope.symbolInnerColor = seriesScope.itemStyle.fill;
-        }
-        else {
+        } else {
             seriesScope.symbolInnerColor = '#fff';
         }
 
@@ -46551,8 +46225,7 @@
         if (isInit) {
             symbolEl = new SymbolClz$1(data, dataIndex, seriesScope);
             symbolEl.attr('position', [sourceOldLayout.x, sourceOldLayout.y]);
-        }
-        else {
+        } else {
             symbolEl.updateData(data, dataIndex, seriesScope);
         }
 
@@ -46588,8 +46261,7 @@
                 if (isLeft) {
                     rad = rad - Math.PI;
                 }
-            }
-            else {
+            } else {
                 rad = Math.atan2(targetLayout.y - rootLayout.y, targetLayout.x - rootLayout.x);
                 if (rad < 0) {
                     rad = Math.PI * 2 + rad;
@@ -46599,8 +46271,7 @@
                     if (isLeft) {
                         rad = rad - Math.PI;
                     }
-                }
-                else {
+                } else {
                     isLeft = targetLayout.x > rootLayout.x;
                     if (!isLeft) {
                         rad = rad - Math.PI;
@@ -46622,13 +46293,13 @@
             if (!edge) {
                 edge = symbolEl.__edge = new BezierCurve({
                     shape: getEdgeShape(seriesScope, sourceOldLayout, sourceOldLayout),
-                    style: defaults({ opacity: 0 }, seriesScope.lineStyle)
+                    style: defaults({opacity: 0}, seriesScope.lineStyle)
                 });
             }
 
             updateProps(edge, {
                 shape: getEdgeShape(seriesScope, sourceLayout, targetLayout),
-                style: { opacity: 1 }
+                style: {opacity: 1}
             }, seriesModel);
 
             group.add(edge);
@@ -46654,7 +46325,7 @@
             data.setItemGraphicEl(dataIndex, null);
         });
 
-        symbolEl.fadeOut(null, { keepLabel: true });
+        symbolEl.fadeOut(null, {keepLabel: true});
 
         var edge = symbolEl.__edge;
         if (edge) {
@@ -46697,8 +46368,7 @@
                 cpx2: radialCoor3.x,
                 cpy2: radialCoor3.y
             };
-        }
-        else {
+        } else {
             var x1 = sourceLayout.x;
             var y1 = sourceLayout.y;
             var x2 = targetLayout.x;
@@ -46753,7 +46423,7 @@
         event: 'treeExpandAndCollapse',
         update: 'update'
     }, function (payload, ecModel) {
-        ecModel.eachComponent({ mainType: 'series', subType: 'tree', query: payload }, function (seriesModel) {
+        ecModel.eachComponent({mainType: 'series', subType: 'tree', query: payload}, function (seriesModel) {
             var dataIndex = payload.dataIndex;
             var tree = seriesModel.getData().tree;
             var node = tree.getNodeByDataIndex(dataIndex);
@@ -46869,8 +46539,7 @@
             separation$$1 = separation(function (node1, node2) {
                 return (node1.parentNode === node2.parentNode ? 1 : 2) / node1.depth;
             });
-        }
-        else {
+        } else {
             width = layoutInfo.width;
             height = layoutInfo.height;
             separation$$1 = separation();
@@ -46882,7 +46551,7 @@
         if (realRoot) {
             init$2(virtualRoot);
             eachAfter(realRoot, firstWalk, separation$$1);
-            virtualRoot.hierNode.modifier = - realRoot.hierNode.prelim;
+            virtualRoot.hierNode.modifier = -realRoot.hierNode.prelim;
             eachBefore(realRoot, secondWalk);
 
             var left = realRoot;
@@ -46915,10 +46584,9 @@
                     coorX = (node.getLayout().x + tx) * kx;
                     coorY = (node.depth - 1) * ky;
                     var finalCoor = radialCoordinate(coorX, coorY);
-                    node.setLayout({ x: finalCoor.x, y: finalCoor.y, rawX: coorX, rawY: coorY }, true);
+                    node.setLayout({x: finalCoor.x, y: finalCoor.y, rawX: coorX, rawY: coorY}, true);
                 });
-            }
-            else {
+            } else {
                 var orient = seriesModel.getOrient();
                 if (orient === 'RL' || orient === 'LR') {
                     ky = height / (right.getLayout().x + delta + tx);
@@ -46928,10 +46596,9 @@
                         coorX = orient === 'LR'
                             ? (node.depth - 1) * kx
                             : width - (node.depth - 1) * kx;
-                        node.setLayout({ x: coorX, y: coorY }, true);
+                        node.setLayout({x: coorX, y: coorY}, true);
                     });
-                }
-                else if (orient === 'TB' || orient === 'BT') {
+                } else if (orient === 'TB' || orient === 'BT') {
                     kx = width / (right.getLayout().x + delta + tx);
                     ky = height / ((bottom.depth - 1) || 1);
                     eachBefore(realRoot, function (node) {
@@ -46939,7 +46606,7 @@
                         coorY = orient === 'TB'
                             ? (node.depth - 1) * ky
                             : height - (node.depth - 1) * ky;
-                        node.setLayout({ x: coorX, y: coorY }, true);
+                        node.setLayout({x: coorX, y: coorY}, true);
                     });
                 }
             }
@@ -46992,12 +46659,12 @@
             var root = seriesModel.getData().tree.root;
             var targetNode = payload.targetNode;
             if (targetNode && root.contains(targetNode)) {
-                return { node: targetNode };
+                return {node: targetNode};
             }
 
             var targetNodeId = payload.targetNodeId;
             if (targetNodeId != null && (targetNode = root.getNodeById(targetNodeId))) {
-                return { node: targetNode };
+                return {node: targetNode};
             }
         }
     }
@@ -47206,7 +46873,7 @@
          */
         getInitialData: function (option, ecModel) {
             // Create a virtual root.
-            var root = { name: option.name, children: option.data };
+            var root = {name: option.name, children: option.data};
 
             completeTreeValue(root);
 
@@ -47489,7 +47156,7 @@
                     layoutParam.emptyItemWidth
                 );
                 layoutParam.totalWidth += itemWidth + ITEM_GAP;
-                layoutParam.renderList.push({ node: node, text: text, width: itemWidth });
+                layoutParam.renderList.push({node: node, text: text, width: itemWidth});
             }
         },
 
@@ -47656,7 +47323,7 @@
                 elExistsMap[el.id] = 1;
 
                 storage.push(
-                    { el: el, target: target, time: time, delay: delay, easing: easing }
+                    {el: el, target: target, time: time, delay: delay, easing: easing}
                 );
 
                 return true;
@@ -47915,7 +47582,7 @@
                         !child.isRemoved() && processNode(index, index);
                     });
                 }
-                // Diff hierarchically (diff only in each subtree, but not whole).
+                    // Diff hierarchically (diff only in each subtree, but not whole).
                 // because, consistency of view is important.
                 else {
                     (new DataDiffer(oldViewChildren, thisViewChildren, getKey, getKey))
@@ -48011,9 +47678,8 @@
                                 }
                             }
                             // Others.
-                            : { style: { opacity: 0 } };
-                    }
-                    else {
+                            : {style: {opacity: 0}};
+                    } else {
                         var targetX = 0;
                         var targetY = 0;
 
@@ -48026,10 +47692,10 @@
                         }
 
                         target = storageName === 'nodeGroup'
-                            ? { position: [targetX, targetY], style: { opacity: 0 } }
+                            ? {position: [targetX, targetY], style: {opacity: 0}}
                             : {
-                                shape: { x: targetX, y: targetY, width: 0, height: 0 },
-                                style: { opacity: 0 }
+                                shape: {x: targetX, y: targetY, width: 0, height: 0},
+                                style: {opacity: 0}
                             };
                     }
 
@@ -48052,8 +47718,7 @@
                             target.position = el.position.slice();
                             el.attr('position', last.old);
                         }
-                    }
-                    else {
+                    } else {
                         if (last.old) {
                             target.shape = extend({}, el.shape);
                             el.setShape(last.old);
@@ -48061,12 +47726,12 @@
 
                         if (last.fadein) {
                             el.setStyle('opacity', 0);
-                            target.style = { opacity: 1 };
+                            target.style = {opacity: 1};
                         }
-                        // When animation is stopped for succedent animation starting,
+                            // When animation is stopped for succedent animation starting,
                         // el.style.opacity might not be 1
                         else if (el.style.opacity !== 1) {
-                            target.style = { opacity: 1 };
+                            target.style = {opacity: 1};
                         }
                     }
 
@@ -48218,12 +47883,10 @@
                 var node = targetInfo.node;
                 if (node.getLayout().isLeafRoot) {
                     this._rootToNode(targetInfo);
-                }
-                else {
+                } else {
                     if (nodeClick === 'zoomToNode') {
                         this._zoomToNode(targetInfo);
-                    }
-                    else if (nodeClick === 'link') {
+                    } else if (nodeClick === 'link') {
                         var itemModel = node.hostTree.data.getItemModel(node.dataIndex);
                         var link = itemModel.get('link', true);
                         var linkTarget = itemModel.get('target', true) || 'blank';
@@ -48240,14 +47903,14 @@
         _renderBreadcrumb: function (seriesModel, api, targetInfo) {
             if (!targetInfo) {
                 targetInfo = seriesModel.get('leafDepth', true) != null
-                    ? { node: seriesModel.getViewRoot() }
+                    ? {node: seriesModel.getViewRoot()}
                     // FIXME
                     // better way?
                     // Find breadcrumb tail on center of containerGroup.
                     : this.findTarget(api.getWidth() / 2, api.getHeight() / 2);
 
                 if (!targetInfo) {
-                    targetInfo = { node: seriesModel.getData().tree.root };
+                    targetInfo = {node: seriesModel.getData().tree.root};
                 }
             }
 
@@ -48257,8 +47920,8 @@
             function onSelect(node) {
                 if (this._state !== 'animating') {
                     aboveViewRoot(seriesModel.getViewRoot(), node)
-                        ? this._rootToNode({ node: node })
-                        : this._zoomToNode({ node: node });
+                        ? this._rootToNode({node: node})
+                        : this._zoomToNode({node: node});
                 }
             }
         },
@@ -48315,7 +47978,7 @@
             var targetInfo;
             var viewRoot = this.seriesModel.getViewRoot();
 
-            viewRoot.eachNode({ attr: 'viewChildren', order: 'preorder' }, function (node) {
+            viewRoot.eachNode({attr: 'viewChildren', order: 'preorder'}, function (node) {
                 var bgEl = this._storage.background[node.getRawIndex()];
                 // If invisible, there might be no element.
                 if (bgEl) {
@@ -48328,9 +47991,8 @@
                         && shape.y <= point[1]
                         && point[1] <= shape.y + shape.height
                     ) {
-                        targetInfo = { node: node, offsetX: point[0], offsetY: point[1] };
-                    }
-                    else {
+                        targetInfo = {node: node, offsetX: point[0], offsetY: point[1]};
+                    } else {
                         return false; // Suppress visit subtree.
                     }
                 }
@@ -48345,7 +48007,7 @@
      * @inner
      */
     function createStorage() {
-        return { nodeGroup: [], background: [], content: [] };
+        return {nodeGroup: [], background: [], content: []};
     }
 
     /**
@@ -48429,7 +48091,7 @@
             bg.dataIndex = thisNode.dataIndex;
             bg.seriesIndex = seriesModel.seriesIndex;
 
-            bg.setShape({ x: 0, y: 0, width: thisWidth, height: thisHeight });
+            bg.setShape({x: 0, y: 0, width: thisWidth, height: thisHeight});
             var visualBorderColor = thisNode.getVisual('borderColor', true);
             var emphasisBorderColor = itemStyleEmphasisModel.get('borderColor');
 
@@ -48444,7 +48106,7 @@
 
                     prepareText(
                         normalStyle, emphasisStyle, visualBorderColor, upperLabelWidth, upperHeight,
-                        { x: borderWidth, y: 0, width: upperLabelWidth, height: upperHeight }
+                        {x: borderWidth, y: 0, width: upperLabelWidth, height: upperHeight}
                     );
                 }
                 // For old bg.
@@ -48500,8 +48162,7 @@
                 if (!element.__tmWillVisible) {
                     element.invisible = false;
                 }
-            }
-            else {
+            } else {
                 // Delay invisible setting utill animation finished,
                 // avoid element vanish suddenly before animation.
                 !element.invisible && willInvisibleEls.push(element);
@@ -48561,7 +48222,7 @@
             }
             // If invisible and no old element, do not create new element (for optimizing).
             else if (!thisInvisible) {
-                element = new Ctor({ z: calculateZ(depth, z) });
+                element = new Ctor({z: calculateZ(depth, z)});
                 element.__tmDepth = depth;
                 element.__tmStorageName = storageName;
                 prepareAnimationWhenNoOld(lasts, element, storageName);
@@ -48600,7 +48261,7 @@
                 // so we can just use {x:0, y:0}.
                 lastCfg.old = storageName === 'nodeGroup'
                     ? [0, parentOldY]
-                    : { x: parentOldX, y: parentOldY, width: 0, height: 0 };
+                    : {x: parentOldX, y: parentOldY, width: 0, height: 0};
             }
 
             // Fade in, user can be aware that these nodes are new.
@@ -48642,7 +48303,8 @@
      * @file Treemap action
      */
 
-    var noop$1 = function () { };
+    var noop$1 = function () {
+    };
 
     var actionTypes = [
         'treemapZoomToNode',
@@ -48651,15 +48313,15 @@
     ];
 
     for (var i$2 = 0; i$2 < actionTypes.length; i$2++) {
-        registerAction({ type: actionTypes[i$2], update: 'updateView' }, noop$1);
+        registerAction({type: actionTypes[i$2], update: 'updateView'}, noop$1);
     }
 
     registerAction(
-        { type: 'treemapRootToNode', update: 'updateView' },
+        {type: 'treemapRootToNode', update: 'updateView'},
         function (payload, ecModel) {
 
             ecModel.eachComponent(
-                { mainType: 'series', subType: 'treemap', query: payload },
+                {mainType: 'series', subType: 'treemap', query: payload},
                 handleRootToNode
             );
 
@@ -48782,15 +48444,13 @@
         if (mappingMethod === 'piecewise') {
             normalizeVisualRange(thisOption);
             preprocessForPiecewise(thisOption);
-        }
-        else if (mappingMethod === 'category') {
+        } else if (mappingMethod === 'category') {
             thisOption.categories
                 ? preprocessForSpecifiedCategory(thisOption)
                 // categories is ordinal when thisOption.categories not specified,
                 // which need no more preprocess except normalize visual.
                 : normalizeVisualRange(thisOption, true);
-        }
-        else { // mappingMethod === 'linear' or 'fixed'
+        } else { // mappingMethod === 'linear' or 'fixed'
             assert$1(mappingMethod !== 'linear' || thisOption.dataExtent);
             normalizeVisualRange(thisOption);
         }
@@ -48899,8 +48559,7 @@
                 var symbolCfg = this.mapValueToVisual(value);
                 if (isString(symbolCfg)) {
                     setter('symbol', symbolCfg);
-                }
-                else if (isObject$5(symbolCfg)) {
+                } else if (isObject$5(symbolCfg)) {
                     for (var name in symbolCfg) {
                         if (symbolCfg.hasOwnProperty(name)) {
                             setter(name, symbolCfg[name]);
@@ -48962,8 +48621,7 @@
                     var index = categoryMap[cate];
                     visualArr[index != null ? index : CATEGORY_DEFAULT_VISUAL_INDEX] = v;
                 });
-            }
-            else { // Is primary type, represents default visual.
+            } else { // Is primary type, represents default visual.
                 visualArr[CATEGORY_DEFAULT_VISUAL_INDEX] = visual;
             }
 
@@ -48988,12 +48646,11 @@
             each$9(visual, function (v) {
                 visualArr.push(v);
             });
-        }
-        else if (visual != null) {
+        } else if (visual != null) {
             visualArr.push(visual);
         }
 
-        var doNotNeedPair = { color: 1, symbol: 1 };
+        var doNotNeedPair = {color: 1, symbol: 1};
 
         if (!isCategory
             && visualArr.length === 1
@@ -49021,7 +48678,7 @@
         var visual = this.option.visual;
         return visual[
             Math.round(linearMap(normalized, [0, 1], [0, visual.length - 1], true))
-        ] || {};
+            ] || {};
     }
 
     function makeApplyVisual(visualType) {
@@ -49036,7 +48693,7 @@
             (this.option.loop && normalized !== CATEGORY_DEFAULT_VISUAL_INDEX)
                 ? normalized % visual.length
                 : normalized
-        ];
+            ];
     }
 
     function doMapFixed() {
@@ -49111,7 +48768,6 @@
     };
 
 
-
     /**
      * List available visual types.
      *
@@ -49149,8 +48805,7 @@
     VisualMapping.eachVisual = function (visual, callback, context) {
         if (isObject$1(visual)) {
             each$1(visual, callback, context);
-        }
-        else {
+        } else {
             callback.call(context, visual);
         }
     };
@@ -49205,11 +48860,9 @@
                 types.push(type);
             });
             visualTypes = types;
-        }
-        else if (isArray(visualTypes)) {
+        } else if (isArray(visualTypes)) {
             visualTypes = visualTypes.slice();
-        }
-        else {
+        } else {
             return [];
         }
 
@@ -49277,13 +48930,11 @@
                     if (littleThan(close[1], value, interval[1])) {
                         return i;
                     }
-                }
-                else if (interval[1] === Infinity) {
+                } else if (interval[1] === Infinity) {
                     if (littleThan(close[0], interval[0], value)) {
                         return i;
                     }
-                }
-                else if (
+                } else if (
                     littleThan(close[0], interval[0], value)
                     && littleThan(close[1], value, interval[1])
                 ) {
@@ -49399,8 +49050,7 @@
             thisNodeColor = calculateColor(visuals, node);
             // Apply visual to this node.
             node.setVisual('color', thisNodeColor);
-        }
-        else {
+        } else {
             var mapping = buildVisualMapping(
                 node, nodeModel, nodeLayout, nodeItemStyleModel, visuals, viewChildren
             );
@@ -49510,8 +49160,7 @@
             opt.mappingMethod = 'category';
             opt.loop = true;
             // categories is ordinal, so do not set opt.categories.
-        }
-        else {
+        } else {
             opt.mappingMethod = 'linear';
         }
 
@@ -49532,7 +49181,7 @@
         // 'colorRange', 'colorARange', 'colorSRange'.
         // If not exsits on this node, fetch from levels and series.
         var range = nodeModel.get(name);
-        return (isArray$2(range) && range.length) ? { name: name, range: range } : null;
+        return (isArray$2(range) && range.length) ? {name: name, range: range} : null;
     }
 
     function mapVisual$1(nodeModel, visuals, child, index, mapping, seriesModel) {
@@ -49662,7 +49311,7 @@
                 each$10(viewAbovePath, function (node, index) {
                     var childValue = (viewAbovePath[index + 1] || viewRoot).getValue();
                     node.setLayout(extend(
-                        { dataExtent: [childValue, childValue], borderWidth: 0, upperHeight: 0 },
+                        {dataExtent: [childValue, childValue], borderWidth: 0, upperHeight: 0},
                         viewRootLayout
                     ));
                 });
@@ -49743,7 +49392,7 @@
             return;
         }
 
-        var rect = { x: layoutOffset, y: layoutOffsetUpper, width: width, height: height };
+        var rect = {x: layoutOffset, y: layoutOffsetUpper, width: width, height: height};
         var rowFixedLength = mathMin$4(width, height);
         var best = Infinity; // the best row score so far
         var row = [];
@@ -49825,16 +49474,16 @@
         for (var i = 0, len = viewChildren.length; i < len; i++) {
             var area = viewChildren[i].getValue() / info.sum * totalArea;
             // Do not use setLayout({...}, true), because it is needed to clear last layout.
-            viewChildren[i].setLayout({ area: area });
+            viewChildren[i].setLayout({area: area});
         }
 
         if (overLeafDepth) {
-            viewChildren.length && node.setLayout({ isLeafRoot: true }, true);
+            viewChildren.length && node.setLayout({isLeafRoot: true}, true);
             viewChildren.length = 0;
         }
 
         node.viewChildren = viewChildren;
-        node.setLayout({ dataExtent: info.dataExtent }, true);
+        node.setLayout({dataExtent: info.dataExtent}, true);
 
         return viewChildren;
     }
@@ -49857,7 +49506,7 @@
         for (var i = len - 1; i >= 0; i--) {
             var value = orderedChildren[
                 orderBy === 'asc' ? len - i - 1 : i
-            ].getValue();
+                ].getValue();
 
             if (value / sum * totalArea < visibleMin) {
                 deletePoint = i;
@@ -49882,7 +49531,7 @@
                     ? a.getValue() - b.getValue() : b.getValue() - a.getValue();
                 return diff === 0
                     ? (orderBy === 'asc'
-                        ? a.dataIndex - b.dataIndex : b.dataIndex - a.dataIndex
+                            ? a.dataIndex - b.dataIndex : b.dataIndex - a.dataIndex
                     )
                     : diff;
             });
@@ -49911,8 +49560,7 @@
         // The same as area dimension.
         if (!children || !children.length) {
             dataExtent = [NaN, NaN];
-        }
-        else if (dimension === 'value' && orderBy) {
+        } else if (dimension === 'value' && orderBy) {
             dataExtent = [
                 children[children.length - 1].getValue(),
                 children[0].getValue()
@@ -49929,7 +49577,7 @@
             });
         }
 
-        return { sum: sum, dataExtent: dataExtent };
+        return {sum: sum, dataExtent: dataExtent};
     }
 
     /**
@@ -50057,10 +49705,10 @@
     // Root postion base on coord of containerGroup
     function calculateRootPosition(layoutInfo, rootRect, targetInfo) {
         if (rootRect) {
-            return { x: rootRect.x, y: rootRect.y };
+            return {x: rootRect.x, y: rootRect.y};
         }
 
-        var defaultPosition = { x: 0, y: 0 };
+        var defaultPosition = {x: 0, y: 0};
         if (!targetInfo) {
             return defaultPosition;
         }
@@ -50184,6 +49832,7 @@
     function generateNodeKey(id) {
         return '_EC_' + id;
     }
+
     /**
      * @alias module:echarts/data/Graph
      * @constructor
@@ -50517,21 +50166,21 @@
      */
     function Node(id, dataIndex) {
         /**
-        * @type {string}
-        */
+         * @type {string}
+         */
         this.id = id == null ? '' : id;
 
         /**
-        * @type {Array.<module:echarts/data/Graph.Edge>}
-        */
+         * @type {Array.<module:echarts/data/Graph.Edge>}
+         */
         this.inEdges = [];
         /**
-        * @type {Array.<module:echarts/data/Graph.Edge>}
-        */
+         * @type {Array.<module:echarts/data/Graph.Edge>}
+         */
         this.outEdges = [];
         /**
-        * @type {Array.<module:echarts/data/Graph.Edge>}
-        */
+         * @type {Array.<module:echarts/data/Graph.Edge>}
+         */
         this.edges = [];
         /**
          * @type {module:echarts/data/Graph}
@@ -50563,8 +50212,8 @@
         },
 
         /**
-        * @return {number}
-        */
+         * @return {number}
+         */
         outDegree: function () {
             return this.outEdges.length;
         },
@@ -50639,7 +50288,7 @@
              */
             setVisual: function (key, value) {
                 this.dataIndex >= 0
-                    && this[hostName][dataName].setItemVisual(this.dataIndex, key, value);
+                && this[hostName][dataName].setItemVisual(this.dataIndex, key, value);
             },
 
             /**
@@ -50656,7 +50305,7 @@
              */
             setLayout: function (layout, merge$$1) {
                 this.dataIndex >= 0
-                    && this[hostName][dataName].setItemLayout(this.dataIndex, layout, merge$$1);
+                && this[hostName][dataName].setItemLayout(this.dataIndex, layout, merge$$1);
             },
 
             /**
@@ -50740,8 +50389,7 @@
         var nodeData;
         if (coordSys === 'cartesian2d' || coordSys === 'polar') {
             nodeData = createListFromArray(nodes, seriesModel);
-        }
-        else {
+        } else {
             var coordSysCtor = CoordinateSystemManager.get(coordSys);
             var coordDimensions = (coordSysCtor && coordSysCtor.type !== 'view')
                 ? (coordSysCtor.dimensions || []) : [];
@@ -50768,8 +50416,8 @@
             mainData: nodeData,
             struct: graph,
             structAttr: 'graph',
-            datas: { node: nodeData, edge: edgeData },
-            datasAttr: { node: 'data', edge: 'edgeData' }
+            datas: {node: nodeData, edge: edgeData},
+            datasAttr: {node: 'data', edge: 'edgeData'}
         });
 
         // Update dataIndex of nodes and edges because invalid edge may be removed
@@ -50852,13 +50500,13 @@
                 var edgeLabelModel = self.getModel('edgeLabel');
                 // For option `edgeLabel` can be found by label.xxx.xxx on item mode.
                 var fakeSeriesModel = new Model(
-                    { label: edgeLabelModel.option },
+                    {label: edgeLabelModel.option},
                     edgeLabelModel.parentModel,
                     ecModel
                 );
                 var emphasisEdgeLabelModel = self.getModel('emphasis.edgeLabel');
                 var emphasisFakeSeriesModel = new Model(
-                    { emphasis: { label: emphasisEdgeLabelModel.option } },
+                    {emphasis: {label: emphasisEdgeLabelModel.option}},
                     emphasisEdgeLabelModel.parentModel,
                     ecModel
                 );
@@ -50920,8 +50568,7 @@
                     html += ' : ' + encodeHTML(params.value);
                 }
                 return html;
-            }
-            else { // dataType === 'node' or empty
+            } else { // dataType === 'node' or empty
                 return GraphSeries.superApply(this, 'formatTooltip', arguments);
             }
         },
@@ -51149,6 +50796,7 @@
     function makeSymbolTypeKey(symbolCategory) {
         return '_' + symbolCategory + 'Type';
     }
+
     /**
      * @inner
      */
@@ -51195,8 +50843,7 @@
         if (cp1) {
             targetShape.cpx1 = cp1[0];
             targetShape.cpy1 = cp1[1];
-        }
-        else {
+        } else {
             targetShape.cpx1 = NaN;
             targetShape.cpy1 = NaN;
         }
@@ -51463,8 +51110,8 @@
             setTextStyle(label.style, labelModel, {
                 text: normalText
             }, {
-                    autoColor: defaultLabelColor
-                });
+                autoColor: defaultLabelColor
+            });
 
             label.__textAlign = labelStyle.textAlign;
             label.__verticalAlign = labelStyle.textVerticalAlign;
@@ -51484,8 +51131,7 @@
                 fontSize: hoverLabelModel.getShallow('fontSize'),
                 fontFamily: hoverLabelModel.getShallow('fontFamily')
             };
-        }
-        else {
+        } else {
             label.hoverStyle = {
                 text: null
             };
@@ -51610,8 +51256,7 @@
 
         if (!itemEl) {
             itemEl = new lineDraw._ctor(newLineData, newIdx, seriesScope);
-        }
-        else {
+        } else {
             itemEl.updateData(newLineData, newIdx, seriesScope);
         }
 
@@ -51715,6 +51360,7 @@
     var quadraticAt$1 = quadraticAt;
     var v2DistSquare = distSquare;
     var mathAbs$1 = Math.abs;
+
     function intersectCurveCircle(curvePoints, center, radius) {
         var p0 = curvePoints[0];
         var p1 = curvePoints[1];
@@ -51759,16 +51405,13 @@
             if (diff < 0) {
                 if (nextDiff >= 0) {
                     t = t + interval;
-                }
-                else {
+                } else {
                     t = t - interval;
                 }
-            }
-            else {
+            } else {
                 if (nextDiff >= 0) {
                     t = t - interval;
-                }
-                else {
+                } else {
                     t = t + interval;
                 }
             }
@@ -51793,6 +51436,7 @@
             }
             return symbolSize;
         }
+
         graph.eachEdge(function (edge, idx) {
             var linePoints = edge.getLayout();
             var fromSymbol = edge.getVisual('fromSymbol');
@@ -51931,7 +51575,7 @@
             var group = this.group;
 
             this._controller = new RoamController(api.getZr());
-            this._controllerHost = { target: group };
+            this._controllerHost = {target: group};
 
             group.add(symbolDraw.group);
             group.add(lineDraw.group);
@@ -51960,8 +51604,7 @@
                 };
                 if (this._firstRender) {
                     group.attr(groupNewProp);
-                }
-                else {
+                } else {
                     updateProps(group, groupNewProp, seriesModel);
                 }
             }
@@ -51995,7 +51638,7 @@
                         if (forceLayout) {
                             forceLayout.warmUp();
                             !this._layouting
-                                && this._startForceLayoutIteration(forceLayout, layoutAnimation);
+                            && this._startForceLayoutIteration(forceLayout, layoutAnimation);
                             forceLayout.setFixed(idx);
                             // Write position back to layout
                             data.setItemLayout(idx, el.position);
@@ -52076,8 +51719,7 @@
                         textOrigin: 'center'
                     });
                     symbolPath.hoverStyle && (symbolPath.hoverStyle.textPosition = textPosition);
-                }
-                else {
+                } else {
                     symbolPath.setStyle({
                         textRotation: 0
                     });
@@ -52279,16 +51921,16 @@
      * @property {number} [originY]
      */
     registerAction(actionInfo, function (payload, ecModel) {
-        ecModel.eachComponent({ mainType: 'series', query: payload }, function (seriesModel) {
+        ecModel.eachComponent({mainType: 'series', query: payload}, function (seriesModel) {
             var coordSys = seriesModel.coordinateSystem;
 
             var res = updateCenterAndZoom(coordSys, payload);
 
             seriesModel.setCenter
-                && seriesModel.setCenter(res.center);
+            && seriesModel.setCenter(res.center);
 
             seriesModel.setZoom
-                && seriesModel.setZoom(res.zoom);
+            && seriesModel.setZoom(res.zoom);
         });
     });
 
@@ -52304,7 +51946,8 @@
         type: 'focusNodeAdjacency',
         event: 'focusNodeAdjacency',
         update: 'series.graph:focusNodeAdjacency'
-    }, function () { });
+    }, function () {
+    });
 
     /**
      * @payload
@@ -52316,7 +51959,8 @@
         type: 'unfocusNodeAdjacency',
         event: 'unfocusNodeAdjacency',
         update: 'series.graph:unfocusNodeAdjacency'
-    }, function () { });
+    }, function () {
+    });
 
     /*
     * Licensed to the Apache Software Foundation (ASF) under one
@@ -52597,16 +52241,14 @@
                     }
                     if (hasValue) {
                         data.setItemLayout(dataIndex, coordSys.dataToPoint(value));
-                    }
-                    else {
+                    } else {
                         // Also {Array.<number>}, not undefined to avoid if...else... statement
                         data.setItemLayout(dataIndex, [NaN, NaN]);
                     }
                 }
 
                 simpleLayoutEdge(data.graph);
-            }
-            else if (!layout || layout === 'none') {
+            } else if (!layout || layout === 'none') {
                 simpleLayout$1(seriesModel);
             }
         });
@@ -52909,11 +52551,9 @@
                         var id = nodeData.getId(idx);
                         nodeData.setItemLayout(idx, preservedPoints[id] || [NaN, NaN]);
                     });
-                }
-                else if (!initLayout || initLayout === 'none') {
+                } else if (!initLayout || initLayout === 'none') {
                     simpleLayout$1(graphSeries);
-                }
-                else if (initLayout === 'circular') {
+                } else if (initLayout === 'circular') {
                     circularLayout$1(graphSeries);
                 }
 
@@ -53008,8 +52648,7 @@
 
                 // Step to get the layout
                 forceInstance.step();
-            }
-            else {
+            } else {
                 // Remove prev injected forceLayout instance
                 graphSeries.forceLayout = null;
             }
@@ -53369,8 +53008,7 @@
         if (labelFormatter) {
             if (typeof labelFormatter === 'string') {
                 label = labelFormatter.replace('{value}', label != null ? label : '');
-            }
-            else if (typeof labelFormatter === 'function') {
+            } else if (typeof labelFormatter === 'function') {
                 label = labelFormatter(label);
             }
         }
@@ -53396,7 +53034,8 @@
             );
         },
 
-        dispose: function () { },
+        dispose: function () {
+        },
 
         _renderMain: function (seriesModel, ecModel, api, colorList, posInfo) {
             var group = this.group;
@@ -53558,7 +53197,7 @@
                             y: unitY * (r - splitLineLen - distance) + cy,
                             textVerticalAlign: unitY < -0.4 ? 'top' : (unitY > 0.4 ? 'bottom' : 'middle'),
                             textAlign: unitX < -0.4 ? 'left' : (unitX > 0.4 ? 'right' : 'center')
-                        }, { autoColor: autoColor }),
+                        }, {autoColor: autoColor}),
                         silent: true
                     }));
                 }
@@ -53589,8 +53228,7 @@
                         angle += subStep;
                     }
                     angle -= subStep;
-                }
-                else {
+                } else {
                     angle += step;
                 }
             }
@@ -53709,7 +53347,7 @@
                         text: data.getName(0),
                         textAlign: 'center',
                         textVerticalAlign: 'middle'
-                    }, { autoColor: autoColor, forceRich: true })
+                    }, {autoColor: autoColor, forceRich: true})
                 }));
             }
         },
@@ -53745,7 +53383,7 @@
                         textHeight: isNaN(height) ? null : height,
                         textAlign: 'center',
                         textVerticalAlign: 'middle'
-                    }, { autoColor: autoColor, forceRich: true })
+                    }, {autoColor: autoColor, forceRich: true})
                 }));
             }
         }
@@ -53923,10 +53561,12 @@
             labelLine.ignore = labelLine.hoverIgnore;
             text.ignore = text.hoverIgnore;
         }
+
         function onNormal() {
             labelLine.ignore = labelLine.normalIgnore;
             text.ignore = text.normalIgnore;
         }
+
         this.on('emphasis', onEmphasis)
             .on('normal', onNormal)
             .on('mouseover', onEmphasis)
@@ -53953,14 +53593,13 @@
             polygon.setShape({
                 points: layout.points
             });
-            polygon.setStyle({ opacity: 0 });
+            polygon.setStyle({opacity: 0});
             initProps(polygon, {
                 style: {
                     opacity: opacity
                 }
             }, seriesModel, idx);
-        }
-        else {
+        } else {
             updateProps(polygon, {
                 style: {
                     opacity: opacity
@@ -54099,7 +53738,8 @@
             this._data = null;
         },
 
-        dispose: function () { }
+        dispose: function () {
+        }
     });
 
     /*
@@ -54178,8 +53818,7 @@
                 linePoints = [
                     [textX, textY], [textX, textY]
                 ];
-            }
-            else {
+            } else {
                 var x1;
                 var y1;
                 var x2;
@@ -54191,8 +53830,7 @@
                     x2 = x1 - labelLineLen;
                     textX = x2 - 5;
                     textAlign = 'right';
-                }
-                else {
+                } else {
                     // Right side
                     x1 = (points[1][0] + points[2][0]) / 2;
                     y1 = (points[1][1] + points[2][1]) / 2;
@@ -54283,8 +53921,7 @@
                 var height = itemModel.get('itemStyle.height');
                 if (height == null) {
                     height = itemHeight;
-                }
-                else {
+                } else {
                     height = parsePercent$1(height, viewRect.height);
                     if (sort === 'ascending') {
                         height = -height;
@@ -54557,7 +54194,7 @@
         var dist = handleEnds[handleIndex] - handleEnds[1 - handleIndex];
         // If `handleEnds[0] === handleEnds[1]`, always believe that handleEnd[0]
         // is at left of handleEnds[1] for non-cross case.
-        return { span: Math.abs(dist), sign: dist > 0 ? -1 : dist < 0 ? 1 : handleIndex ? -1 : 1 };
+        return {span: Math.abs(dist), sign: dist > 0 ? -1 : dist < 0 ? 1 : handleIndex ? -1 : 1};
     }
 
     function restrict$1(value, extend) {
@@ -54782,8 +54419,7 @@
                 var axisExpandCenter = parallelModel.get('axisExpandCenter') || mathFloor$2(axisCount / 2);
                 axisExpandWindow = [axisExpandWidth * axisExpandCenter - winSize / 2];
                 axisExpandWindow[1] = axisExpandWindow[0] + winSize;
-            }
-            else {
+            } else {
                 winSize = restrict(axisExpandWindow[1] - axisExpandWindow[0], layoutExtent);
                 axisExpandWindow[1] = axisExpandWindow[0] + winSize;
             }
@@ -54836,7 +54472,7 @@
 
             each$11(dimensions, function (dim, idx) {
                 var posInfo = (layoutInfo.axisExpandable
-                    ? layoutAxisWithExpand : layoutAxisWithoutExpand
+                        ? layoutAxisWithExpand : layoutAxisWithoutExpand
                 )(idx, layoutInfo);
 
                 var positionTable = {
@@ -54934,8 +54570,7 @@
 
                 if (!hasActiveSet) {
                     activeState = 'normal';
-                }
-                else {
+                } else {
                     activeState = 'active';
                     var values = data.getValues(dataDimensions, dataIndex);
                     for (var j = 0, lenj = dimensions.length; j < lenj; j++) {
@@ -55002,7 +54637,7 @@
 
             // Out of the area of coordinate system.
             if (!this.containPoint(point)) {
-                return { behavior: 'none', axisExpandWindow: axisExpandWindow };
+                return {behavior: 'none', axisExpandWindow: axisExpandWindow};
             }
 
             // Conver the point from global to expand coordinates.
@@ -55021,15 +54656,13 @@
                 if (useJump && axisCollapseWidth && pointCoord < winSize * triggerArea[0]) {
                     behavior = 'jump';
                     delta = pointCoord - winSize * triggerArea[2];
-                }
-                else if (useJump && axisCollapseWidth && pointCoord > winSize * (1 - triggerArea[0])) {
+                } else if (useJump && axisCollapseWidth && pointCoord > winSize * (1 - triggerArea[0])) {
                     behavior = 'jump';
                     delta = pointCoord - winSize * (1 - triggerArea[2]);
-                }
-                else {
+                } else {
                     (delta = pointCoord - winSize * triggerArea[1]) >= 0
-                        && (delta = pointCoord - winSize * (1 - triggerArea[1])) <= 0
-                        && (delta = 0);
+                    && (delta = pointCoord - winSize * (1 - triggerArea[1])) <= 0
+                    && (delta = 0);
                 }
                 delta *= layoutInfo.axisExpandWidth / axisCollapseWidth;
                 delta
@@ -55081,14 +54714,12 @@
         if (axisIndex < winInnerIndices[0]) {
             position = axisIndex * axisCollapseWidth;
             nameTruncateMaxWidth = axisCollapseWidth;
-        }
-        else if (axisIndex <= winInnerIndices[1]) {
+        } else if (axisIndex <= winInnerIndices[1]) {
             position = layoutInfo.axisExpandWindow0Pos
                 + axisIndex * axisExpandWidth - layoutInfo.axisExpandWindow[0];
             axisNameAvailableWidth = axisExpandWidth;
             axisLabelShow = true;
-        }
-        else {
+        } else {
             position = layoutLength - (axisCount - 1 - axisIndex) * axisCollapseWidth;
             nameTruncateMaxWidth = axisCollapseWidth;
         }
@@ -55154,7 +54785,7 @@
         return coordSysList;
     }
 
-    CoordinateSystemManager.register('parallel', { create: create$2 });
+    CoordinateSystemManager.register('parallel', {create: create$2});
 
     /*
     * Licensed to the Apache Software Foundation (ASF) under one
@@ -55251,8 +54882,7 @@
                 if (interval[0] <= value && value <= interval[1]) {
                     return 'active';
                 }
-            }
-            else {
+            } else {
                 for (var i = 0, len = activeIntervals.length; i < len; i++) {
                     if (activeIntervals[i][0] <= value && value <= activeIntervals[i][1]) {
                         return 'active';
@@ -55467,7 +55097,7 @@
 
     registerAction(actionInfo$1, function (payload, ecModel) {
         ecModel.eachComponent(
-            { mainType: 'parallelAxis', query: payload },
+            {mainType: 'parallelAxis', query: payload},
             function (parallelAxisModel) {
                 parallelAxisModel.axis.model.setActiveIntervals(payload.intervals);
             }
@@ -55479,7 +55109,7 @@
      */
     registerAction('parallelAxisExpand', function (payload, ecModel) {
         ecModel.eachComponent(
-            { mainType: 'parallel', query: payload },
+            {mainType: 'parallel', query: payload},
             function (parallelModel) {
                 parallelModel.setAxisExpand(payload);
             }
@@ -55715,8 +55345,7 @@
                 each$1(panelOpts, function (panelOpts) {
                     panels[panelOpts.panelId] = clone(panelOpts);
                 });
-            }
-            else {
+            } else {
                 this._panels = null;
             }
             return this;
@@ -55803,12 +55432,11 @@
                 // where updating cover when creating should be forbiden.
                 if (oldIndex != null && oldCovers[oldIndex] === creatingCover) {
                     newCovers[newIndex] = oldCovers[oldIndex];
-                }
-                else {
+                } else {
                     var cover = newCovers[newIndex] = oldIndex != null
                         ? (
                             oldCovers[oldIndex].__brushOption = newBrushOption,
-                            oldCovers[oldIndex]
+                                oldCovers[oldIndex]
                         )
                         : endCreating(controller, createCover(controller, newBrushOption));
                     updateCoverAfterCreation(controller, cover);
@@ -56006,7 +55634,7 @@
             draggable: true,
             cursor: 'move',
             drift: curry$2(doDrift, controller, cover, 'nswe'),
-            ondragend: curry$2(trigger, controller, { isEnd: true })
+            ondragend: curry$2(trigger, controller, {isEnd: true})
         }));
 
         each$12(
@@ -56014,12 +55642,12 @@
             function (name) {
                 cover.add(new Rect({
                     name: name,
-                    style: { opacity: 0 },
+                    style: {opacity: 0},
                     draggable: true,
                     silent: true,
                     invisible: true,
                     drift: curry$2(doDrift, controller, cover, name),
-                    ondragend: curry$2(trigger, controller, { isEnd: true })
+                    ondragend: curry$2(trigger, controller, {isEnd: true})
                 }));
             }
         );
@@ -56092,7 +55720,7 @@
     }
 
     function makeStyle(brushOption) {
-        return defaults({ strokeNoScale: true }, brushOption.brushStyle);
+        return defaults({strokeNoScale: true}, brushOption.brushStyle);
     }
 
     function formatRectRange(x, y, x2, y2) {
@@ -56118,10 +55746,9 @@
             ];
             (globalDir[0] === 'e' || globalDir[0] === 'w') && globalDir.reverse();
             return globalDir.join('');
-        }
-        else {
-            var map$$1 = { w: 'left', e: 'right', n: 'top', s: 'bottom' };
-            var inverseMap = { left: 'w', right: 'e', top: 'n', bottom: 's' };
+        } else {
+            var map$$1 = {w: 'left', e: 'right', n: 'top', s: 'bottom'};
+            var inverseMap = {left: 'w', right: 'e', top: 'n', bottom: 's'};
             var globalDir = transformDirection(
                 map$$1[localDirection], getTransform$1(controller)
             );
@@ -56144,7 +55771,7 @@
         ));
 
         updateCoverAfterCreation(controller, cover);
-        trigger(controller, { isEnd: false });
+        trigger(controller, {isEnd: false});
     }
 
     function driftPolygon(controller, cover, dx, dy, e) {
@@ -56157,7 +55784,7 @@
         });
 
         updateCoverAfterCreation(controller, cover);
-        trigger(controller, { isEnd: false });
+        trigger(controller, {isEnd: false});
     }
 
     function toLocalDelta(controller, dx, dy) {
@@ -56262,10 +55889,9 @@
 
                 updateCoverShape(controller, creatingCover);
 
-                eventParams = { isEnd: isEnd };
+                eventParams = {isEnd: isEnd};
             }
-        }
-        else if (
+        } else if (
             isEnd
             && thisBrushOption.brushMode === 'single'
             && thisBrushOption.removeOnClick
@@ -56276,7 +55902,7 @@
             // disappear).
             // Only some cover removed, trigger action, but not every click trigger action.
             if (getPanelByPoint(controller, e, localCursorPoint) && clearCovers(controller)) {
-                eventParams = { isEnd: isEnd, removeOnClick: true };
+                eventParams = {isEnd: isEnd, removeOnClick: true};
             }
         }
 
@@ -56303,8 +55929,7 @@
                 // In case some browser do not support globalOut,
                 // and release mose out side the browser.
                 handleDragEnd.call(this, e);
-            }
-            else if (!e.target || !e.target.draggable) {
+            } else if (!e.target || !e.target.draggable) {
 
                 preventDefault(e);
 
@@ -56421,7 +56046,7 @@
                     name: 'main',
                     draggable: true,
                     drift: curry$2(driftPolygon, controller, cover),
-                    ondragend: curry$2(trigger, controller, { isEnd: true })
+                    ondragend: curry$2(trigger, controller, {isEnd: true})
                 }));
             },
             updateCoverShape: function (controller, cover, localRange, brushOption) {
@@ -56469,8 +56094,7 @@
                     otherExtent = panel.getLinearBrushOtherExtent(
                         xyIndex, controller._transform
                     );
-                }
-                else {
+                } else {
                     var zr = controller._zr;
                     otherExtent = [0, [zr.getWidth(), zr.getHeight()][1 - xyIndex]];
                 }
@@ -56602,7 +56226,7 @@
             var axisLayout = coordSys.getAxisLayout(dim);
 
             var builderOpt = extend(
-                { strokeContainThreshold: areaWidth },
+                {strokeContainThreshold: areaWidth},
                 axisLayout
             );
 
@@ -56702,7 +56326,7 @@
         return payload
             && payload.type === 'axisAreaSelect'
             && ecModel.findComponents(
-                { mainType: 'parallelAxis', query: payload }
+                {mainType: 'parallelAxis', query: payload}
             )[0] === axisModel;
     }
 
@@ -56805,7 +56429,7 @@
 
         _dispatchExpand: function (opt) {
             opt && this._api.dispatchAction(
-                extend({ type: 'parallelAxisExpand' }, opt)
+                extend({type: 'parallelAxisExpand'}, opt)
             );
         }
 
@@ -57065,7 +56689,7 @@
                 var points = createLinePoints(data, newDataIndex, dimensions, coordSys);
                 data.setItemGraphicEl(newDataIndex, line);
                 var animationModel = (payload && payload.animation === false) ? null : seriesModel;
-                updateProps(line, { shape: { points: points } }, animationModel, newDataIndex);
+                updateProps(line, {shape: {points: points}}, animationModel, newDataIndex);
 
                 updateElCommon(line, data, newDataIndex, seriesScope);
             }
@@ -57111,7 +56735,8 @@
             }
         },
 
-        dispose: function () { },
+        dispose: function () {
+        },
 
         // _renderForProgressive: function (seriesModel) {
         //     var dataGroup = this._dataGroup;
@@ -57189,7 +56814,7 @@
     function addEl(data, dataGroup, dataIndex, dimensions, coordSys) {
         var points = createLinePoints(data, dataIndex, dimensions, coordSys);
         var line = new Polyline({
-            shape: { points: points },
+            shape: {points: points},
             silent: true,
             z2: 10
         });
@@ -57317,7 +56942,7 @@
                 }, params.start, params.end);
             }
 
-            return { progress: progress };
+            return {progress: progress};
         }
     };
 
@@ -57699,7 +57324,8 @@
             this._data = seriesModel.getData();
         },
 
-        dispose: function () { }
+        dispose: function () {
+        }
     });
 
     // add animation to the view
@@ -57747,7 +57373,7 @@
         // here can only use 'update' now, other value is not support in echarts.
         update: 'update'
     }, function (payload, ecModel) {
-        ecModel.eachComponent({ mainType: 'series', subType: 'sankey', query: payload }, function (seriesModel) {
+        ecModel.eachComponent({mainType: 'series', subType: 'sankey', query: payload}, function (seriesModel) {
             seriesModel.setNodePosition(payload.dataIndex, [payload.localX, payload.localY]);
         });
     });
@@ -57801,8 +57427,7 @@
 
                 if (values) {
                     values.push(array[i]);
-                }
-                else {
+                } else {
                     valuesByKey[keyValue] = [array[i]];
                 }
             }
@@ -57836,8 +57461,7 @@
                 return array.sort(function (a, b) {
                     return sortKeyFunction(a.key, b.key);
                 });
-            }
-            else {
+            } else {
                 return array;
             }
         }
@@ -57960,13 +57584,13 @@
             var value1 = sum(node.outEdges, getEdgeValue);
             var value2 = sum(node.inEdges, getEdgeValue);
             var value = Math.max(value1, value2);
-            node.setLayout({ value: value }, true);
+            node.setLayout({value: value}, true);
         });
     }
 
     /**
      * Compute the x-position for each node.
-     * 
+     *
      * Here we use Kahn algorithm to detect cycle when we traverse
      * the node to computer the initial x position.
      *
@@ -57999,8 +57623,8 @@
 
         while (zeroIndegrees.length) {
             each$1(zeroIndegrees, function (node) {
-                node.setLayout({ x: x }, true);
-                node.setLayout({ dx: nodeWidth }, true);
+                node.setLayout({x: x}, true);
+                node.setLayout({dx: nodeWidth}, true);
                 each$1(node.outEdges, function (edge) {
                     var indexEdge = edges.indexOf(edge);
                     remainEdges[indexEdge] = 0;
@@ -58042,7 +57666,7 @@
     function moveSinksRight(nodes, x) {
         each$1(nodes, function (node) {
             if (!node.outEdges.length) {
-                node.setLayout({ x: x - 1 }, true);
+                node.setLayout({x: x - 1}, true);
             }
         });
     }
@@ -58056,7 +57680,7 @@
     function scaleNodeBreadths(nodes, kx) {
         each$1(nodes, function (node) {
             var nodeX = node.getLayout().x * kx;
-            node.setLayout({ x: nodeX }, true);
+            node.setLayout({x: nodeX}, true);
         });
     }
 
@@ -58124,15 +57748,15 @@
 
         each$1(nodesByBreadth, function (nodes) {
             each$1(nodes, function (node, i) {
-                node.setLayout({ y: i }, true);
+                node.setLayout({y: i}, true);
                 var nodeDy = node.getLayout().value * ky0;
-                node.setLayout({ dy: nodeDy }, true);
+                node.setLayout({dy: nodeDy}, true);
             });
         });
 
         each$1(edges, function (edge) {
             var edgeDy = +edge.getValue() * ky0;
-            edge.setLayout({ dy: edgeDy }, true);
+            edge.setLayout({dy: edgeDy}, true);
         });
     }
 
@@ -58159,7 +57783,7 @@
                 dy = y0 - node.getLayout().y;
                 if (dy > 0) {
                     var nodeY = node.getLayout().y + dy;
-                    node.setLayout({ y: nodeY }, true);
+                    node.setLayout({y: nodeY}, true);
                 }
                 y0 = node.getLayout().y + node.getLayout().dy + nodeGap;
             }
@@ -58168,14 +57792,14 @@
             dy = y0 - nodeGap - height;
             if (dy > 0) {
                 var nodeY = node.getLayout().y - dy;
-                node.setLayout({ y: nodeY }, true);
+                node.setLayout({y: nodeY}, true);
                 y0 = node.getLayout().y;
                 for (i = n - 2; i >= 0; --i) {
                     node = nodes[i];
                     dy = node.getLayout().y + node.getLayout().dy + nodeGap - y0;
                     if (dy > 0) {
                         nodeY = node.getLayout().y - dy;
-                        node.setLayout({ y: nodeY }, true);
+                        node.setLayout({y: nodeY}, true);
                     }
                     y0 = node.getLayout().y;
                 }
@@ -58196,7 +57820,7 @@
                 if (node.outEdges.length) {
                     var y = sum(node.outEdges, weightedTarget) / sum(node.outEdges, getEdgeValue);
                     var nodeY = node.getLayout().y + (y - center$1(node)) * alpha;
-                    node.setLayout({ y: nodeY }, true);
+                    node.setLayout({y: nodeY}, true);
                 }
             });
         });
@@ -58219,7 +57843,7 @@
                 if (node.inEdges.length) {
                     var y = sum(node.inEdges, weightedSource) / sum(node.inEdges, getEdgeValue);
                     var nodeY = node.getLayout().y + (y - center$1(node)) * alpha;
-                    node.setLayout({ y: nodeY }, true);
+                    node.setLayout({y: nodeY}, true);
                 }
             });
         });
@@ -58243,11 +57867,11 @@
             var sy = 0;
             var ty = 0;
             each$1(node.outEdges, function (edge) {
-                edge.setLayout({ sy: sy }, true);
+                edge.setLayout({sy: sy}, true);
                 sy += edge.getLayout().dy;
             });
             each$1(node.inEdges, function (edge) {
-                edge.setLayout({ ty: ty }, true);
+                edge.setLayout({ty: ty}, true);
                 ty += edge.getLayout().dy;
             });
         });
@@ -58425,13 +58049,11 @@
                 option.layout = 'horizontal';
                 ordinalMeta = xAxisModel.getOrdinalMeta();
                 addOrdinal = true;
-            }
-            else if (yAxisType === 'category') {
+            } else if (yAxisType === 'category') {
                 option.layout = 'vertical';
                 ordinalMeta = yAxisModel.getOrdinalMeta();
                 addOrdinal = true;
-            }
-            else {
+            } else {
                 option.layout = option.layout || 'horizontal';
             }
 
@@ -58453,12 +58075,10 @@
                     if (item.value && isArray(item.value)) {
                         newItem = item.value.slice();
                         item.value.unshift(index);
-                    }
-                    else if (isArray(item)) {
+                    } else if (isArray(item)) {
                         newItem = item.slice();
                         item.unshift(index);
-                    }
-                    else {
+                    } else {
                         newItem = item;
                     }
                     newOptionData.push(newItem);
@@ -58536,11 +58156,11 @@
          * @readOnly
          */
         defaultValueDimensions: [
-            { name: 'min', defaultTooltip: true },
-            { name: 'Q1', defaultTooltip: true },
-            { name: 'median', defaultTooltip: true },
-            { name: 'Q3', defaultTooltip: true },
-            { name: 'max', defaultTooltip: true }
+            {name: 'min', defaultTooltip: true},
+            {name: 'Q1', defaultTooltip: true},
+            {name: 'median', defaultTooltip: true},
+            {name: 'Q3', defaultTooltip: true},
+            {name: 'max', defaultTooltip: true}
         ],
 
         /**
@@ -58649,8 +58269,7 @@
                     var itemLayout = data.getItemLayout(newIdx);
                     if (!symbolEl) {
                         symbolEl = createNormalBox(itemLayout, data, newIdx, constDim);
-                    }
-                    else {
+                    } else {
                         updateNormalBoxData(itemLayout, symbolEl, data, newIdx);
                     }
 
@@ -58729,7 +58348,7 @@
 
         updateMethod(
             el,
-            { shape: { points: itemLayout.ends } },
+            {shape: {points: itemLayout.ends}},
             seriesModel,
             dataIndex
         );
@@ -58802,7 +58421,7 @@
                     var itemModel = data.getItemModel(idx);
                     data.setItemVisual(
                         idx,
-                        { color: itemModel.get(borderColorQuery, true) }
+                        {color: itemModel.get(borderColorQuery, true)}
                     );
                 });
             }
@@ -58868,7 +58487,7 @@
             if (idx < 0) {
                 idx = axisList.length;
                 axisList[idx] = baseAxis;
-                result[idx] = { axis: baseAxis, seriesModels: [] };
+                result[idx] = {axis: baseAxis, seriesModels: []};
             }
 
             result[idx].seriesModels.push(seriesModel);
@@ -58893,14 +58512,13 @@
         var bandWidth;
         if (baseAxis.type === 'category') {
             bandWidth = baseAxis.getBandWidth();
-        }
-        else {
+        } else {
             var maxDataCount = 0;
             each$13(seriesModels, function (seriesModel) {
                 maxDataCount = Math.max(maxDataCount, seriesModel.getData().count());
             });
             extent = baseAxis.getExtent(),
-                Math.abs(extent[1] - extent[0]) / maxDataCount;
+            Math.abs(extent[1] - extent[0]) / maxDataCount;
         }
 
         each$13(seriesModels, function (seriesModel) {
@@ -58978,8 +58596,7 @@
             var point;
             if (isNaN(axisDimVal) || isNaN(val)) {
                 point = [NaN, NaN];
-            }
-            else {
+            } else {
                 point = coordSys.dataToPoint(p);
                 point[cDimIdx] += offset;
             }
@@ -59056,10 +58673,10 @@
          * @readOnly
          */
         defaultValueDimensions: [
-            { name: 'open', defaultTooltip: true },
-            { name: 'close', defaultTooltip: true },
-            { name: 'lowest', defaultTooltip: true },
-            { name: 'highest', defaultTooltip: true }
+            {name: 'open', defaultTooltip: true},
+            {name: 'close', defaultTooltip: true},
+            {name: 'lowest', defaultTooltip: true},
+            {name: 'highest', defaultTooltip: true}
         ],
 
         /**
@@ -59207,7 +58824,7 @@
 
                         var itemLayout = data.getItemLayout(newIdx);
                         el = createNormalBox$1(itemLayout, newIdx, true);
-                        initProps(el, { shape: { points: itemLayout.ends } }, seriesModel, newIdx);
+                        initProps(el, {shape: {points: itemLayout.ends}}, seriesModel, newIdx);
 
                         setBoxCommon(el, data, newIdx, isSimpleBox);
 
@@ -59227,9 +58844,8 @@
                     var itemLayout = data.getItemLayout(newIdx);
                     if (!el) {
                         el = createNormalBox$1(itemLayout, newIdx);
-                    }
-                    else {
-                        updateProps(el, { shape: { points: itemLayout.ends } }, seriesModel, newIdx);
+                    } else {
+                        updateProps(el, {shape: {points: itemLayout.ends}}, seriesModel, newIdx);
                     }
 
                     setBoxCommon(el, data, newIdx, isSimpleBox);
@@ -59298,8 +58914,7 @@
             if (this.__simpleBox) {
                 ctx.moveTo(ends[4][0], ends[4][1]);
                 ctx.lineTo(ends[6][0], ends[6][1]);
-            }
-            else {
+            } else {
                 ctx.moveTo(ends[0][0], ends[0][1]);
                 ctx.lineTo(ends[1][0], ends[1][1]);
                 ctx.lineTo(ends[2][0], ends[2][1]);
@@ -59356,7 +58971,6 @@
     }
 
 
-
     var LargeBoxPath = Path.extend({
 
         type: 'largeCandlestickBox',
@@ -59372,8 +58986,7 @@
                     var x = points[i++];
                     ctx.moveTo(x, points[i++]);
                     ctx.lineTo(x, points[i++]);
-                }
-                else {
+                } else {
                     i += 3;
                 }
             }
@@ -59385,12 +58998,12 @@
         var largePoints = data.getLayout('largePoints');
 
         var elP = new LargeBoxPath({
-            shape: { points: largePoints },
+            shape: {points: largePoints},
             __sign: 1
         });
         group.add(elP);
         var elN = new LargeBoxPath({
-            shape: { points: largePoints },
+            shape: {points: largePoints},
             __sign: -1
         });
         group.add(elN);
@@ -59503,7 +59116,7 @@
                 return;
             }
 
-            return !isLargeRender && { progress: progress };
+            return !isLargeRender && {progress: progress};
 
 
             function progress(params, data) {
@@ -59723,11 +59336,9 @@
         var sign;
         if (openVal > closeVal) {
             sign = -1;
-        }
-        else if (openVal < closeVal) {
+        } else if (openVal < closeVal) {
             sign = 1;
-        }
-        else {
+        } else {
             sign = dataIndex > 0
                 // If close === open, compare with close of last record
                 ? (data.get(closeDim, dataIndex - 1) <= closeVal ? 1 : -1)
@@ -59911,6 +59522,7 @@
             });
         });
     }
+
     /**
      * @constructor
      * @param {module:echarts/data/List} data
@@ -60069,8 +59681,7 @@
                 : this.startEffectAnimation(effectCfg);
 
             this._effectCfg = effectCfg;
-        }
-        else {
+        } else {
             // Not keep old effect config
             this._effectCfg = null;
 
@@ -60145,7 +59756,7 @@
 
             var res = pointsLayout().reset(seriesModel);
             if (res.progress) {
-                res.progress({ start: 0, end: data.count() }, data);
+                res.progress({start: 0, end: data.count()}, data);
             }
 
             this._symbolDraw.updateLayout(data);
@@ -60163,7 +59774,8 @@
             this._symbolDraw && this._symbolDraw.remove(api);
         },
 
-        dispose: function () { }
+        dispose: function () {
+        }
     });
 
     /*
@@ -60285,8 +59897,7 @@
                 if (!this._flatCoords) {
                     this._flatCoords = result.flatCoords;
                     this._flatCoordsOffset = result.flatCoordsOffset;
-                }
-                else {
+                } else {
                     this._flatCoords = concatArray(this._flatCoords, result.flatCoords);
                     this._flatCoordsOffset = concatArray(this._flatCoordsOffset, result.flatCoordsOffset);
                 }
@@ -60312,8 +59923,7 @@
         getLineCoordsCount: function (idx) {
             if (this._flatCoordsOffset) {
                 return this._flatCoordsOffset[idx * 2 + 1];
-            }
-            else {
+            } else {
                 return this._getCoordsFromItemModel(idx).length;
             }
         },
@@ -60328,8 +59938,7 @@
                     out[i][1] = this._flatCoords[offset + i * 2 + 1];
                 }
                 return len;
-            }
-            else {
+            } else {
                 var coords = this._getCoordsFromItemModel(idx);
                 for (var i = 0; i < coords.length; i++) {
                     out[i] = out[i] || [];
@@ -60405,8 +60014,7 @@
                 // dataItem is simply coords
                 if (dataItem instanceof Array) {
                     return NaN;
-                }
-                else {
+                } else {
                     lineData.hasItemOption = true;
                     var value = dataItem.value;
                     if (value != null) {
@@ -60897,8 +60505,7 @@
             }
             // PENDING really need to do this ?
             frame = Math.min(frame, len$$1 - 2);
-        }
-        else {
+        } else {
             for (var frame = lastFrame; frame < len$$1; frame++) {
                 if (offsets[frame] > t) {
                     break;
@@ -60967,8 +60574,7 @@
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 for (var i = 0; i < segs.length;) {
                     var x0 = segs[i++];
                     var y0 = segs[i++];
@@ -60979,8 +60585,7 @@
                         var x2 = (x0 + x1) / 2 - (y0 - y1) * curveness;
                         var y2 = (y0 + y1) / 2 - (x1 - x0) * curveness;
                         path.quadraticCurveTo(x2, y2, x1, y1);
-                    }
-                    else {
+                    } else {
                         path.lineTo(x1, y1);
                     }
                 }
@@ -61011,8 +60616,7 @@
 
                     dataIndex++;
                 }
-            }
-            else {
+            } else {
                 var dataIndex = 0;
                 for (var i = 0; i < segs.length;) {
                     var x0 = segs[i++];
@@ -61026,8 +60630,7 @@
                         if (containStroke$3(x0, y0, x2, y2, x1, y1)) {
                             return dataIndex;
                         }
-                    }
-                    else {
+                    } else {
                         if (containStroke$1(x0, y0, x1, y1)) {
                             return dataIndex;
                         }
@@ -61089,8 +60692,7 @@
                 });
             }
             this.group.add(this._incremental);
-        }
-        else {
+        } else {
             this._incremental = null;
         }
     };
@@ -61111,8 +60713,7 @@
             lineEl.cursor = 'default';
             lineEl.__startIndex = taskParams.start;
             this.group.add(lineEl);
-        }
-        else {
+        } else {
             this._incremental.addDisplayable(lineEl, true);
         }
     };
@@ -61207,8 +60808,7 @@
                             totalCoordsCount += seriesModel.getLineCoordsCount(i);
                         }
                         points = new Float32Array(segCount + totalCoordsCount * 2);
-                    }
-                    else {
+                    } else {
                         points = new Float32Array(segCount * 4);
                     }
 
@@ -61227,8 +60827,7 @@
                     }
 
                     lineData.setLayout('linesPoints', points);
-                }
-                else {
+                } else {
                     for (var i = params.start; i < params.end; i++) {
                         var itemModel = lineData.getItemModel(i);
                         var len = seriesModel.getLineCoords(i, lineCoords);
@@ -61238,8 +60837,7 @@
                             for (var j = 0; j < len; j++) {
                                 pts.push(coordSys.dataToPoint(lineCoords[j]));
                             }
-                        }
-                        else {
+                        } else {
                             pts[0] = coordSys.dataToPoint(lineCoords[0]);
                             pts[1] = coordSys.dataToPoint(lineCoords[1]);
 
@@ -61256,7 +60854,7 @@
                 }
             }
 
-            return { progress: progress };
+            return {progress: progress};
         }
     };
 
@@ -61283,7 +60881,8 @@
 
         type: 'lines',
 
-        init: function () { },
+        init: function () {
+        },
 
         render: function (seriesModel, ecModel, api) {
             var data = seriesModel.getData();
@@ -61360,13 +60959,12 @@
                 return {
                     update: true
                 };
-            }
-            else {
+            } else {
                 // TODO Use same logic with ScatterView.
                 // Manually update layout
                 var res = linesLayout.reset(seriesModel);
                 if (res.progress) {
-                    res.progress({ start: 0, end: data.count() }, data);
+                    res.progress({start: 0, end: data.count()}, data);
                 }
                 this._lineDraw.updateLayout();
                 this._clearLayer(api);
@@ -61431,7 +61029,8 @@
             this._clearLayer(api);
         },
 
-        dispose: function () { }
+        dispose: function () {
+        }
     });
 
     /*
@@ -61490,7 +61089,7 @@
                 data.setItemVisual(idx, 'opacity', opacity);
             }
 
-            return { dataEach: data.hasItemOption ? dataEach : null };
+            return {dataEach: data.hasItemOption ? dataEach : null};
         }
     };
 
@@ -61684,8 +61283,7 @@
                     pixels[offset++] = gradient[gradientOffset + 1];
                     pixels[offset++] = gradient[gradientOffset + 2];
                     pixels[offset++] = gradient[gradientOffset + 3] * alpha * 256;
-                }
-                else {
+                } else {
                     offset += 4;
                 }
             }
@@ -61845,8 +61443,7 @@
             var coordSys = seriesModel.coordinateSystem;
             if (coordSys.type === 'cartesian2d' || coordSys.type === 'calendar') {
                 this._renderOnCartesianAndCalendar(seriesModel, api, 0, seriesModel.getData().count());
-            }
-            else if (isGeoCoordSys(coordSys)) {
+            } else if (isGeoCoordSys(coordSys)) {
                 this._renderOnGeo(
                     coordSys, seriesModel, visualMapOfThisSeries, api
                 );
@@ -61938,8 +61535,7 @@
                             opacity: data.getItemVisual(idx, 'opacity')
                         }
                     });
-                }
-                else {
+                } else {
                     // Ignore empty data
                     if (isNaN(data.get(dataDims[1], idx))) {
                         continue;
@@ -62065,7 +61661,8 @@
             this.group.add(img);
         },
 
-        dispose: function () { }
+        dispose: function () {
+        }
     });
 
     /*
@@ -62170,8 +61767,8 @@
 
     // index: +isHorizontal
     var LAYOUT_ATTRS = [
-        { xy: 'x', wh: 'width', index: 0, posDesc: ['left', 'right'] },
-        { xy: 'y', wh: 'height', index: 1, posDesc: ['top', 'bottom'] }
+        {xy: 'x', wh: 'width', index: 0, posDesc: ['left', 'right']},
+        {xy: 'y', wh: 'height', index: 1, posDesc: ['top', 'bottom']}
     ];
 
     var pathForLineWidth = new Circle();
@@ -62191,7 +61788,7 @@
             var coordSysRect = cartesian.grid.getRect();
 
             var opt = {
-                ecSize: { width: api.getWidth(), height: api.getHeight() },
+                ecSize: {width: api.getWidth(), height: api.getHeight()},
                 seriesModel: seriesModel,
                 coordSys: cartesian,
                 coordSysExtent: [
@@ -62239,8 +61836,7 @@
 
                     if (bar) {
                         updateBar(bar, opt, symbolMeta);
-                    }
-                    else {
+                    } else {
                         bar = createBar(data, opt, symbolMeta, true);
                     }
 
@@ -62273,8 +61869,7 @@
                         removeBar(data, bar.dataIndex, ecModel, bar);
                     });
                 }
-            }
-            else {
+            } else {
                 group.removeAll();
             }
         }
@@ -62351,14 +61946,11 @@
             ];
             symbolBoundingExtent[1] < symbolBoundingExtent[0] && (symbolBoundingExtent.reverse());
             boundingLength = symbolBoundingExtent[pxSignIdx];
-        }
-        else if (symbolBoundingData != null) {
+        } else if (symbolBoundingData != null) {
             boundingLength = convertToCoordOnAxis(valueAxis, symbolBoundingData) - zeroPx;
-        }
-        else if (symbolRepeat) {
+        } else if (symbolRepeat) {
             boundingLength = opt.coordSysExtent[valueDim.index][pxSignIdx] - zeroPx;
-        }
-        else {
+        } else {
             boundingLength = layout[valueDim.wh];
         }
 
@@ -62387,8 +61979,7 @@
         var symbolSize = data.getItemVisual(dataIndex, 'symbolSize');
         if (isArray(symbolSize)) {
             symbolSize = symbolSize.slice();
-        }
-        else {
+        } else {
             if (symbolSize == null) {
                 symbolSize = '100%';
             }
@@ -62565,9 +62156,8 @@
             path.__pictorialRepeatTimes = repeatTimes;
             if (index < repeatTimes) {
                 updateAttr(path, null, makeTarget(index), symbolMeta, isUpdate);
-            }
-            else {
-                updateAttr(path, null, { scale: [0, 0] }, symbolMeta, isUpdate, function () {
+            } else {
+                updateAttr(path, null, {scale: [0, 0]}, symbolMeta, isUpdate, function () {
                     bundle.remove(path);
                 });
             }
@@ -62664,8 +62254,7 @@
             mainPath
                 .on('mouseover', onMouseOver)
                 .on('mouseout', onMouseOut);
-        }
-        else {
+        } else {
             updateAttr(
                 mainPath,
                 null,
@@ -62708,9 +62297,8 @@
             });
 
             bar.add(barRect);
-        }
-        else {
-            updateAttr(barRect, null, { shape: rectShape }, symbolMeta, isUpdate);
+        } else {
+            updateAttr(barRect, null, {shape: rectShape}, symbolMeta, isUpdate);
         }
     }
 
@@ -62725,12 +62313,11 @@
 
             if (clipPath) {
                 updateProps(
-                    clipPath, { shape: clipShape }, animationModel, dataIndex
+                    clipPath, {shape: clipShape}, animationModel, dataIndex
                 );
-            }
-            else {
+            } else {
                 clipShape[valueDim.wh] = 0;
-                clipPath = new Rect({ shape: clipShape });
+                clipPath = new Rect({shape: clipShape});
                 bar.__pictorialBundle.setClipPath(clipPath);
                 bar.__pictorialClipPath = clipPath;
 
@@ -62738,7 +62325,7 @@
                 target[valueDim.wh] = symbolMeta.clipShape[valueDim.wh];
 
                 graphic[isUpdate ? 'updateProps' : 'initProps'](
-                    clipPath, { shape: target }, animationModel, dataIndex
+                    clipPath, {shape: target}, animationModel, dataIndex
                 );
             }
         }
@@ -62793,8 +62380,7 @@
 
         if (symbolMeta.symbolRepeat) {
             createOrUpdateRepeatSymbols(bar, opt, symbolMeta);
-        }
-        else {
+        } else {
             createOrUpdateSingleSymbol(bar, opt, symbolMeta);
         }
 
@@ -62814,13 +62400,12 @@
         var bundle = bar.__pictorialBundle;
 
         updateProps(
-            bundle, { position: symbolMeta.bundlePosition.slice() }, animationModel, dataIndex
+            bundle, {position: symbolMeta.bundlePosition.slice()}, animationModel, dataIndex
         );
 
         if (symbolMeta.symbolRepeat) {
             createOrUpdateRepeatSymbols(bar, opt, symbolMeta, true);
-        }
-        else {
+        } else {
             createOrUpdateSingleSymbol(bar, opt, symbolMeta, true);
         }
 
@@ -62845,7 +62430,7 @@
 
         each$1(pathes, function (path) {
             updateProps(
-                path, { scale: [0, 0] }, animationModel, dataIndex,
+                path, {scale: [0, 0]}, animationModel, dataIndex,
                 function () {
                     bar.parent && bar.parent.remove(bar);
                 }
@@ -62875,8 +62460,7 @@
         // when symbolCip used, only clip path has init animation, otherwise it would be weird effect.
         if (symbolMeta.symbolClip && !isUpdate) {
             animationAttrs && el.attr(animationAttrs);
-        }
-        else {
+        } else {
             animationAttrs && graphic[isUpdate ? 'updateProps' : 'initProps'](
                 el, animationAttrs, symbolMeta.animationModel, symbolMeta.dataIndex, cb
             );
@@ -63290,7 +62874,7 @@
          * @return {Object} {baseAxes: [], otherAxes: []}
          */
         getTooltipAxes: function () {
-            return { baseAxes: [this.getAxis()] };
+            return {baseAxes: [this.getAxis()]};
         },
 
         /**
@@ -63306,8 +62890,7 @@
             if (orient === 'horizontal') {
                 return axis.contain(axis.toLocalCoord(point[0]))
                     && (point[1] >= rect.y && point[1] <= (rect.y + rect.height));
-            }
-            else {
+            } else {
                 return axis.contain(axis.toLocalCoord(point[1]))
                     && (point[0] >= rect.y && point[0] <= (rect.y + rect.height));
             }
@@ -63448,8 +63031,8 @@
         var rectBound = [rect.x, rect.x + rect.width, rect.y, rect.y + rect.height];
 
         var positionMap = {
-            horizontal: { top: rectBound[2], bottom: rectBound[3] },
-            vertical: { left: rectBound[0], right: rectBound[1] }
+            horizontal: {top: rectBound[2], bottom: rectBound[3]},
+            vertical: {left: rectBound[0], right: rectBound[1]}
         };
 
         layout.position = [
@@ -63461,10 +63044,10 @@
                 : rectBound[3]
         ];
 
-        var r = { horizontal: 0, vertical: 1 };
+        var r = {horizontal: 0, vertical: 1};
         layout.rotation = Math.PI / 2 * r[orient];
 
-        var directionMap = { top: -1, bottom: 1, right: 1, left: -1 };
+        var directionMap = {top: -1, bottom: 1, right: 1, left: -1};
 
         layout.labelDirection = layout.tickDirection
             = layout.nameDirection
@@ -63574,8 +63157,7 @@
                     p1[1] = gridRect.y;
                     p2[0] = tickCoord;
                     p2[1] = gridRect.y + gridRect.height;
-                }
-                else {
+                } else {
                     p1[0] = gridRect.x;
                     p1[1] = tickCoord;
                     p2[0] = gridRect.x + gridRect.width;
@@ -63744,13 +63326,13 @@
         if (seriesIndex == null || !(
             seriesModel = ecModel.getSeriesByIndex(seriesIndex)
         )) {
-            return { point: [] };
+            return {point: []};
         }
 
         var data = seriesModel.getData();
         var dataIndex = queryDataIndex(data, finder);
         if (dataIndex == null || dataIndex < 0 || isArray(dataIndex)) {
-            return { point: [] };
+            return {point: []};
         }
 
         var el = data.getItemGraphicEl(dataIndex);
@@ -63758,8 +63340,7 @@
 
         if (seriesModel.getTooltipPosition) {
             point = seriesModel.getTooltipPosition(dataIndex) || [];
-        }
-        else if (coordSys && coordSys.dataToPoint) {
+        } else if (coordSys && coordSys.dataToPoint) {
             point = coordSys.dataToPoint(
                 data.getValues(
                     map(coordSys.dimensions, function (dim) {
@@ -63767,8 +63348,7 @@
                     }), dataIndex, true
                 )
             ) || [];
-        }
-        else if (el) {
+        } else if (el) {
             // Use graphic bounding rect
             var rect = el.getBoundingRect().clone();
             rect.applyTransform(el.transform);
@@ -63778,7 +63358,7 @@
             ];
         }
 
-        return { point: point, el: el };
+        return {point: point, el: el};
     };
 
     /*
@@ -63867,7 +63447,7 @@
         var outputFinder = {};
 
         var showValueMap = {};
-        var dataByCoordSys = { list: [], map: {} };
+        var dataByCoordSys = {list: [], map: {}};
         var updaters = {
             showPointer: curry$3(showPointer, showValueMap),
             showTooltip: curry$3(showTooltip, dataByCoordSys)
@@ -63977,8 +63557,7 @@
                 var result = series.getAxisTooltipData(dataDim, value, axis);
                 dataIndices = result.dataIndices;
                 seriesNestestValue = result.nestestValue;
-            }
-            else {
+            } else {
                 dataIndices = series.getData().indicesOfNearest(
                     dataDim[0],
                     value,
@@ -64024,7 +63603,7 @@
     }
 
     function showPointer(showValueMap, axisInfo, value, payloadBatch) {
-        showValueMap[axisInfo.key] = { value: value, payloadBatch: payloadBatch };
+        showValueMap[axisInfo.key] = {value: value, payloadBatch: payloadBatch};
     }
 
     function showTooltip(dataByCoordSys, axisInfo, payloadInfo, value) {
@@ -64084,7 +63663,7 @@
                 // For label formatter param and highlight.
                 option.seriesDataIndices = (valItem.payloadBatch || []).slice();
             }
-            // When always show (e.g., handle used), remain
+                // When always show (e.g., handle used), remain
             // original value and status.
             else {
                 // If hide, value still need to be set, consider
@@ -64104,7 +63683,7 @@
     function dispatchTooltipActually(dataByCoordSys, point, payload, dispatchAction) {
         // Basic logic: If no showTip required, hideTip will be dispatched.
         if (illegalPoint(point) || !dataByCoordSys.list.length) {
-            dispatchAction({ type: 'hideTip' });
+            dispatchAction({type: 'hideTip'});
             return;
         }
 
@@ -64376,8 +63955,7 @@
         var actuallyPayload;
         if (showLen) {
             actuallyPayload = pendings.showTip[showLen - 1];
-        }
-        else if (hideLen) {
+        } else if (hideLen) {
             actuallyPayload = pendings.hideTip[hideLen - 1];
         }
         if (actuallyPayload) {
@@ -64408,8 +63986,7 @@
             var pendingList = pendings[payload.type];
             if (pendingList) {
                 pendingList.push(payload);
-            }
-            else {
+            } else {
                 payload.dispatchAction = dispatchAction;
                 api.dispatchAction(payload);
             }
@@ -64633,8 +64210,7 @@
                 this.createPointerEl(group, elOption, axisModel, axisPointerModel);
                 this.createLabelEl(group, elOption, axisModel, axisPointerModel);
                 api.getZr().add(group);
-            }
-            else {
+            } else {
                 var doUpdateProps = curry(updateProps$1, axisPointerModel, moveAnimation);
                 this.updatePointerEl(group, elOption, doUpdateProps, axisPointerModel);
                 this.updateLabelEl(group, elOption, doUpdateProps, axisPointerModel);
@@ -64737,7 +64313,7 @@
             var pointerEl = inner$9(group).pointerEl;
             if (pointerEl) {
                 pointerEl.setStyle(elOption.pointer.style);
-                updateProps$$1(pointerEl, { shape: elOption.pointer.shape });
+                updateProps$$1(pointerEl, {shape: elOption.pointer.shape});
             }
         },
 
@@ -64998,8 +64574,7 @@
                 equals = equals && propsEqual(lastProps[key], item);
             });
             return !!equals;
-        }
-        else {
+        } else {
             return lastProps === newProps;
         }
     }
@@ -65059,8 +64634,7 @@
         if (axisPointerType === 'line') {
             style = styleModel.getLineStyle();
             style.fill = null;
-        }
-        else if (axisPointerType === 'shadow') {
+        } else if (axisPointerType === 'shadow') {
             style = styleModel.getAreaStyle();
             style.stroke = null;
         }
@@ -65109,7 +64683,7 @@
         }
 
         elOption.label = {
-            shape: { x: 0, y: 0, width: width, height: height, r: labelModel.get('borderRadius') },
+            shape: {x: 0, y: 0, width: width, height: height, r: labelModel.get('borderRadius')},
             position: position.slice(),
             // TODO: rich
             style: {
@@ -65154,7 +64728,7 @@
         var text = axis.scale.getLabel(
             // If `precision` is set, width can be fixed (like '12.00500'), which
             // helps to debounce when when moving label.
-            value, { precision: opt.precision }
+            value, {precision: opt.precision}
         );
         var formatter = opt.formatter;
 
@@ -65172,8 +64746,7 @@
 
             if (isString(formatter)) {
                 text = formatter.replace('{value}', text);
-            }
-            else if (isFunction$1(formatter)) {
+            } else if (isFunction$1(formatter)) {
                 text = formatter(params);
             }
         }
@@ -65337,7 +64910,7 @@
             cursorPoint[dimIndex] = currPosition[dimIndex];
 
             // Make tooltip do not overlap axisPointer and in the middle of the grid.
-            var tooltipOptions = [{ verticalAlign: 'middle' }, { align: 'center' }];
+            var tooltipOptions = [{verticalAlign: 'middle'}, {align: 'center'}];
 
             return {
                 position: currPosition,
@@ -65419,7 +64992,7 @@
         // Always has a global axisPointerModel for default setting.
         if (option) {
             (!option.axisPointer || option.axisPointer.length === 0)
-                && (option.axisPointer = {});
+            && (option.axisPointer = {});
 
             var link = option.axisPointer.link;
             // Normalize to array to avoid object mergin. But if link
@@ -65502,7 +65075,7 @@
          * @override
          */
         getHandleTransform: function (value, axisModel, axisPointerModel) {
-            var layoutInfo = layout$2(axisModel, { labelInside: false });
+            var layoutInfo = layout$2(axisModel, {labelInside: false});
             layoutInfo.labelMargin = axisPointerModel.get('handle.margin');
             return {
                 position: getTransformedPosition(axisModel.axis, value, layoutInfo),
@@ -65861,7 +65434,7 @@
                 indices.push(nearestIdx);
             }
 
-            return { dataIndices: indices, nestestValue: nestestValue };
+            return {dataIndices: indices, nestestValue: nestestValue};
         },
 
         /**
@@ -65957,6 +65530,7 @@
             function keyGetter(item) {
                 return item.name;
             }
+
             var dataDiffer = new DataDiffer(
                 this._layersSeries || [], layerSeries,
                 keyGetter, keyGetter
@@ -66023,8 +65597,7 @@
                     polygon.setClipPath(createGridClipShape$3(polygon.getBoundingRect(), seriesModel, function () {
                         polygon.removeClipPath();
                     }));
-                }
-                else {
+                } else {
                     var layerGroup = oldLayersGroups[oldIdx];
                     polygon = layerGroup.childAt(0);
                     text = layerGroup.childAt(1);
@@ -66069,7 +65642,8 @@
             this._layers = newLayersGroups;
         },
 
-        dispose: function () { }
+        dispose: function () {
+        }
     });
 
     // add animation to the view
@@ -66142,8 +65716,7 @@
                 boundaryGap[1] = parsePercent$1(boundaryGap[1], rect.height);
                 var height = rect.height - boundaryGap[0] - boundaryGap[1];
                 themeRiverLayout$1(data, seriesModel, height);
-            }
-            else {
+            } else {
                 boundaryGap[0] = parsePercent$1(boundaryGap[0], rect.width);
                 boundaryGap[1] = parsePercent$1(boundaryGap[1], rect.width);
                 var width = rect.width - boundaryGap[0] - boundaryGap[1];
@@ -66354,7 +65927,7 @@
 
         getInitialData: function (option, ecModel) {
             // Create a virtual root.
-            var root = { name: option.name, children: option.data };
+            var root = {name: option.name, children: option.data};
 
             completeTreeValue$1(root);
 
@@ -66489,7 +66062,6 @@
     });
 
 
-
     /**
      * @param {Object} dataNode
      */
@@ -66583,9 +66155,11 @@
         function onEmphasis() {
             text.ignore = text.hoverIgnore;
         }
+
         function onNormal() {
             text.ignore = text.normalIgnore;
         }
+
         this.on('emphasis', onEmphasis)
             .on('normal', onNormal)
             .on('mouseover', onEmphasis)
@@ -66624,8 +66198,7 @@
         var style;
         if (state === 'normal') {
             style = normalStyle;
-        }
-        else {
+        } else {
             var stateStyle = itemModel.getModel(state + '.itemStyle')
                 .getItemStyle();
             style = merge(stateStyle, normalStyle);
@@ -66652,8 +66225,7 @@
                 node.dataIndex
             );
             sector.useStyle(style);
-        }
-        else if (typeof style.fill === 'object' && style.fill.type
+        } else if (typeof style.fill === 'object' && style.fill.type
             || typeof sector.style.fill === 'object' && sector.style.fill.type
         ) {
             // Disable animation for gradient since no interpolation method
@@ -66662,8 +66234,7 @@
                 shape: sectorShape
             }, seriesModel);
             sector.useStyle(style);
-        }
-        else {
+        } else {
             updateProps(sector, {
                 shape: sectorShape,
                 style: style
@@ -66690,11 +66261,9 @@
             if (n.piece) {
                 if (that.node === n) {
                     n.piece.updateData(false, n, 'emphasis');
-                }
-                else if (isNodeHighlighted(n, that.node, highlightPolicy)) {
+                } else if (isNodeHighlighted(n, that.node, highlightPolicy)) {
                     n.piece.childAt(0).trigger('highlight');
-                }
-                else if (highlightPolicy !== NodeHighlightPolicy.NONE) {
+                } else if (highlightPolicy !== NodeHighlightPolicy.NONE) {
                     n.piece.childAt(0).trigger('downplay');
                 }
             }
@@ -66769,19 +66338,16 @@
         if (labelPosition === 'outside') {
             r = layout.r + labelPadding;
             textAlign = midAngle > Math.PI / 2 ? 'right' : 'left';
-        }
-        else {
+        } else {
             if (!textAlign || textAlign === 'center') {
                 r = (layout.r + layout.r0) / 2;
                 textAlign = 'center';
-            }
-            else if (textAlign === 'left') {
+            } else if (textAlign === 'left') {
                 r = layout.r0 + labelPadding;
                 if (midAngle > Math.PI / 2) {
                     textAlign = 'right';
                 }
-            }
-            else if (textAlign === 'right') {
+            } else if (textAlign === 'right') {
                 r = layout.r - labelPadding;
                 if (midAngle > Math.PI / 2) {
                     textAlign = 'left';
@@ -66807,13 +66373,11 @@
             if (rotate < -Math.PI / 2) {
                 rotate += Math.PI;
             }
-        }
-        else if (rotateType === 'tangential') {
+        } else if (rotateType === 'tangential') {
             rotate = Math.PI / 2 - midAngle;
             if (rotate > Math.PI / 2) {
                 rotate -= Math.PI;
-            }
-            else if (rotate < -Math.PI / 2) {
+            } else if (rotate < -Math.PI / 2) {
                 rotate += Math.PI;
             }
         } else if (typeof rotateType === 'number') {
@@ -66825,8 +66389,7 @@
             var stateAttr = labelModel.get(name);
             if (stateAttr == null) {
                 return normalModel.get(name);
-            }
-            else {
+            } else {
                 return stateAttr;
             }
         }
@@ -66887,16 +66450,13 @@
         var color = node.getModel('itemStyle').get('color');
         if (color) {
             return color;
-        }
-        else if (visualColor) {
+        } else if (visualColor) {
             // Color mapping
             return visualColor;
-        }
-        else if (node.depth === 0) {
+        } else if (node.depth === 0) {
             // Virtual root node
             return ecModel.option.color[0];
-        }
-        else {
+        } else {
             // First-generation color
             var length = ecModel.option.color.length;
             color = ecModel.option.color[getRootId(node) % length];
@@ -66923,14 +66483,11 @@
     function isNodeHighlighted(node, activeNode, policy) {
         if (policy === NodeHighlightPolicy.NONE) {
             return false;
-        }
-        else if (policy === NodeHighlightPolicy.SELF) {
+        } else if (policy === NodeHighlightPolicy.SELF) {
             return node === activeNode;
-        }
-        else if (policy === NodeHighlightPolicy.ANCESTOR) {
+        } else if (policy === NodeHighlightPolicy.ANCESTOR) {
             return node === activeNode || node.isAncestorOf(activeNode);
-        }
-        else {
+        } else {
             return node === activeNode || node.isDescendantOf(activeNode);
         }
     }
@@ -66992,8 +66549,7 @@
             if (payload && payload.highlight && payload.highlight.piece) {
                 var highlightPolicy = seriesModel.getShallow('highlightPolicy');
                 payload.highlight.piece.onEmphasis(highlightPolicy);
-            }
-            else if (payload && payload.unhighlight) {
+            } else if (payload && payload.unhighlight) {
                 var piece = this.virtualPiece;
                 if (!piece && virtualRoot.children.length) {
                     piece = virtualRoot.children[0].piece;
@@ -67045,13 +66601,11 @@
 
                             // For tooltip
                             data.setItemGraphicEl(newNode.dataIndex, oldNode.piece);
-                        }
-                        else {
+                        } else {
                             // Remove
                             removeNode(oldNode);
                         }
-                    }
-                    else if (newNode) {
+                    } else if (newNode) {
                         // Add
                         var piece = new SunburstPiece(
                             newNode,
@@ -67084,8 +66638,7 @@
                         // Update
                         that.virtualPiece.updateData(
                             false, virtualRoot, 'normal', seriesModel, ecModel);
-                    }
-                    else {
+                    } else {
                         // Add
                         that.virtualPiece = new SunburstPiece(
                             virtualRoot,
@@ -67103,8 +66656,7 @@
                     };
                     viewRoot.piece._onclickEvent = event;
                     that.virtualPiece.on('click', event);
-                }
-                else if (that.virtualPiece) {
+                } else if (that.virtualPiece) {
                     // Remove
                     group.remove(that.virtualPiece);
                     that.virtualPiece = null;
@@ -67131,8 +66683,7 @@
                         var nodeClick = node.getModel().get('nodeClick');
                         if (nodeClick === 'rootToNode') {
                             that._rootToNode(node);
-                        }
-                        else if (nodeClick === 'link') {
+                        } else if (nodeClick === 'link') {
                             var itemModel = node.getModel();
                             var link = itemModel.get('link');
                             if (link) {
@@ -67209,11 +66760,11 @@
     var ROOT_TO_NODE_ACTION$1 = 'sunburstRootToNode';
 
     registerAction(
-        { type: ROOT_TO_NODE_ACTION$1, update: 'updateView' },
+        {type: ROOT_TO_NODE_ACTION$1, update: 'updateView'},
         function (payload, ecModel) {
 
             ecModel.eachComponent(
-                { mainType: 'series', subType: 'sunburst', query: payload },
+                {mainType: 'series', subType: 'sunburst', query: payload},
                 handleRootToNode
             );
 
@@ -67236,11 +66787,11 @@
     var HIGHLIGHT_ACTION = 'sunburstHighlight';
 
     registerAction(
-        { type: HIGHLIGHT_ACTION, update: 'updateView' },
+        {type: HIGHLIGHT_ACTION, update: 'updateView'},
         function (payload, ecModel) {
 
             ecModel.eachComponent(
-                { mainType: 'series', subType: 'sunburst', query: payload },
+                {mainType: 'series', subType: 'sunburst', query: payload},
                 handleHighlight
             );
 
@@ -67258,11 +66809,11 @@
     var UNHIGHLIGHT_ACTION = 'sunburstUnhighlight';
 
     registerAction(
-        { type: UNHIGHLIGHT_ACTION, update: 'updateView' },
+        {type: UNHIGHLIGHT_ACTION, update: 'updateView'},
         function (payload, ecModel) {
 
             ecModel.eachComponent(
-                { mainType: 'series', subType: 'sunburst', query: payload },
+                {mainType: 'series', subType: 'sunburst', query: payload},
                 handleUnhighlight
             );
 
@@ -67367,8 +66918,7 @@
                     if (angle < minAngle) {
                         angle = minAngle;
 
-                    }
-                    else {
+                    } else {
 
                     }
 
@@ -67462,8 +67012,7 @@
     function sort$2(children, sortOrder) {
         if (typeof sortOrder === 'function') {
             return children.sort(sortOrder);
-        }
-        else {
+        } else {
             var isAsc = sortOrder === 'asc';
             return children.sort(function (a, b) {
                 var diff = (a.getValue() - b.getValue()) * (isAsc ? 1 : -1);
@@ -67904,12 +67453,14 @@
         incrementalRender: function (params, customSeries, ecModel, api) {
             var data = customSeries.getData();
             var renderItem = makeRenderItem(customSeries, data, ecModel, api);
+
             function setIncrementalAndHoverLayer(el) {
                 if (!el.isGroup) {
                     el.incremental = true;
                     el.useHoverLayer = true;
                 }
             }
+
             for (var idx = params.start; idx < params.end; idx++) {
                 var el = createOrUpdate$1(null, idx, renderItem(idx), customSeries, this.group, data);
                 el.traverse(setIncrementalAndHoverLayer);
@@ -67941,18 +67492,13 @@
                 'center'
             );
             el.__customPathData = elOption.pathData;
-        }
-        else if (graphicType === 'image') {
-            el = new ZImage({
-            });
+        } else if (graphicType === 'image') {
+            el = new ZImage({});
             el.__customImagePath = elOption.style.image;
-        }
-        else if (graphicType === 'text') {
-            el = new Text({
-            });
+        } else if (graphicType === 'text') {
+            el = new Text({});
             el.__customText = elOption.style.text;
-        }
-        else {
+        } else {
             var Clz = graphic[graphicType.charAt(0).toUpperCase() + graphicType.slice(1)];
 
             if (__DEV__) {
@@ -68008,19 +67554,18 @@
                 el.style.opacity = 0;
                 var targetOpacity = elOptionStyle.opacity;
                 targetOpacity == null && (targetOpacity = 1);
-                initProps(el, { style: { opacity: targetOpacity } }, animatableModel, dataIndex);
+                initProps(el, {style: {opacity: targetOpacity}}, animatableModel, dataIndex);
             }
         }
 
         if (isInit) {
             el.attr(targetProps);
-        }
-        else {
+        } else {
             updateProps(el, targetProps, animatableModel, dataIndex);
         }
 
         // z2 must not be null/undefined, otherwise sort error may occur.
-        el.attr({ z2: elOption.z2 || 0, silent: elOption.silent });
+        el.attr({z2: elOption.z2 || 0, silent: elOption.silent});
 
         elOption.styleEmphasis !== false && setHoverStyle(el, elOption.styleEmphasis);
     }
@@ -68203,7 +67748,7 @@
         function barLayout(opt) {
             if (coordSys.getBaseAxis) {
                 var baseAxis = coordSys.getBaseAxis();
-                return getLayoutOnAxis(defaults({ axis: baseAxis }, opt), api);
+                return getLayoutOnAxis(defaults({axis: baseAxis}, opt), api);
             }
         }
 
@@ -68284,8 +67829,7 @@
                     group: el,
                     data: data
                 });
-            }
-            else {
+            } else {
                 // better performance.
                 var index = 0;
                 for (; index < newChildren.length; index++) {
@@ -68383,16 +67927,14 @@
         // {graphic: [{elements: [{left: 10, type: 'circle'}, ...]}]}
         if (isArray(graphicOption)) {
             if (!graphicOption[0] || !graphicOption[0].elements) {
-                option.graphic = [{ elements: graphicOption }];
-            }
-            else {
+                option.graphic = [{elements: graphicOption}];
+            } else {
                 // Only one graphic instance can be instantiated. (We dont
                 // want that too many views are created in echarts._viewMap)
                 option.graphic = [option.graphic[0]];
             }
-        }
-        else if (graphicOption && !graphicOption.elements) {
-            option.graphic = [{ elements: [graphicOption] }];
+        } else if (graphicOption && !graphicOption.elements) {
+            option.graphic = [{elements: [graphicOption]}];
         }
     });
 
@@ -68502,8 +68044,7 @@
             for (var i = existList.length - 1; i >= 0; i--) {
                 if (existList[i] == null) {
                     existList.splice(i, 1);
-                }
-                else {
+                } else {
                     // $action should be volatile, otherwise option gotten from
                     // `getOption` will contain unexpected $action.
                     delete existList[i].$action;
@@ -68670,12 +68211,10 @@
                     existEl
                         ? existEl.attr(elOptionCleaned)
                         : createEl$1(id, targetElParent, elOptionCleaned, elMap);
-                }
-                else if ($action === 'replace') {
+                } else if ($action === 'replace') {
                     removeEl(existEl, elMap);
                     createEl$1(id, targetElParent, elOptionCleaned, elMap);
-                }
-                else if ($action === 'remove') {
+                } else if ($action === 'remove') {
                     removeEl(existEl, elMap);
                 }
 
@@ -68721,7 +68260,7 @@
 
                 positionElement(
                     el, elOption, containerInfo, null,
-                    { hv: elOption.hv, boundingMode: elOption.bounding }
+                    {hv: elOption.hv, boundingMode: elOption.bounding}
                 );
             }
         },
@@ -68809,8 +68348,7 @@
             var newElParentOption = newElOption.parentOption;
             if (newElParentOption) {
                 newElOption.parentId = newElParentOption.id;
-            }
-            else if (existElOption) {
+            } else if (existElOption) {
                 newElOption.parentId = existElOption.parentId;
             }
         }
@@ -68840,18 +68378,15 @@
                 // the same object, so `merge` will not change newElOptCopy.
                 merge(existElOption, newElOptCopy, true);
                 // Rigid body, use ignoreSize.
-                mergeLayoutParam(existElOption, newElOptCopy, { ignoreSize: true });
+                mergeLayoutParam(existElOption, newElOptCopy, {ignoreSize: true});
                 // Will be used in render.
                 copyLayoutParams(newElOption, existElOption);
-            }
-            else {
+            } else {
                 existList[index] = newElOptCopy;
             }
-        }
-        else if ($action === 'replace') {
+        } else if ($action === 'replace') {
             existList[index] = newElOptCopy;
-        }
-        else if ($action === 'remove') {
+        } else if ($action === 'remove') {
             // null will be cleaned later.
             existElOption && (existList[index] = null);
         }
@@ -68982,12 +68517,10 @@
 
                     if (names.length) {
                         potentialData = potentialData.concat(names);
-                    }
-                    else {
+                    } else {
                         isPotential = true;
                     }
-                }
-                else {
+                } else {
                     isPotential = true;
                 }
 
@@ -69167,8 +68700,7 @@
                 // In the case one legend has some item unSelected in option. And if other legend
                 // doesn't has the item, they will assume it is selected.
                 legendModel[isSelected ? 'select' : 'unSelect'](payload.name);
-            }
-            else {
+            } else {
                 legendModel[methodName](payload.name);
                 isSelected = legendModel.isSelected(payload.name);
             }
@@ -69183,8 +68715,7 @@
                 if (selectedMap.hasOwnProperty(name)) {
                     // Unselected if any legend is unselected
                     selectedMap[name] = selectedMap[name] && isItemSelected;
-                }
-                else {
+                } else {
                     selectedMap[name] = isItemSelected;
                 }
             });
@@ -69195,6 +68726,7 @@
             selected: selectedMap
         };
     }
+
     /**
      * @event legendToggleSelect
      * @type {Object}
@@ -69258,7 +68790,7 @@
     function layout$3(group, componentModel, api) {
         var boxLayoutParams = componentModel.getBoxLayoutParams();
         var padding = componentModel.get('padding');
-        var viewportSize = { width: api.getWidth(), height: api.getHeight() };
+        var viewportSize = {width: api.getWidth(), height: api.getHeight()};
 
         var rect = getLayoutRect(
             boxLayoutParams,
@@ -69385,7 +68917,7 @@
 
             // Perform layout.
             var positionInfo = legendModel.getBoxLayoutParams();
-            var viewportSize = { width: api.getWidth(), height: api.getHeight() };
+            var viewportSize = {width: api.getWidth(), height: api.getHeight()};
             var padding = legendModel.get('padding');
 
             var maxSize = getLayoutRect(positionInfo, viewportSize, padding);
@@ -69393,7 +68925,7 @@
 
             // Place mainGroup, based on the calculated `mainRect`.
             var layoutRect = getLayoutRect(
-                defaults({ width: mainRect.width, height: mainRect.height }, positionInfo),
+                defaults({width: mainRect.width, height: mainRect.height}, positionInfo),
                 viewportSize,
                 padding
             );
@@ -69472,8 +69004,7 @@
                         .on('mouseout', curry$4(dispatchDownplayAction, seriesModel, null, api, excludeSeriesId));
 
                     legendDrawnMap.set(name, true);
-                }
-                else {
+                } else {
                     // Data legend of pie, funnel
                     ecModel.eachRawSeries(function (seriesModel) {
                         // In case multiple series has same data name
@@ -69582,8 +69113,7 @@
             var content = name;
             if (typeof formatter === 'string' && formatter) {
                 content = formatter.replace('{name}', name != null ? name : '');
-            }
-            else if (typeof formatter === 'function') {
+            } else if (typeof formatter === 'function') {
                 content = formatter(name);
             }
 
@@ -69830,8 +69360,8 @@
 
         getOrient: function () {
             return this.get('orient') === 'vertical'
-                ? { index: 1, name: 'vertical' }
-                : { index: 0, name: 'horizontal' };
+                ? {index: 1, name: 'vertical'}
+                : {index: 0, name: 'horizontal'};
         }
 
     });
@@ -70044,7 +69574,7 @@
             // mainRect should not be calculated by `this.group.getBoundingRect()`
             // for sake of the overflow.
             var mainRect = this.group.getBoundingRect();
-            var mainRect = { x: 0, y: 0 };
+            var mainRect = {x: 0, y: 0};
             // Consider content may be overflow (should be clipped).
             mainRect[wh] = showController ? maxSize[wh] : contentRect[wh];
             mainRect[hw] = Math.max(contentRect[hw], controllerRect[hw]);
@@ -70053,18 +69583,17 @@
 
             containerGroup.__rectSize = maxSize[wh];
             if (showController) {
-                var clipShape = { x: 0, y: 0 };
+                var clipShape = {x: 0, y: 0};
                 clipShape[wh] = Math.max(maxSize[wh] - controllerRect[wh] - pageButtonGap, 0);
                 clipShape[hw] = mainRect[hw];
-                containerGroup.setClipPath(new Rect({ shape: clipShape }));
+                containerGroup.setClipPath(new Rect({shape: clipShape}));
                 // Consider content may be larger than container, container rect
                 // can not be obtained from `containerGroup.getBoundingRect()`.
                 containerGroup.__rectSize = clipShape[wh];
-            }
-            else {
+            } else {
                 // Do not remove or ignore controller. Keep them set as place holders.
                 controllerGroup.eachChild(function (child) {
-                    child.attr({ invisible: true, silent: true });
+                    child.attr({invisible: true, silent: true});
                 });
             }
 
@@ -70072,7 +69601,7 @@
             var pageInfo = this._getPageInfo(legendModel);
             pageInfo.pageIndex != null && updateProps(
                 contentGroup,
-                { position: pageInfo.contentPosition },
+                {position: pageInfo.contentPosition},
                 // When switch from "show controller" to "not show controller", view should be
                 // updated immediately without animation, otherwise causes weird efffect.
                 showController ? legendModel : false
@@ -70120,7 +69649,7 @@
                 'text',
                 isString(pageFormatter)
                     ? pageFormatter.replace('{current}', current).replace('{total}', total)
-                    : pageFormatter({ current: current, total: total })
+                    : pageFormatter({current: current, total: total})
             );
         },
 
@@ -70158,8 +69687,7 @@
                         targetItemGroup = child;
                     }
                 });
-            }
-            else {
+            } else {
                 targetItemGroup = contentGroup.childAt(0);
             }
 
@@ -70176,7 +69704,7 @@
                     ? Math.max(0, Math.min(pageCount - 1, pageIndex))
                     : -1;
 
-                var winRect = { x: 0, y: 0 };
+                var winRect = {x: 0, y: 0};
                 winRect[wh] = containerRectSize;
                 winRect[hw] = contentRect[hw];
                 winRect[xy] = -contentPos[orientIdx] - contentRect[xy];
@@ -70212,8 +69740,7 @@
                     // If the first item is shown entirely, no previous page.
                     if (startIdx <= 0 && startRect[xy] >= winRect[xy]) {
                         pagePrevDataIndex = null;
-                    }
-                    else {
+                    } else {
                         while (startIdx > 0 && getItemRect(children[startIdx - 1]).intersect(winRect)) {
                             startIdx--;
                         }
@@ -70270,7 +69797,7 @@
             var scrollDataIndex = payload.scrollDataIndex;
 
             scrollDataIndex != null && ecModel.eachComponent(
-                { mainType: 'legend', subType: 'scroll', query: payload },
+                {mainType: 'legend', subType: 'scroll', query: payload},
                 function (legendModel) {
                     legendModel.setScrollDataIndex(scrollDataIndex);
                 }
@@ -70479,7 +70006,7 @@
         cssText.push('font:' + textStyleModel.getFont());
 
         fontSize &&
-            cssText.push('line-height:' + Math.round(fontSize * 3 / 2) + 'px');
+        cssText.push('line-height:' + Math.round(fontSize * 3 / 2) + 'px');
 
         each$18(['decoration', 'align'], function (name) {
             var val = textStyleModel.get(name);
@@ -70505,13 +70032,12 @@
 
         // Animation transition. Do not animate when transitionDuration is 0.
         transitionDuration &&
-            cssText.push(assembleTransition(transitionDuration));
+        cssText.push(assembleTransition(transitionDuration));
 
         if (backgroundColor) {
             if (env$1.canvasSupported) {
                 cssText.push('background-Color:' + backgroundColor);
-            }
-            else {
+            } else {
                 // for ie
                 cssText.push(
                     'background-Color:#' + toHex(backgroundColor)
@@ -70526,7 +70052,7 @@
             var camelCase = toCamelCase$1(borderName);
             var val = tooltipModel.get(camelCase);
             val != null &&
-                cssText.push(borderName + ':' + val + (name === 'color' ? '' : 'px'));
+            cssText.push(borderName + ':' + val + (name === 'color' ? '' : 'px'));
         });
 
         // Text style
@@ -70683,8 +70209,7 @@
                     // Set show false to avoid invoke hideLater mutiple times
                     this._show = false;
                     this._hideTimeout = setTimeout(bind(this.hide, this), time);
-                }
-                else {
+                } else {
                     this.hide();
                 }
             }
@@ -70719,7 +70244,7 @@
     var parsePercent$2 = parsePercent$1;
 
     var proxyRect = new Rect({
-        shape: { x: -1, y: -1, width: 2, height: 2 }
+        shape: {x: -1, y: -1, width: 2, height: 2}
     });
 
     extendComponentView({
@@ -70794,8 +70319,7 @@
                     if (triggerOn !== 'none') {
                         if (triggerOn.indexOf(currTrigger) >= 0) {
                             this._tryShow(e, dispatchAction);
-                        }
-                        else if (currTrigger === 'leave') {
+                        } else if (currTrigger === 'leave') {
                             this._hide(dispatchAction);
                         }
                     }
@@ -70870,8 +70394,7 @@
                     offsetY: payload.y,
                     target: el
                 }, dispatchAction);
-            }
-            else if (dataByCoordSys) {
+            } else if (dataByCoordSys) {
                 this._tryShow({
                     offsetX: payload.x,
                     offsetY: payload.y,
@@ -70880,8 +70403,7 @@
                     dataByCoordSys: payload.dataByCoordSys,
                     tooltipOption: payload.tooltipOption
                 }, dispatchAction);
-            }
-            else if (payload.seriesIndex != null) {
+            } else if (payload.seriesIndex != null) {
 
                 if (this._manuallyAxisShowTip(tooltipModel, ecModel, api, payload)) {
                     return;
@@ -70899,8 +70421,7 @@
                         event: {}
                     }, dispatchAction);
                 }
-            }
-            else if (payload.x != null && payload.y != null) {
+            } else if (payload.x != null && payload.y != null) {
                 // FIXME
                 // should wrap dispatchAction like `axisPointer/globalListener` ?
                 api.dispatchAction({
@@ -70997,8 +70518,7 @@
             else if (el && el.tooltip) {
                 this._lastDataByCoordSys = null;
                 this._showComponentItemTooltip(e, el, dispatchAction);
-            }
-            else {
+            } else {
                 this._lastDataByCoordSys = null;
                 this._hide(dispatchAction);
             }
@@ -71098,8 +70618,7 @@
                         this._tooltipContent,
                         singleParamsList
                     );
-                }
-                else {
+                } else {
                     this._showTooltipContent(
                         singleTooltipModel, singleDefaultHTML, singleParamsList, Math.random(),
                         point[0], point[1], positionExpr
@@ -71209,8 +70728,7 @@
 
             if (formatter && typeof formatter === 'string') {
                 html = formatTpl(formatter, params, true);
-            }
-            else if (typeof formatter === 'function') {
+            } else if (typeof formatter === 'function') {
                 var callback = bind$3(function (cbTicket, html) {
                     if (cbTicket === this._ticket) {
                         tooltipContent.setContent(html);
@@ -71263,12 +70781,11 @@
             if (isArray(positionExpr)) {
                 x = parsePercent$2(positionExpr[0], viewWidth);
                 y = parsePercent$2(positionExpr[1], viewHeight);
-            }
-            else if (isObject$1(positionExpr)) {
+            } else if (isObject$1(positionExpr)) {
                 positionExpr.width = contentSize[0];
                 positionExpr.height = contentSize[1];
                 var layoutRect = getLayoutRect(
-                    positionExpr, { width: viewWidth, height: viewHeight }
+                    positionExpr, {width: viewWidth, height: viewHeight}
                 );
                 x = layoutRect.x;
                 y = layoutRect.y;
@@ -71284,8 +70801,7 @@
                 );
                 x = pos[0];
                 y = pos[1];
-            }
-            else {
+            } else {
                 var pos = refixTooltipPosition(
                     x, y, content.el, viewWidth, viewHeight, align ? null : 20, vAlign ? null : 20
                 );
@@ -71386,7 +70902,7 @@
                 //  tooltip: 'Something you need to know'
                 // }
                 if (typeof tooltipOpt === 'string') {
-                    tooltipOpt = { formatter: tooltipOpt };
+                    tooltipOpt = {formatter: tooltipOpt};
                 }
                 resultModel = new Model(tooltipOpt, resultModel, resultModel.ecModel);
             }
@@ -71406,16 +70922,14 @@
         if (gapH != null) {
             if (x + width + gapH > viewWidth) {
                 x -= width + gapH;
-            }
-            else {
+            } else {
                 x += gapH;
             }
         }
         if (gapV != null) {
             if (y + height + gapV > viewHeight) {
                 y -= height + gapV;
-            }
-            else {
+            } else {
                 y += gapV;
             }
         }
@@ -71451,7 +70965,7 @@
             }
         }
 
-        return { width: width, height: height };
+        return {width: width, height: height};
     }
 
     function calcTooltipPosition(position, rect, contentSize) {
@@ -71526,7 +71040,8 @@
             update: 'tooltip:manuallyShowTip'
         },
         // noop
-        function () { }
+        function () {
+        }
     );
 
     registerAction(
@@ -71536,7 +71051,8 @@
             update: 'tooltip:manuallyHideTip'
         },
         // noop
-        function () { }
+        function () {
+        }
     );
 
     /*
@@ -72654,7 +72170,7 @@
                     labelModel = new Model(rawCategoryData[tickValue].textStyle, commonLabelModel, commonLabelModel.ecModel);
                 }
 
-                var textEl = new Text({ silent: true });
+                var textEl = new Text({silent: true});
                 this.group.add(textEl);
                 setTextStyle(textEl.style, labelModel, {
                     x: p[0],
@@ -73033,8 +72549,7 @@
             );
             align = labelLayout.textAlign;
             verticalAlign = labelLayout.textVerticalAlign;
-        }
-        else { // angle axis
+        } else { // angle axis
             var r = radiusExtent[1];
             position = polar.coordToPoint([r + labelMargin, coord]);
             var cx = polar.cx;
@@ -73279,8 +72794,7 @@
             if (typeof formatter === 'function') {
                 params.status = status;
                 return formatter(params);
-            }
-            else if (typeof formatter === 'string') {
+            } else if (typeof formatter === 'string') {
                 return formatter.replace('{a}', name != null ? name : '');
             }
         },
@@ -73337,8 +72851,7 @@
             var mapDraw = this._mapDraw;
             if (geoModel.get('show')) {
                 mapDraw.draw(geoModel, ecModel, api, this, payload);
-            }
-            else {
+            } else {
                 this._mapDraw.group.removeAll();
             }
 
@@ -73376,7 +72889,7 @@
             var selected = {};
 
             ecModel.eachComponent(
-                { mainType: 'geo', query: payload },
+                {mainType: 'geo', query: payload},
                 function (geoModel) {
                     geoModel[method](payload.name);
                     var geo = geoModel.coordinateSystem;
@@ -73454,7 +72967,7 @@
             toolbox = toolbox[0];
         }
         if (!toolbox) {
-            toolbox = { feature: {} };
+            toolbox = {feature: {}};
             option.toolbox = [toolbox];
         }
 
@@ -73553,7 +73066,8 @@
         return visualMappings;
 
         function createMappings() {
-            var Creater = function () { };
+            var Creater = function () {
+            };
             // Make sure hidden fields will not be visited by
             // object iteration (with hasOwnProperty checking).
             Creater.prototype.__hidden = Creater.prototype;
@@ -73581,8 +73095,7 @@
         has && each$1(keys, function (key) {
             if (newOption.hasOwnProperty(key) && hasKeys(newOption[key])) {
                 thisOption[key] = clone(newOption[key]);
-            }
-            else {
+            } else {
                 delete thisOption[key];
             }
         });
@@ -73616,8 +73129,7 @@
 
         if (dimension == null) {
             data.each(eachItem);
-        }
-        else {
+        } else {
             data.each([dimension], eachItem);
         }
 
@@ -73694,7 +73206,7 @@
             }
         }
 
-        return { progress: progress };
+        return {progress: progress};
     }
 
     /*
@@ -74067,8 +73579,7 @@
                 if (targetInfo.panelId === areaPanelId) {
                     return targetInfo;
                 }
-            }
-            else {
+            } else {
                 for (var i = 0; i < targetInfoMatchers.length; i++) {
                     if (targetInfoMatchers[i](foundCpts, targetInfo)) {
                         return targetInfo;
@@ -74087,7 +73598,7 @@
 
     function parseFinder$1(ecModel, option) {
         return parseFinder(
-            ecModel, option, { includeMainTypes: INCLUDE_FINDER_MAIN_TYPES }
+            ecModel, option, {includeMainTypes: INCLUDE_FINDER_MAIN_TYPES}
         );
     }
 
@@ -74212,7 +73723,7 @@
                 formatMinMax([xminymin[0], xmaxymax[0]]),
                 formatMinMax([xminymin[1], xmaxymax[1]])
             ];
-            return { values: values, xyMinMax: values };
+            return {values: values, xyMinMax: values};
         },
 
         polygon: function (to, coordSys, rangeOrCoordRange) {
@@ -74225,7 +73736,7 @@
                 xyMinMax[1][1] = Math.max(xyMinMax[1][1], p[1]);
                 return p;
             });
-            return { values: values, xyMinMax: xyMinMax };
+            return {values: values, xyMinMax: xyMinMax};
         }
     };
 
@@ -74247,7 +73758,7 @@
         xyMinMax[axisNameIndex] = values;
         xyMinMax[1 - axisNameIndex] = [NaN, NaN];
 
-        return { values: values, xyMinMax: xyMinMax };
+        return {values: values, xyMinMax: xyMinMax};
     }
 
     var diffProcessor = {
@@ -74321,10 +73832,10 @@
      * Layout for visual, the priority higher than other layout, and before brush visual.
      */
     registerLayout(PRIORITY_BRUSH, function (ecModel, api, payload) {
-        ecModel.eachComponent({ mainType: 'brush' }, function (brushModel) {
+        ecModel.eachComponent({mainType: 'brush'}, function (brushModel) {
 
             payload && payload.type === 'takeGlobalCursor' && brushModel.setBrushOption(
-                payload.key === 'brush' ? payload.brushOption : { brushType: false }
+                payload.key === 'brush' ? payload.brushOption : {brushType: false}
             );
 
             var brushTargetManager = brushModel.brushTargetManager = new BrushTargetManager(brushModel.option, ecModel);
@@ -74342,7 +73853,7 @@
         var throttleType;
         var throttleDelay;
 
-        ecModel.eachComponent({ mainType: 'brush' }, function (brushModel, brushIndex) {
+        ecModel.eachComponent({mainType: 'brush'}, function (brushModel, brushIndex) {
 
             var thisBrushSelected = {
                 brushId: brushModel.id,
@@ -74371,7 +73882,7 @@
             var areas = map(brushModel.areas, function (area) {
                 return bindSelector(
                     defaults(
-                        { boundingRect: boundingRectBuilders[area.brushType](area) },
+                        {boundingRect: boundingRectBuilders[area.brushType](area)},
                         area
                     )
                 );
@@ -74439,8 +73950,8 @@
 
                 each$1(areas, function (area) {
                     selectorsByBrushType[area.brushType]
-                        && brushModel.brushTargetManager.controlSeries(area, seriesModel, ecModel)
-                        && rangeInfoList.push(area);
+                    && brushModel.brushTargetManager.controlSeries(area, seriesModel, ecModel)
+                    && rangeInfoList.push(area);
                     hasBrushExists |= brushed(rangeInfoList);
                 });
 
@@ -74484,9 +73995,9 @@
 
                 // If no supported brush or no brush, all visuals are in original state.
                 (linkOthers(seriesIndex) ? hasBrushExists : brushed(rangeInfoList))
-                    && applyVisual(
-                        STATE_LIST, visualMappings, data, getValueState
-                    );
+                && applyVisual(
+                    STATE_LIST, visualMappings, data, getValueState
+                );
             });
 
         });
@@ -74555,8 +74066,7 @@
                 };
             });
             return sels;
-        }
-        else if (isFunction$1(brushSelector)) {
+        } else if (isFunction$1(brushSelector)) {
             var bSelector = {};
             each$1(selector, function (sel, brushType) {
                 bSelector[brushType] = brushSelector;
@@ -74723,7 +74233,7 @@
 
             var inBrush = thisOption.inBrush = thisOption.inBrush || {};
             // Always give default visual, consider setOption at the second time.
-            thisOption.outOfBrush = thisOption.outOfBrush || { color: DEFAULT_OUT_OF_BRUSH_COLOR };
+            thisOption.outOfBrush = thisOption.outOfBrush || {color: DEFAULT_OUT_OF_BRUSH_COLOR};
 
             if (!inBrush.hasOwnProperty('liftZ')) {
                 // Bigger than the highlight z lift, otherwise it will
@@ -74928,9 +74438,9 @@
      * }
      */
     registerAction(
-        { type: 'brush', event: 'brush' /*, update: 'updateView' */ },
+        {type: 'brush', event: 'brush' /*, update: 'updateView' */},
         function (payload, ecModel) {
-            ecModel.eachComponent({ mainType: 'brush', query: payload }, function (brushModel) {
+            ecModel.eachComponent({mainType: 'brush', query: payload}, function (brushModel) {
                 brushModel.setAreas(payload.areas);
             });
         }
@@ -74958,8 +74468,9 @@
      * }
      */
     registerAction(
-        { type: 'brushSelect', event: 'brushSelected', update: 'none' },
-        function () { }
+        {type: 'brushSelect', event: 'brushSelected', update: 'none'},
+        function () {
+        }
     );
 
     /*
@@ -75055,7 +74566,7 @@
             var brushMode;
             var isBrushed;
 
-            ecModel.eachComponent({ mainType: 'brush' }, function (brushModel) {
+            ecModel.eachComponent({mainType: 'brush'}, function (brushModel) {
                 brushType = brushModel.brushType;
                 brushMode = brushModel.brushOption.brushMode || 'single';
                 isBrushed |= brushModel.areas.length;
@@ -75106,8 +74617,7 @@
                 // Clear all areas of all brush components.
                 areas: []
             });
-        }
-        else {
+        } else {
             api.dispatchAction({
                 type: 'takeGlobalCursor',
                 key: 'brush',
@@ -75195,7 +74705,7 @@
 
         // Required in createListFromData
         getDimensionsInfo: function () {
-            return [{ name: 'time', type: 'time' }, 'value'];
+            return [{name: 'time', type: 'time'}, 'value'];
         },
 
         getRangeInfo: function () {
@@ -75754,8 +75264,7 @@
 
         if (!isArray(cellSize)) {
             cellSize = target.cellSize = [cellSize, cellSize];
-        }
-        else if (cellSize.length === 1) {
+        } else if (cellSize.length === 1) {
             cellSize[1] = cellSize[0];
         }
 
@@ -75873,8 +75382,8 @@
             var sh = coordSys.getCellHeight();
 
             for (var i = rangeData.start.time;
-                i <= rangeData.end.time;
-                i = coordSys.getNextNDay(i, 1).time
+                 i <= rangeData.end.time;
+                 i = coordSys.getNextNDay(i, 1).time
             ) {
 
                 var point = coordSys.dataToRect([i], false).tl;
@@ -76021,15 +75530,12 @@
             if (position === 'bottom') {
                 point[1] += margin;
                 aligns = ['center', 'top'];
-            }
-            else if (position === 'left') {
+            } else if (position === 'left') {
                 point[0] -= margin;
-            }
-            else if (position === 'right') {
+            } else if (position === 'right') {
                 point[0] += margin;
                 aligns = ['center', 'top'];
-            }
-            else { // top
+            } else { // top
                 point[1] -= margin;
             }
 
@@ -76092,8 +75598,8 @@
 
             var content = this._formatterLabel(formatter, params);
 
-            var yearText = new Text({ z2: 30 });
-            setTextStyle(yearText.style, yearLabel, { text: content }),
+            var yearText = new Text({z2: 30});
+            setTextStyle(yearText.style, yearLabel, {text: content}),
                 yearText.attr(this._yearTextPositionControl(yearText, posPoints[pos], orient, pos, margin));
 
             group.add(yearText);
@@ -76115,8 +75621,7 @@
                 if (position === 'start') {
                     vAlign = 'bottom';
                 }
-            }
-            else {
+            } else {
                 x = x + margin;
 
                 if (isCenter) {
@@ -76182,9 +75687,9 @@
 
                 var content = this._formatterLabel(formatter, params);
 
-                var monthText = new Text({ z2: 30 });
+                var monthText = new Text({z2: 30});
                 extend(
-                    setTextStyle(monthText.style, monthLabel, { text: content }),
+                    setTextStyle(monthText.style, monthLabel, {text: content}),
                     this._monthTextPositionControl(tmp, isCenter, orient, pos, margin)
                 );
 
@@ -76202,8 +75707,7 @@
             if (orient === 'horizontal') {
                 x = x + margin + (isStart ? 1 : -1) * cellSize[0] / 2;
                 align = isStart ? 'right' : 'left';
-            }
-            else {
+            } else {
                 y = y + margin + (isStart ? 1 : -1) * cellSize[1] / 2;
                 vAlign = isStart ? 'bottom' : 'top';
             }
@@ -76254,10 +75758,10 @@
                 var point = coordSys.dataToRect([tmpD.time], false).center;
                 var day = i;
                 day = Math.abs((i + firstDayOfWeek) % 7);
-                var weekText = new Text({ z2: 30 });
+                var weekText = new Text({z2: 30});
 
                 extend(
-                    setTextStyle(weekText.style, dayLabel, { text: nameMap[day] }),
+                    setTextStyle(weekText.style, dayLabel, {text: nameMap[day]}),
                     this._weekTextPositionControl(point, orient, pos, margin, cellSize)
                 );
                 group.add(weekText);
@@ -76313,7 +75817,7 @@
 
         type: 'title',
 
-        layoutMode: { type: 'box', ignoreSize: true },
+        layoutMode: {type: 'box', ignoreSize: true},
 
         defaultOption: {
             // 一级层叠
@@ -76400,7 +75904,7 @@
                 style: setTextStyle({}, textStyleModel, {
                     text: titleModel.get('text'),
                     textFill: textStyleModel.getTextColor()
-                }, { disableBox: true }),
+                }, {disableBox: true}),
                 z2: 10
             });
 
@@ -76413,7 +75917,7 @@
                     textFill: subtextStyleModel.getTextColor(),
                     y: textRect.height + titleModel.get('itemGap'),
                     textVerticalAlign: 'top'
-                }, { disableBox: true }),
+                }, {disableBox: true}),
                 z2: 10
             });
 
@@ -76458,8 +75962,7 @@
                 // Adjust layout by text align
                 if (textAlign === 'right') {
                     layoutRect.x += layoutRect.width;
-                }
-                else if (textAlign === 'center') {
+                } else if (textAlign === 'center') {
                     layoutRect.x += layoutRect.width / 2;
                 }
             }
@@ -76470,8 +75973,7 @@
                 }
                 if (textBaseline === 'bottom') {
                     layoutRect.y += layoutRect.height;
-                }
-                else if (textBaseline === 'middle') {
+                } else if (textBaseline === 'middle') {
                     layoutRect.y += layoutRect.height / 2;
                 }
 
@@ -76580,7 +76082,7 @@
 
         return function (callback, context) {
             each$1(names, function (name, index) {
-                var nameObj = { name: name, capital: capitalNames[index] };
+                var nameObj = {name: name, capital: capitalNames[index]};
 
                 for (var j = 0; j < attrs.length; j++) {
                     nameObj[attrs[j]] = name + capitalAttrs[j];
@@ -76834,8 +76336,7 @@
             if (isCartesian) {
                 coordSysIndexName = 'gridIndex';
                 otherAxisDim = axisDim === 'x' ? 'y' : 'x';
-            }
-            else {
+            } else {
                 coordSysIndexName = 'polarIndex';
                 otherAxisDim = axisDim === 'angle' ? 'radius' : 'angle';
             }
@@ -76904,8 +76405,7 @@
                     boundValue = scale.parse(linearMap(
                         boundPercent, percentExtent, dataExtent, true
                     ));
-                }
-                else {
+                } else {
                     // Calculating `percent` from `value` may be not accurate, because
                     // This calculation can not be inversed, because all of values that
                     // are overflow the `dataExtent` will be calculated to percent '100%'
@@ -77038,8 +76538,7 @@
                         // If both left out and right out, do not filter.
                         return hasValue && leftOut && rightOut;
                     });
-                }
-                else {
+                } else {
                     each$22(dataDims, function (dim) {
                         if (filterMode === 'empty') {
                             seriesModel.setData(
@@ -77047,8 +76546,7 @@
                                     return !isInWindow(value) ? NaN : value;
                                 })
                             );
-                        }
-                        else {
+                        } else {
                             var range = {};
                             range[dim] = valueWindow;
 
@@ -77113,16 +76611,14 @@
 
         if (min != null && min !== 'dataMin' && typeof min !== 'function') {
             dataExtent[0] = min;
-        }
-        else if (isCategoryAxis) {
+        } else if (isCategoryAxis) {
             dataExtent[0] = axisDataLen > 0 ? 0 : NaN;
         }
 
         var max = axisModel.getMax(true);
         if (max != null && max !== 'dataMax' && typeof max !== 'function') {
             dataExtent[1] = max;
-        }
-        else if (isCategoryAxis) {
+        } else if (isCategoryAxis) {
             dataExtent[1] = axisDataLen > 0 ? axisDataLen - 1 : NaN;
         }
 
@@ -77386,8 +76882,7 @@
 
             if (autoMode === 'axisIndex') {
                 this._autoSetAxisIndex();
-            }
-            else if (autoMode === 'orient') {
+            } else if (autoMode === 'orient') {
                 this._autoSetOrient();
             }
         },
@@ -77415,8 +76910,7 @@
 
             if (orient == null && hasIndexSpecified) {
                 return 'orient';
-            }
-            else if (!hasIndexSpecified) {
+            } else if (!hasIndexSpecified) {
                 if (orient == null) {
                     thisOption.orient = 'horizontal';
                 }
@@ -77440,8 +76934,7 @@
                 if (dependentModels[dimName + 'Axis'].length) {
                     thisOption[dimName + 'AxisIndex'] = [0];
                     autoAxisIndex = false;
-                }
-                else {
+                } else {
                     each$21(dependentModels.singleAxis, function (singleAxisModel) {
                         if (autoAxisIndex && singleAxisModel.get('orient', true) === orient) {
                             thisOption.singleAxisIndex = [singleAxisModel.componentIndex];
@@ -77673,8 +77166,7 @@
                 if (axisProxy) {
                     return axisProxy.getDataValueWindow();
                 }
-            }
-            else {
+            } else {
                 return this.getAxisProxy(axisDimName, axisIndex).getDataValueWindow();
             }
         },
@@ -77739,14 +77231,11 @@
             var valueSpecified = rawOption[names[1]] != null;
             if (percentSpecified && !valueSpecified) {
                 rangePropMode[index] = 'percent';
-            }
-            else if (!percentSpecified && valueSpecified) {
+            } else if (!percentSpecified && valueSpecified) {
                 rangePropMode[index] = 'value';
-            }
-            else if (rangeModeInOption) {
+            } else if (rangeModeInOption) {
                 rangePropMode[index] = rangeModeInOption[index];
-            }
-            else if (percentSpecified) { // percentSpecified && valueSpecified
+            } else if (percentSpecified) { // percentSpecified && valueSpecified
                 rangePropMode[index] = 'percent';
             }
             // else remain its original setting.
@@ -78100,7 +77589,7 @@
             // If some of x/y/width/height are not specified,
             // auto-adapt according to target grid.
             var coordRect = this._findCoordRect();
-            var ecSize = { width: api.getWidth(), height: api.getHeight() };
+            var ecSize = {width: api.getWidth(), height: api.getHeight()};
             // Default align by coordinate system rect.
             var positionInfo = this._orient === HORIZONTAL
                 ? {
@@ -78135,7 +77624,7 @@
                 dataZoomModel.padding
             );
 
-            this._location = { x: layoutRect.x, y: layoutRect.y };
+            this._location = {x: layoutRect.x, y: layoutRect.y};
             this._size = [layoutRect.width, layoutRect.height];
             this._orient === VERTICAL && this._size.reverse();
         },
@@ -78158,13 +77647,13 @@
             // Transform barGroup.
             barGroup.attr(
                 (orient === HORIZONTAL && !inverse)
-                    ? { scale: otherAxisInverse ? [1, 1] : [1, -1] }
+                    ? {scale: otherAxisInverse ? [1, 1] : [1, -1]}
                     : (orient === HORIZONTAL && inverse)
-                        ? { scale: otherAxisInverse ? [-1, 1] : [-1, -1] }
+                        ? {scale: otherAxisInverse ? [-1, 1] : [-1, -1]}
                         : (orient === VERTICAL && !inverse)
-                            ? { scale: otherAxisInverse ? [1, -1] : [1, 1], rotation: Math.PI / 2 }
+                            ? {scale: otherAxisInverse ? [1, -1] : [1, 1], rotation: Math.PI / 2}
                             // Dont use Math.PI, considering shadow direction.
-                            : { scale: otherAxisInverse ? [-1, -1] : [-1, 1], rotation: Math.PI / 2 }
+                            : {scale: otherAxisInverse ? [-1, -1] : [-1, 1], rotation: Math.PI / 2}
             );
 
             // Position barGroup
@@ -78266,8 +77755,7 @@
                 if (isEmpty && !lastIsEmpty && index) {
                     areaPoints.push([areaPoints[areaPoints.length - 1][0], 0]);
                     linePoints.push([linePoints[linePoints.length - 1][0], 0]);
-                }
-                else if (!isEmpty && lastIsEmpty) {
+                } else if (!isEmpty && lastIsEmpty) {
                     areaPoints.push([thisCoord, 0]);
                     linePoints.push([thisCoord, 0]);
                 }
@@ -78282,16 +77770,16 @@
             var dataZoomModel = this.dataZoomModel;
             // var dataBackgroundModel = dataZoomModel.getModel('dataBackground');
             this._displayables.barGroup.add(new Polygon({
-                shape: { points: areaPoints },
+                shape: {points: areaPoints},
                 style: defaults(
-                    { fill: dataZoomModel.get('dataBackgroundColor') },
+                    {fill: dataZoomModel.get('dataBackgroundColor')},
                     dataZoomModel.getModel('dataBackground.areaStyle').getAreaStyle()
                 ),
                 silent: true,
                 z2: -20
             }));
             this._displayables.barGroup.add(new Polyline({
-                shape: { points: linePoints },
+                shape: {points: linePoints},
                 style: dataZoomModel.getModel('dataBackground.lineStyle').getLineStyle(),
                 silent: true,
                 z2: -19
@@ -78411,7 +77899,7 @@
                         onmouseover: bind$4(this._showDataInfo, this, true),
                         onmouseout: bind$4(this._showDataInfo, this, false)
                     },
-                    { x: -1, y: 0, width: 2, height: 2 }
+                    {x: -1, y: 0, width: 2, height: 2}
                 );
 
                 var bRect = path.getBoundingRect();
@@ -78721,7 +78209,7 @@
     function getOtherDim(thisDim) {
         // FIXME
         // 这个逻辑和getOtherAxis里一致，但是写在这里是否不好
-        var map$$1 = { x: 'y', y: 'x', radius: 'angle', angle: 'radius' };
+        var map$$1 = {x: 'y', y: 'x', radius: 'angle', angle: 'radius'};
         return map$$1[thisDim];
     }
 
@@ -79158,8 +78646,7 @@
                 ret.pixelLength = rect.width;
                 ret.pixelStart = rect.x;
                 ret.signal = axis.inverse ? 1 : -1;
-            }
-            else { // axis.dim === 'y'
+            } else { // axis.dim === 'y'
                 ret.pixel = newPoint[1] - oldPoint[1];
                 ret.pixelLength = rect.height;
                 ret.pixelStart = rect.y;
@@ -79186,8 +78673,7 @@
                 ret.pixelLength = radiusExtent[1] - radiusExtent[0];
                 ret.pixelStart = radiusExtent[0];
                 ret.signal = axis.inverse ? 1 : -1;
-            }
-            else { // 'angleAxis'
+            } else { // 'angleAxis'
                 ret.pixel = newPoint[1] - oldPoint[1];
                 // ret.pixelLength = Math.abs(angleExtent[1] - angleExtent[0]);
                 // ret.pixelStart = Math.min(angleExtent[0], angleExtent[1]);
@@ -79211,8 +78697,7 @@
                 ret.pixelLength = rect.width;
                 ret.pixelStart = rect.x;
                 ret.signal = axis.inverse ? 1 : -1;
-            }
-            else { // 'vertical'
+            } else { // 'vertical'
                 ret.pixel = newPoint[1] - oldPoint[1];
                 ret.pixelLength = rect.height;
                 ret.pixelStart = rect.y;
@@ -79345,7 +78830,7 @@
         var effectedModels = [];
 
         ecModel.eachComponent(
-            { mainType: 'dataZoom', query: payload },
+            {mainType: 'dataZoom', query: payload},
             function (model, index) {
                 effectedModels.push.apply(
                     effectedModels, linkedNodesFinder(model).nodes
@@ -79537,7 +79022,7 @@
                 if (visualMapModel.isTargetSeries(seriesModel)) {
                     var visualMeta = visualMapModel.getVisualMeta(
                         bind(getColorVisual, null, seriesModel, visualMapModel)
-                    ) || { stops: [], outerColors: [] };
+                    ) || {stops: [], outerColors: []};
 
                     var concreteDim = visualMapModel.getDataDimension(data);
                     var dimInfo = data.getDimensionInfo(concreteDim);
@@ -79568,7 +79053,7 @@
             var type = visualTypes[i];
             var mapping = mappings[
                 type === 'opacity' ? '__alphaForOpacity' : type
-            ];
+                ];
             mapping && mapping.applyVisual(value, getVisual, setVisual);
         }
 
@@ -79725,7 +79210,7 @@
          * @readOnly
          * @type {string|Object}
          */
-        layoutMode: { type: 'box', ignoreSize: true },
+        layoutMode: {type: 'box', ignoreSize: true},
 
         /**
          * @protected
@@ -79866,8 +79351,7 @@
                 this.ecModel.eachSeries(function (seriesModel, index) {
                     seriesIndices.push(index);
                 });
-            }
-            else {
+            } else {
                 seriesIndices = normalizeToArray(optionSeriesIndex);
             }
 
@@ -79925,16 +79409,15 @@
             textValue = isCategory
                 ? value
                 : (isMinMax
-                    ? [toFixed(value[0]), toFixed(value[1])]
-                    : toFixed(value)
+                        ? [toFixed(value[0]), toFixed(value[1])]
+                        : toFixed(value)
                 );
 
             if (isString(formatter)) {
                 return formatter
                     .replace('{value}', isMinMax ? textValue[0] : textValue)
                     .replace('{value2}', isMinMax ? textValue[1] : textValue);
-            }
-            else if (isFunction$1(formatter)) {
+            } else if (isFunction$1(formatter)) {
                 return isMinMax
                     ? formatter(value[0], value[1])
                     : formatter(value);
@@ -79943,15 +79426,12 @@
             if (isMinMax) {
                 if (value[0] === dataBound[0]) {
                     return edgeSymbols[0] + ' ' + textValue[1];
-                }
-                else if (value[1] === dataBound[1]) {
+                } else if (value[1] === dataBound[1]) {
                     return edgeSymbols[1] + ' ' + textValue[0];
-                }
-                else {
+                } else {
                     return textValue[0] + ' - ' + textValue[1];
                 }
-            }
-            else { // Format single value (includes category case).
+            } else { // Format single value (includes category case).
                 return textValue;
             }
 
@@ -80020,7 +79500,7 @@
         completeVisualOption: function () {
             var ecModel = this.ecModel;
             var thisOption = this.option;
-            var base = { inRange: thisOption.inRange, outOfRange: thisOption.outOfRange };
+            var base = {inRange: thisOption.inRange, outOfRange: thisOption.outOfRange};
 
             var target = thisOption.target || (thisOption.target = {});
             var controller = thisOption.controller || (thisOption.controller = {});
@@ -80046,7 +79526,7 @@
                     // So adding color only when no inRange defined.
                     && !base.inRange
                 ) {
-                    base.inRange = { color: thisOption.color.slice().reverse() };
+                    base.inRange = {color: thisOption.color.slice().reverse()};
                 }
 
                 // Compatible with previous logic, always give a defautl color, otherwise
@@ -80055,7 +79535,7 @@
                 // the second time the default color will be erased. So we change to use
                 // constant DEFAULT_COLOR.
                 // If user do not want the defualt color, set inRange: {color: null}.
-                base.inRange = base.inRange || { color: ecModel.get('gradientColor') };
+                base.inRange = base.inRange || {color: ecModel.get('gradientColor')};
 
                 // If using shortcut like: {inRange: 'symbol'}, complete default value.
                 each$25(this.stateList, function (state) {
@@ -80066,8 +79546,7 @@
                         if (defa) {
                             base[state] = {};
                             base[state][visualType] = defa;
-                        }
-                        else {
+                        } else {
                             // Mark as not specified.
                             delete base[state];
                         }
@@ -80299,8 +79778,7 @@
                 // value like 'auto') for user-friend. (consider getOption).
                 dataExtent.auto = 1;
                 this.option.range = dataExtent;
-            }
-            else if (isArray(range)) {
+            } else if (isArray(range)) {
                 if (range[0] > range[1]) {
                     range.reverse();
                 }
@@ -80381,7 +79859,7 @@
                     range[0] <= value && value <= range[1] && dataIndices.push(dataIndex);
                 }, this);
 
-                result.push({ seriesId: seriesModel.id, dataIndex: dataIndices });
+                result.push({seriesId: seriesModel.id, dataIndex: dataIndices});
             }, this);
 
             return result;
@@ -80494,7 +79972,7 @@
          * @readOnly
          * @type {Object}
          */
-        autoPositionValues: { left: 1, right: 1, top: 1, bottom: 1 },
+        autoPositionValues: {left: 1, right: 1, top: 1, bottom: 1},
 
         init: function (ecModel, api) {
             /**
@@ -80589,8 +80067,8 @@
             }
 
             var mappings = visualMapModel.controllerVisuals[
-                forceState || visualMapModel.getValueState(targetValue)
-            ];
+            forceState || visualMapModel.getValueState(targetValue)
+                ];
             var visualTypes = VisualMapping.prepareVisualTypes(mappings);
 
             each$1(visualTypes, function (type) {
@@ -80619,7 +80097,7 @@
             positionElement(
                 group,
                 model.getBoxLayoutParams(),
-                { width: api.getWidth(), height: api.getHeight() }
+                {width: api.getWidth(), height: api.getHeight()}
             );
         },
 
@@ -80665,7 +80143,7 @@
         }
 
         // Auto decision align.
-        var ecSize = { width: api.getWidth(), height: api.getHeight() };
+        var ecSize = {width: api.getWidth(), height: api.getHeight()};
         var realIndex = modelOption.orient === 'horizontal' ? 1 : 0;
 
         var paramsSet = [
@@ -80686,8 +80164,8 @@
 
         return reals[
             (rect.margin[rParam[2]] || 0) + rect[rParam[0]] + rect[rParam[1]] * 0.5
-                < ecSize[rParam[1]] * 0.5 ? 0 : 1
-        ];
+            < ecSize[rParam[1]] * 0.5 ? 0 : 1
+            ];
     }
 
     /**
@@ -80978,7 +80456,7 @@
         _createIndicator: function (barGroup, itemSize, textSize, orient) {
             var indicator = createPolygon([[0, 0]], 'move');
             indicator.position[0] = itemSize[0];
-            indicator.attr({ invisible: true, silent: true });
+            indicator.attr({invisible: true, silent: true});
             barGroup.add(indicator);
 
             var textStyleModel = this.visualMapModel.textStyleModel;
@@ -81036,8 +80514,7 @@
 
             if (isEnd) {
                 !this._hovering && this._clearHoverLinkToSeries();
-            }
-            else if (useHoverLinkOnHandle(this.visualMapModel)) {
+            } else if (useHoverLinkOnHandle(this.visualMapModel)) {
                 this._doHoverLinkToSeries(this._handleEnds[handleIndex], false);
             }
         },
@@ -81205,12 +80682,12 @@
 
             return new Group(
                 (orient === 'horizontal' && !inverse)
-                    ? { scale: itemAlign === 'bottom' ? [1, 1] : [-1, 1], rotation: Math.PI / 2 }
+                    ? {scale: itemAlign === 'bottom' ? [1, 1] : [-1, 1], rotation: Math.PI / 2}
                     : (orient === 'horizontal' && inverse)
-                        ? { scale: itemAlign === 'bottom' ? [-1, 1] : [1, 1], rotation: -Math.PI / 2 }
+                        ? {scale: itemAlign === 'bottom' ? [-1, 1] : [1, 1], rotation: -Math.PI / 2}
                         : (orient === 'vertical' && !inverse)
-                            ? { scale: itemAlign === 'left' ? [1, -1] : [-1, -1] }
-                            : { scale: itemAlign === 'left' ? [1, 1] : [-1, 1] }
+                            ? {scale: itemAlign === 'left' ? [1, -1] : [-1, -1]}
+                            : {scale: itemAlign === 'left' ? [1, 1] : [-1, 1]}
             );
         },
 
@@ -81278,7 +80755,7 @@
                 !!rangeSymbol, halfHoverLinkSize, pos, itemSize[1]
             ));
 
-            var opts = { convertOpacityToAlpha: true };
+            var opts = {convertOpacityToAlpha: true};
             var color = this.getControllerVisual(cursorValue, 'color', opts);
             indicator.setStyle('fill', color);
 
@@ -81343,8 +80820,7 @@
             if (this.visualMapModel.option.hoverLink) {
                 zr.on('mouseover', this._hoverLinkFromSeriesMouseOver, this);
                 zr.on('mouseout', this._hideIndicator, this);
-            }
-            else {
+            } else {
                 this._clearHoverLinkFromSeries();
             }
         },
@@ -81383,11 +80859,9 @@
             if (hoverOnBar) {
                 if (valueRange[0] === -Infinity) {
                     this._showIndicator(cursorValue, valueRange[1], '< ', halfHoverLinkSize);
-                }
-                else if (valueRange[1] === Infinity) {
+                } else if (valueRange[1] === Infinity) {
                     this._showIndicator(cursorValue, valueRange[0], '> ', halfHoverLinkSize);
-                }
-                else {
+                } else {
                     this._showIndicator(cursorValue, cursorValue, '≈ ', halfHoverLinkSize);
                 }
             }
@@ -81475,7 +80949,7 @@
 
             return graphic[
                 isArray(vertex) ? 'applyTransform' : 'transformDirection'
-            ](vertex, transform, inverse);
+                ](vertex, transform, inverse);
         },
 
         /**
@@ -81508,7 +80982,7 @@
 
     function createPolygon(points, cursor, onDrift, onDragEnd) {
         return new Polygon({
-            shape: { points: points },
+            shape: {points: points},
             draggable: !!onDrift,
             cursor: cursor,
             drift: onDrift,
@@ -81584,7 +81058,7 @@
 
     registerAction(actionInfo$2, function (payload, ecModel) {
 
-        ecModel.eachComponent({ mainType: 'visualMap', query: payload }, function (model) {
+        ecModel.eachComponent({mainType: 'visualMap', query: payload}, function (model) {
             model.setSelected(payload.selected);
         });
 
@@ -81727,8 +81201,7 @@
                 if (mode === 'categories') {
                     mappingOption.mappingMethod = 'category';
                     mappingOption.categories = clone(categories);
-                }
-                else {
+                } else {
                     mappingOption.dataExtent = this.getExtent();
                     mappingOption.mappingMethod = 'piecewise';
                     mappingOption.pieceList = map(this._pieceList, function (piece) {
@@ -81873,7 +81346,7 @@
 
             return index != null
                 ? (this.option.selected[this.getSelectedMapKey(this._pieceList[index])]
-                    ? 'inRange' : 'outOfRange'
+                        ? 'inRange' : 'outOfRange'
                 )
                 : 'outOfRange';
         },
@@ -81896,7 +81369,7 @@
                     pIdx === pieceIndex && dataIndices.push(dataIndex);
                 }, this);
 
-                result.push({ seriesId: seriesModel.id, dataIndex: dataIndices });
+                result.push({seriesId: seriesModel.id, dataIndex: dataIndices});
             }, this);
 
             return result;
@@ -81911,12 +81384,10 @@
             var representValue;
             if (this.isCategory()) {
                 representValue = piece.value;
-            }
-            else {
+            } else {
                 if (piece.value != null) {
                     representValue = piece.value;
-                }
-                else {
+                } else {
                     var pieceInterval = piece.interval || [];
                     representValue = (pieceInterval[0] === -Infinity && pieceInterval[1] === Infinity)
                         ? 0
@@ -81937,21 +81408,19 @@
             var visualMapModel = this;
 
             function setStop(interval, valueState) {
-                var representValue = visualMapModel.getRepresentValue({ interval: interval });
+                var representValue = visualMapModel.getRepresentValue({interval: interval});
                 if (!valueState) {
                     valueState = visualMapModel.getValueState(representValue);
                 }
                 var color = getColorVisual(representValue, valueState);
                 if (interval[0] === -Infinity) {
                     outerColors[0] = color;
-                }
-                else if (interval[1] === Infinity) {
+                } else if (interval[1] === Infinity) {
                     outerColors[1] = color;
-                }
-                else {
+                } else {
                     stops.push(
-                        { value: interval[0], color: color },
-                        { value: interval[1], color: color }
+                        {value: interval[0], color: color},
+                        {value: interval[1], color: color}
                     );
                 }
             }
@@ -81959,13 +81428,12 @@
             // Suplement
             var pieceList = this._pieceList.slice();
             if (!pieceList.length) {
-                pieceList.push({ interval: [-Infinity, Infinity] });
-            }
-            else {
+                pieceList.push({interval: [-Infinity, Infinity]});
+            } else {
                 var edge = pieceList[0].interval[0];
-                edge !== -Infinity && pieceList.unshift({ interval: [-Infinity, edge] });
+                edge !== -Infinity && pieceList.unshift({interval: [-Infinity, edge]});
                 edge = pieceList[pieceList.length - 1].interval[1];
-                edge !== Infinity && pieceList.push({ interval: [edge, Infinity] });
+                edge !== Infinity && pieceList.push({interval: [edge, Infinity]});
             }
 
             var curr = -Infinity;
@@ -81979,7 +81447,7 @@
                 }
             }, this);
 
-            return { stops: stops, outerColors: outerColors };
+            return {stops: stops, outerColors: outerColors};
         }
 
     });
@@ -82069,10 +81537,10 @@
             each$1(thisOption.pieces, function (pieceListItem, index) {
 
                 if (!isObject$1(pieceListItem)) {
-                    pieceListItem = { value: pieceListItem };
+                    pieceListItem = {value: pieceListItem};
                 }
 
-                var item = { text: '', index: index };
+                var item = {text: '', index: index};
 
                 if (pieceListItem.label != null) {
                     item.text = pieceListItem.label;
@@ -82082,8 +81550,7 @@
                     var value = item.value = pieceListItem.value;
                     item.interval = [value, value];
                     item.close = [1, 1];
-                }
-                else {
+                } else {
                     // `min` `max` is legacy option.
                     // `lt` `gt` `lte` `gte` is recommanded.
                     var interval = item.interval = [];
@@ -82278,8 +81745,7 @@
                 return getItemAlign(
                     visualMapModel, this.api, visualMapModel.itemSize
                 );
-            }
-            else { // horizontal, most case left unless specifying right.
+            } else { // horizontal, most case left unless specifying right.
                 var align = modelOption.align;
                 if (!align || align === 'auto') {
                     align = 'left';
@@ -82322,7 +81788,7 @@
             var visualMapModel = this.visualMapModel;
 
             var viewPieceList = map(visualMapModel.getPieceList(), function (piece, index) {
-                return { piece: piece, indexInModelPieceList: index };
+                return {piece: piece, indexInModelPieceList: index};
             });
             var endsText = visualMapModel.get('text');
 
@@ -82339,7 +81805,7 @@
                 endsText = endsText.slice().reverse();
             }
 
-            return { viewPieceList: viewPieceList, endsText: endsText };
+            return {viewPieceList: viewPieceList, endsText: endsText};
         },
 
         /**
@@ -82367,8 +81833,7 @@
                 each$1(selected, function (o, key) {
                     selected[key] = key === newKey;
                 });
-            }
-            else {
+            } else {
                 selected[newKey] = !selected[newKey];
             }
 
@@ -82454,6 +81919,7 @@
     function fillLabel(opt) {
         defaultEmphasis(opt, 'label', ['show']);
     }
+
     var MarkerModel = extendComponentModel({
 
         type: 'marker',
@@ -82509,8 +81975,7 @@
                             if (item instanceof Array) {
                                 fillLabel(item[0]);
                                 fillLabel(item[1]);
-                            }
-                            else {
+                            } else {
                                 fillLabel(item);
                             }
                         });
@@ -82528,8 +81993,7 @@
                         });
 
                         markerModel.__hostSeries = seriesModel;
-                    }
-                    else {
+                    } else {
                         markerModel.mergeOption(markerOpt, ecModel, true);
                     }
                     seriesModel[modelPropName] = markerModel;
@@ -82763,8 +82227,7 @@
                 );
                 // Force to use the value of calculated value.
                 item.value = item.coord[targetCoordIndex];
-            }
-            else {
+            } else {
                 // FIXME Only has one of xAxis and yAxis.
                 var coord = [
                     item.xAxis != null ? item.xAxis : item.radiusAxis,
@@ -82791,8 +82254,7 @@
             ret.valueAxis = coordSys.getAxis(dataDimToCoordDim(seriesModel, ret.valueDataDim));
             ret.baseAxis = coordSys.getOtherAxis(ret.valueAxis);
             ret.baseDataDim = data.mapDimension(ret.baseAxis.dim);
-        }
-        else {
+        } else {
             ret.baseAxis = seriesModel.getBaseAxis();
             ret.valueAxis = coordSys.getOtherAxis(ret.baseAxis);
             ret.baseDataDim = data.mapDimension(ret.baseAxis.dim);
@@ -82846,11 +82308,9 @@
                 }
             });
             return sum / count;
-        }
-        else if (type === 'median') {
+        } else if (type === 'median') {
             return data.getMedian(valueDataDim);
-        }
-        else {
+        } else {
             // max & min
             return data.getDataExtent(valueDataDim, true)[type === 'max' ? 1 : 0];
         }
@@ -82905,7 +82365,8 @@
             }, this);
         },
 
-        renderSeries: function () { }
+        renderSeries: function () {
+        }
     });
 
     /*
@@ -82943,8 +82404,7 @@
                 point = seriesModel.getMarkerPosition(
                     mpData.getValues(mpData.dimensions, idx)
                 );
-            }
-            else if (coordSys) {
+            } else if (coordSys) {
                 var x = mpData.get(coordSys.dimensions[0], idx);
                 var y = mpData.get(coordSys.dimensions[1], idx);
                 point = coordSys.dataToPoint([x, y]);
@@ -83052,10 +82512,9 @@
                     seriesModel.getData().mapDimension(coordDim)
                 ) || {};
                 // In map series data don't have lng and lat dimension. Fallback to same with coordSys
-                return defaults({ name: coordDim }, info);
+                return defaults({name: coordDim}, info);
             });
-        }
-        else {
+        } else {
             coordDimsInfos = [{
                 name: 'value',
                 type: 'float'
@@ -83204,8 +82663,7 @@
                 valueAxis = coordSys.getAxis(valueDataDim);
 
                 value = retrieve(item.yAxis, item.xAxis);
-            }
-            else {
+            } else {
                 var axisInfo = getAxisInfo$1(item, data, coordSys, seriesModel);
                 valueDataDim = axisInfo.valueDataDim;
                 valueAxis = axisInfo.valueAxis;
@@ -83300,16 +82758,14 @@
         var yPx = parsePercent$1(itemModel.get('y'), api.getHeight());
         if (!isNaN(xPx) && !isNaN(yPx)) {
             point = [xPx, yPx];
-        }
-        else {
+        } else {
             // Chart like bar may have there own marker positioning logic
             if (seriesModel.getMarkerPosition) {
                 // Use the getMarkerPoisition
                 point = seriesModel.getMarkerPosition(
                     data.getValues(data.dimensions, idx)
                 );
-            }
-            else {
+            } else {
                 var dims = coordSys.dimensions;
                 var x = data.get(dims[0], idx);
                 var y = data.get(dims[1], idx);
@@ -83330,8 +82786,7 @@
                 var dims = coordSys.dimensions;
                 if (isInifinity(data.get(dims[0], idx))) {
                     point[0] = xAxis.toGlobalCoord(xAxis.getExtent()[isFrom ? 0 : 1]);
-                }
-                else if (isInifinity(data.get(dims[1], idx))) {
+                } else if (isInifinity(data.get(dims[1], idx))) {
                     point[1] = yAxis.toGlobalCoord(yAxis.getExtent()[isFrom ? 0 : 1]);
                 }
             }
@@ -83504,10 +82959,9 @@
                     seriesModel.getData().mapDimension(coordDim)
                 ) || {};
                 // In map series data don't have lng and lat dimension. Fallback to same with coordSys
-                return defaults({ name: coordDim }, info);
+                return defaults({name: coordDim}, info);
             });
-        }
-        else {
+        } else {
             coordDimsInfos = [{
                 name: 'value',
                 type: 'float'
@@ -83531,15 +82985,21 @@
             return item.value;
         };
         fromData.initData(
-            map(optData, function (item) { return item[0]; }),
+            map(optData, function (item) {
+                return item[0];
+            }),
             null, dimValueGetter$$1
         );
         toData.initData(
-            map(optData, function (item) { return item[1]; }),
+            map(optData, function (item) {
+                return item[1];
+            }),
             null, dimValueGetter$$1
         );
         lineData.initData(
-            map(optData, function (item) { return item[2]; })
+            map(optData, function (item) {
+                return item[2];
+            })
         );
         lineData.hasItemOption = true;
 
@@ -83703,10 +83163,10 @@
             }
         }
         return dataFilter$1(coordSys, {
-            coord: fromCoord,
-            x: item.x0,
-            y: item.y0
-        })
+                coord: fromCoord,
+                x: item.x0,
+                y: item.y0
+            })
             || dataFilter$1(coordSys, {
                 coord: toCoord,
                 x: item.x1,
@@ -83724,16 +83184,14 @@
         var yPx = parsePercent$1(itemModel.get(dims[1]), api.getHeight());
         if (!isNaN(xPx) && !isNaN(yPx)) {
             point = [xPx, yPx];
-        }
-        else {
+        } else {
             // Chart like bar may have there own marker positioning logic
             if (seriesModel.getMarkerPosition) {
                 // Use the getMarkerPoisition
                 point = seriesModel.getMarkerPosition(
                     data.getValues(dims, idx)
                 );
-            }
-            else {
+            } else {
                 var x = data.get(dims[0], idx);
                 var y = data.get(dims[1], idx);
                 var pt = [x, y];
@@ -83747,8 +83205,7 @@
                 var y = data.get(dims[1], idx);
                 if (isInifinity$1(x)) {
                     point[0] = xAxis.toGlobalCoord(xAxis.getExtent()[dims[0] === 'x0' ? 0 : 1]);
-                }
-                else if (isInifinity$1(y)) {
+                } else if (isInifinity$1(y)) {
                     point[1] = yAxis.toGlobalCoord(yAxis.getExtent()[dims[1] === 'y0' ? 0 : 1]);
                 }
             }
@@ -83814,7 +83271,7 @@
 
             var areaGroupMap = this.markerGroupMap;
             var polygonGroup = areaGroupMap.get(seriesId)
-                || areaGroupMap.set(seriesId, { group: new Group() });
+                || areaGroupMap.set(seriesId, {group: new Group()});
 
             this.group.add(polygonGroup.group);
             polygonGroup.__keep = true;
@@ -83921,7 +83378,7 @@
                     data.mapDimension(coordDim)
                 ) || {};
                 // In map series data don't have lng and lat dimension. Fallback to same with coordSys
-                return defaults({ name: coordDim }, info);
+                return defaults({name: coordDim}, info);
             });
             areaData = new List(map(dims, function (dim, idx) {
                 return {
@@ -83929,8 +83386,7 @@
                     type: coordDimsInfos[idx % 2].type
                 };
             }), maModel);
-        }
-        else {
+        } else {
             coordDimsInfos = [{
                 name: 'value',
                 type: 'float'
@@ -84019,7 +83475,7 @@
     function compatibleEC2(opt) {
         var type = opt.type;
 
-        var ec2Types = { 'number': 'value', 'time': 'time' };
+        var ec2Types = {'number': 'value', 'time': 'time'};
 
         // Compatible with ec2
         if (ec2Types[type]) {
@@ -84060,7 +83516,7 @@
         // Transfer label out
         var label = opt.label || (opt.label || {});
         var labelNormal = label.normal || (label.normal = {});
-        var excludeLabelAttr = { normal: 1, emphasis: 1 };
+        var excludeLabelAttr = {normal: 1, emphasis: 1};
 
         each$1(label, function (value, name) {
             if (!excludeLabelAttr[name] && !has$2(labelNormal, name)) {
@@ -84122,8 +83578,7 @@
     */
 
     registerAction(
-
-        { type: 'timelineChange', event: 'timelineChanged', update: 'prepareAndUpdate' },
+        {type: 'timelineChange', event: 'timelineChanged', update: 'prepareAndUpdate'},
 
         function (payload, ecModel) {
 
@@ -84146,8 +83601,7 @@
     );
 
     registerAction(
-
-        { type: 'timelinePlayChange', event: 'timelinePlayChanged', update: 'update' },
+        {type: 'timelinePlayChange', event: 'timelinePlayChanged', update: 'update'},
 
         function (payload, ecModel) {
             var timelineModel = ecModel.getComponent('timeline');
@@ -84259,8 +83713,7 @@
 
             if (this.option.loop) {
                 currentIndex = (currentIndex % count + count) % count;
-            }
-            else {
+            } else {
                 currentIndex >= count && (currentIndex = count - 1);
                 currentIndex < 0 && (currentIndex = 0);
             }
@@ -84314,8 +83767,7 @@
                     if (isObject$1(item)) {
                         newItem = clone(item);
                         newItem.value = index;
-                    }
-                    else {
+                    } else {
                         newItem = index;
                     }
 
@@ -84330,9 +83782,9 @@
                 dataArr = idxArr;
             }
 
-            var dimType = ({ category: 'ordinal', time: 'time' })[axisType] || 'number';
+            var dimType = ({category: 'ordinal', time: 'time'})[axisType] || 'number';
 
-            var data = this._data = new List([{ name: 'value', type: dimType }], this);
+            var data = this._data = new List([{name: 'value', type: dimType}], this);
 
             data.initData(dataArr, names);
         },
@@ -84695,11 +84147,10 @@
                 labelPosOpt = orient === 'horizontal'
                     ? ((viewRect.y + viewRect.height / 2) < api.getHeight() / 2 ? '-' : '+')
                     : ((viewRect.x + viewRect.width / 2) < api.getWidth() / 2 ? '+' : '-');
-            }
-            else if (isNaN(labelPosOpt)) {
+            } else if (isNaN(labelPosOpt)) {
                 labelPosOpt = ({
-                    horizontal: { top: '-', bottom: '+' },
-                    vertical: { left: '-', right: '+' }
+                    horizontal: {top: '-', bottom: '+'},
+                    vertical: {left: '-', right: '+'}
                 })[orient][labelPosOpt];
             }
 
@@ -84746,8 +84197,7 @@
                 showPlayBtn && (playPosition = [0, 0], xLeft += sizePlusGap);
                 showPrevBtn && (prevBtnPosition = [xLeft, 0], xLeft += sizePlusGap);
                 showNextBtn && (nextBtnPosition = [xRight - controlSize, 0], xRight -= sizePlusGap);
-            }
-            else { // 'top' 'right'
+            } else { // 'top' 'right'
                 showPlayBtn && (playPosition = [xRight - controlSize, 0], xRight -= sizePlusGap);
                 showPrevBtn && (prevBtnPosition = [0, 0], xLeft += sizePlusGap);
                 showNextBtn && (nextBtnPosition = [xRight - controlSize, 0], xRight -= sizePlusGap);
@@ -84821,8 +84271,7 @@
                 var mainBoundIdx = labelPosOpt === '+' ? 0 : 1;
                 toBound(mainPosition, mainBound, viewBound, 1, mainBoundIdx);
                 toBound(labelsPosition, labelBound, viewBound, 1, 1 - mainBoundIdx);
-            }
-            else {
+            } else {
                 var mainBoundIdx = labelPosOpt >= 0 ? 0 : 1;
                 toBound(mainPosition, mainBound, viewBound, 1, mainBoundIdx);
                 labelsPosition[1] = mainPosition[1] + labelPosOpt;
@@ -84898,7 +84347,7 @@
                     x2: axisExtent[1], y2: 0
                 },
                 style: extend(
-                    { lineCap: 'round' },
+                    {lineCap: 'round'},
                     timelineModel.getModel('lineStyle').getLineStyle()
                 ),
                 silent: true,
@@ -84930,8 +84379,7 @@
                 if (itemModel.get('tooltip')) {
                     el.dataIndex = value;
                     el.dataModel = timelineModel;
-                }
-                else {
+                } else {
                     el.dataIndex = el.dataModel = null;
                 }
 
@@ -85147,8 +84595,7 @@
 
             if (nextIndex === '+') {
                 nextIndex = currentIndex + 1;
-            }
-            else if (nextIndex === '-') {
+            } else if (nextIndex === '-') {
                 nextIndex = currentIndex - 1;
             }
 
@@ -85196,8 +84643,7 @@
             symbol.setStyle('strokeNoScale', true);
             group.add(symbol);
             callback && callback.onCreate(symbol);
-        }
-        else {
+        } else {
             symbol.setColor(color);
             group.add(symbol); // Group may be new, also need to add.
             callback && callback.onUpdate(symbol);
@@ -85253,12 +84699,11 @@
         var toCoord = axis.dataToCoord(timelineModel.getData().get(['value'], dataIndex));
 
         if (noAnimation || !pointerModel.get('animation', true)) {
-            pointer.attr({ position: [toCoord, 0] });
-        }
-        else {
+            pointer.attr({position: [toCoord, 0]});
+        } else {
             pointer.stopAnimation(true);
             pointer.animateTo(
-                { position: [toCoord, 0] },
+                {position: [toCoord, 0]},
                 pointerModel.get('animationDuration', true),
                 pointerModel.get('animationEasing', true)
             );
@@ -85438,8 +84883,7 @@
                             onclick: featureModel.option.onclick,
                             featureName: featureName
                         };
-                    }
-                    else {
+                    } else {
                         var Feature = get$1(featureName);
                         if (!Feature) {
                             return;
@@ -85447,8 +84891,7 @@
                         feature = new Feature(featureModel, ecModel, api);
                     }
                     features[featureName] = feature;
-                }
-                else {
+                } else {
                     feature = features[oldName];
                     // If feature does not exsit.
                     if (!feature) {
@@ -85582,8 +85025,7 @@
                     if (offsetX + rect.width / 2 > api.getWidth()) {
                         hoverStyle.textPosition = ['100%', topOffset];
                         hoverStyle.textAlign = 'right';
-                    }
-                    else if (offsetX - rect.width / 2 < 0) {
+                    } else if (offsetX - rect.width / 2 < 0) {
                         hoverStyle.textPosition = [0, topOffset];
                         hoverStyle.textAlign = 'left';
                     }
@@ -85698,8 +85140,7 @@
                 }
                 var blob = new Blob([u8arr]);
                 window.navigator.msSaveOrOpenBlob(blob, title + '.' + type);
-            }
-            else {
+            } else {
                 var lang$$1 = model.get('lang');
                 var html = '' +
                     '<body style="margin:0;">' +
@@ -85922,6 +85363,7 @@
 
     var BLOCK_SPLITER = new Array(60).join('-');
     var ITEM_SPLITER = '\t';
+
     /**
      * Group series into two types
      *  1. on category axis, like line, bar
@@ -85953,12 +85395,10 @@
                         });
                     }
                     seriesGroupByCategoryAxis[key].series.push(seriesModel);
-                }
-                else {
+                } else {
                     otherSeries.push(seriesModel);
                 }
-            }
-            else {
+            } else {
                 otherSeries.push(seriesModel);
             }
         });
@@ -86055,6 +85495,7 @@
     function trim$1(str) {
         return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
     }
+
     /**
      * If a block is tsv format
      */
@@ -86067,6 +85508,7 @@
     }
 
     var itemSplitRegex = new RegExp('[' + ITEM_SPLITER + ']+', 'g');
+
     /**
      * @param {string} tsv
      * @return {Object}
@@ -86119,8 +85561,7 @@
                     value: []
                 };
                 value = data[i].value;
-            }
-            else {
+            } else {
                 value = data[i] = [];
             }
             for (var j = 0; j < items.length; j++) {
@@ -86161,8 +85602,7 @@
                     };
                     newOption.series = newOption.series.concat(result.series);
                 }
-            }
-            else {
+            } else {
                 var result = parseListContents(block);
                 newOption.series.push(result);
             }
@@ -86227,12 +85667,10 @@
             var htmlOrDom = optionToContent(api.getOption());
             if (typeof htmlOrDom === 'string') {
                 viewMain.innerHTML = htmlOrDom;
-            }
-            else if (isDom(htmlOrDom)) {
+            } else if (isDom(htmlOrDom)) {
                 viewMain.appendChild(htmlOrDom);
             }
-        }
-        else {
+        } else {
             // Use default textarea
             viewMain.appendChild(textarea);
             textarea.readOnly = model.get('readOnly');
@@ -86262,6 +85700,7 @@
             container.removeChild(root);
             self._dom = null;
         }
+
         addEventListener(closeButton, 'click', close);
 
         addEventListener(refreshButton, 'click', function () {
@@ -86269,12 +85708,10 @@
             try {
                 if (typeof contentToOption === 'function') {
                     newOption = contentToOption(viewMain, api.getOption());
-                }
-                else {
+                } else {
                     newOption = parseContents(textarea.value, blockMetaList);
                 }
-            }
-            catch (e) {
+            } catch (e) {
                 close();
                 throw new Error('Data view format error ' + e);
             }
@@ -86347,8 +85784,7 @@
                 return defaults({
                     value: newVal
                 }, original);
-            }
-            else {
+            } else {
                 return newVal;
             }
         });
@@ -86371,8 +85807,7 @@
                     // Default is scatter
                     type: 'scatter'
                 }, seriesOpt));
-            }
-            else {
+            } else {
                 var originalData = seriesModel.get('data');
                 newSeriesOptList.push({
                     name: seriesOpt.name,
@@ -86429,7 +85864,7 @@
             if (i < 0) {
                 // No origin range set, create one by current range.
                 var dataZoomModel = ecModel.queryComponents(
-                    { mainType: 'dataZoom', subType: 'select', id: dataZoomId }
+                    {mainType: 'dataZoom', subType: 'select', id: dataZoomId}
                 )[0];
                 if (dataZoomModel) {
                     var percentRange = dataZoomModel.getPercentRange();
@@ -86677,7 +86112,7 @@
         this._brushController.updateCovers([]); // remove cover
 
         var brushTargetManager = new BrushTargetManager(
-            retrieveAxisSetting(this.model.option), ecModel, { include: ['grid'] }
+            retrieveAxisSetting(this.model.option), ecModel, {include: ['grid']}
         );
         brushTargetManager.matchOutputRanges(areas, ecModel, function (area, coordRange, coordSys) {
             if (coordSys.type !== 'cartesian2d') {
@@ -86688,9 +86123,8 @@
             if (brushType === 'rect') {
                 setBatch('x', coordSys, coordRange[0]);
                 setBatch('y', coordSys, coordRange[1]);
-            }
-            else {
-                setBatch(({ lineX: 'x', lineY: 'y' })[brushType], coordSys, coordRange);
+            } else {
+                setBatch(({lineX: 'x', lineY: 'y'})[brushType], coordSys, coordRange);
             }
         });
 
@@ -86721,7 +86155,7 @@
 
         function findDataZoom(dimName, axisModel, ecModel) {
             var found;
-            ecModel.eachComponent({ mainType: 'dataZoom', subType: 'select' }, function (dzModel) {
+            ecModel.eachComponent({mainType: 'dataZoom', subType: 'select'}, function (dzModel) {
                 var has = dzModel.getAxisModel(dimName, axisModel.componentIndex);
                 has && (found = dzModel);
             });
@@ -86778,7 +86212,7 @@
         featureModel.setIconStatus('zoom', zoomActive ? 'emphasis' : 'normal');
 
         var brushTargetManager = new BrushTargetManager(
-            retrieveAxisSetting(featureModel.option), ecModel, { include: ['grid'] }
+            retrieveAxisSetting(featureModel.option), ecModel, {include: ['grid']}
         );
 
         view._brushController
@@ -86924,7 +86358,7 @@
     register$1('restore', Restore);
 
     registerAction(
-        { type: 'restore', event: 'restore', update: 'prepareAndUpdate' },
+        {type: 'restore', event: 'restore', update: 'prepareAndUpdate'},
         function (payload, ecModel) {
             ecModel.resetOption('recreate');
         }
@@ -86969,8 +86403,7 @@
             doCreateNode = function (tagName) {
                 return doc.createElement('<zrvml:' + tagName + ' class="zrvml">');
             };
-        }
-        catch (e) {
+        } catch (e) {
             doCreateNode = function (tagName) {
                 return doc.createElement('<' + tagName + ' xmlns="' + urn + '" class="zrvml">');
             };
@@ -86987,8 +86420,7 @@
         var styleSheets = doc.styleSheets;
         if (styleSheets.length < 31) {
             doc.createStyleSheet().addRule('.zrvml', 'behavior:url(#default#VML)');
-        }
-        else {
+        } else {
             // http://msdn.microsoft.com/en-us/library/ms531194%28VS.85%29.aspx
             styleSheets[0].addRule('.zrvml', 'behavior:url(#default#VML)');
         }
@@ -87119,8 +86551,7 @@
                         if (angle < 1e-6) {
                             angle = 0;
                         }
-                    }
-                    else {
+                    } else {
                         gradientType = 'gradientradial';
                         var p0 = [fill.x * rectWidth, fill.y * rectHeight];
                         var transform = zrEl.transform;
@@ -87185,8 +86616,7 @@
                     if (gradientType === 'radial') {
                         el.focusposition = focus.join(',');
                     }
-                }
-                else {
+                } else {
                     // FIXME Change from Gradient fill to color fill
                     setColorAndOpacity(el, fill, style.opacity);
                 }
@@ -87227,8 +86657,7 @@
 
                 isFill ? updateFillNode(el, style, zrEl) : updateStrokeNode(el, style);
                 append(vmlEl, el);
-            }
-            else {
+            } else {
                 vmlEl[isFill ? 'filled' : 'stroked'] = 'false';
                 remove(vmlEl, el);
             }
@@ -87290,8 +86719,7 @@
                             y2 = (y2 + 2 * y1) / 3;
                             x1 = (xi + 2 * x1) / 3;
                             y1 = (yi + 2 * y1) / 3;
-                        }
-                        else {
+                        } else {
                             x3 = data[i++];
                             y3 = data[i++];
                         }
@@ -87346,21 +86774,17 @@
                                 if (clockwise) {
                                     x0 += 270 / Z;
                                 }
-                            }
-                            else {
+                            } else {
                                 // Avoid case draw full circle
                                 if (Math.abs(y0 - cy) < 1e-4) {
                                     if ((clockwise && x0 < cx) || (!clockwise && x0 > cx)) {
                                         y1 -= 270 / Z;
-                                    }
-                                    else {
+                                    } else {
                                         y1 += 270 / Z;
                                     }
-                                }
-                                else if ((clockwise && y0 < cy) || (!clockwise && y0 > cy)) {
+                                } else if ((clockwise && y0 < cy) || (!clockwise && y0 > cy)) {
                                     x1 += 270 / Z;
-                                }
-                                else {
+                                } else {
                                     x1 -= 270 / Z;
                                 }
                             }
@@ -87482,8 +86906,7 @@
             // Text
             if (style.text != null) {
                 this.drawRectText(vmlRoot, this.getBoundingRect());
-            }
-            else {
+            } else {
                 this.removeRectText(vmlRoot);
             }
         };
@@ -87521,8 +86944,7 @@
                 if (src === this._imageSrc) {
                     ow = this._imageWidth;
                     oh = this._imageHeight;
-                }
-                else {
+                } else {
                     var imageRuntimeStyle = image.runtimeStyle;
                     var oldRuntimeWidth = imageRuntimeStyle.width;
                     var oldRuntimeHeight = imageRuntimeStyle.height;
@@ -87543,8 +86965,7 @@
                     this._imageHeight = oh;
                 }
                 image = src;
-            }
-            else {
+            } else {
                 if (image === this._imageSrc) {
                     ow = this._imageWidth;
                     oh = this._imageHeight;
@@ -87620,8 +87041,7 @@
                 vmlElStyle.filter = imageTransformPrefix + '.Matrix('
                     + transformFilter.join('') + ', SizingMethod=clip)';
 
-            }
-            else {
+            } else {
                 if (m) {
                     x = x * scaleX + m[4];
                     y = y * scaleY + m[5];
@@ -87658,8 +87078,7 @@
                         self._imageSrc = image;
                     };
                     tmpImage.src = image;
-                }
-                else {
+                } else {
                     imageELStyle.width = round$3(scaleX * ow * dw / sw) + 'px';
                     imageELStyle.height = round$3(scaleY * oh * dh / sh) + 'px';
                 }
@@ -87681,8 +87100,7 @@
                 if (imageEl.parentNode != cropEl) {
                     cropEl.appendChild(imageEl);
                 }
-            }
-            else {
+            } else {
                 imageELStyle.width = round$3(scaleX * dw) + 'px';
                 imageELStyle.height = round$3(scaleY * dh) + 'px';
 
@@ -87755,8 +87173,7 @@
                 try {
                     style.font = fontString;
                     fontFamily = style.fontFamily.split(',')[0];
-                }
-                catch (e) {
+                } catch (e) {
                 }
 
                 fontStyle = {
@@ -87859,8 +87276,7 @@
                     y = rect.y + parsePercent$3(textPosition[1], rect.height);
 
                     align = align || 'left';
-                }
-                else {
+                } else {
                     var res = adjustTextPositionOnRect(
                         textPosition, rect, distance$$1
                     );
@@ -87871,8 +87287,7 @@
                     align = align || res.textAlign;
                     verticalAlign = verticalAlign || res.textVerticalAlign;
                 }
-            }
-            else {
+            } else {
                 x = rect.x;
                 y = rect.y;
             }
@@ -87949,8 +87364,7 @@
                 append(textVmlEl, textPathEl);
 
                 this._textVmlEl = textVmlEl;
-            }
-            else {
+            } else {
                 // 这里是在前面 appendChild 保证顺序的前提下
                 skewEl = textVmlEl.firstChild;
                 pathEl = skewEl.nextSibling;
@@ -87975,8 +87389,7 @@
 
                 textVmlElStyle.left = '0px';
                 textVmlElStyle.top = '0px';
-            }
-            else {
+            } else {
                 skewEl.on = false;
                 textVmlElStyle.left = round$3(x) + 'px';
                 textVmlElStyle.top = round$3(y) + 'px';
@@ -87987,8 +87400,9 @@
             try {
                 textPathEl.style.font = font;
             }
-            // Error font format
-            catch (e) { }
+                // Error font format
+            catch (e) {
+            }
 
             updateFillAndStroke(textVmlEl, 'fill', {
                 fill: style.textFill,
@@ -88032,8 +87446,7 @@
                     x: style.x || 0, y: style.y || 0,
                     width: 0, height: 0
                 }, this.getBoundingRect(), true);
-            }
-            else {
+            } else {
                 this.removeRectText(vmlRoot);
             }
         };
@@ -88149,8 +87562,7 @@
                     }
                     // Set as already invisible
                     el.__alreadyNotVisible = true;
-                }
-                else {
+                } else {
                     if (el.__alreadyNotVisible) {
                         el.onAdd(vmlRoot);
                     }
@@ -88193,7 +87605,7 @@
 
             this._vmlRoot =
                 this._vmlViewport =
-                this.storage = null;
+                    this.storage = null;
         },
 
         getWidth: function () {
@@ -88333,8 +87745,7 @@
 
             attr(svgEl, 'fill', fill);
             attr(svgEl, 'fill-opacity', style.opacity);
-        }
-        else {
+        } else {
             attr(svgEl, 'fill', NONE);
         }
 
@@ -88356,8 +87767,7 @@
             if (lineDash) {
                 attr(svgEl, 'stroke-dasharray', style.lineDash.join(','));
                 attr(svgEl, 'stroke-dashoffset', mathRound(style.lineDashOffset || 0));
-            }
-            else {
+            } else {
                 attr(svgEl, 'stroke-dasharray', '');
             }
 
@@ -88365,8 +87775,7 @@
             style.lineCap && attr(svgEl, 'stroke-linecap', style.lineCap);
             style.lineJoin && attr(svgEl, 'stroke-linejoin', style.lineJoin);
             style.miterLimit && attr(svgEl, 'stroke-miterlimit', style.miterLimit);
-        }
-        else {
+        } else {
             attr(svgEl, 'stroke', NONE);
         }
     }
@@ -88416,11 +87825,9 @@
                     var large = false;
                     if (dThetaPositive >= PI2$7) {
                         large = true;
-                    }
-                    else if (isAroundZero$1(dThetaPositive)) {
+                    } else if (isAroundZero$1(dThetaPositive)) {
                         large = false;
-                    }
-                    else {
+                    } else {
                         large = (dTheta > -PI$5 && dTheta < 0 || dTheta > PI$5)
                             === !!clockwise;
                     }
@@ -88434,8 +87841,7 @@
                     if (isCircle) {
                         if (clockwise) {
                             dTheta = PI2$7 - 1e-4;
-                        }
-                        else {
+                        } else {
                             dTheta = -PI2$7 + 1e-4;
                         }
 
@@ -88583,8 +87989,7 @@
         if (text == null) {
             // Draw no text only when text is set to null, but not ''
             return;
-        }
-        else {
+        } else {
             text += '';
         }
 
@@ -88622,8 +88027,7 @@
         if (textPosition instanceof Array) {
             x = rect.x + textPosition[0];
             y = rect.y + textPosition[1];
-        }
-        else {
+        } else {
             var newPos = adjustTextPositionOnRect(
                 textPosition, rect, distance
             );
@@ -88649,14 +88053,12 @@
         if (el instanceof Text || el.style.transformText) {
             // Transform text with element
             setTransform(textSvgEl, el.transform);
-        }
-        else {
+        } else {
             if (el.transform) {
                 tmpRect$3.copy(rect);
                 tmpRect$3.applyTransform(el.transform);
                 rect = tmpRect$3;
-            }
-            else {
+            } else {
                 var pos = el.transformCoordToGlobal(rect.x, rect.y);
                 rect.x = pos[0];
                 rect.y = pos[1];
@@ -88667,8 +88069,7 @@
             if (origin === 'center') {
                 x = textRect.width / 2 + x;
                 y = textRect.height / 2 + y;
-            }
-            else if (origin) {
+            } else if (origin) {
                 x = origin[0] + x;
                 y = origin[1] + y;
             }
@@ -88686,12 +88087,10 @@
         if (textAnchor === 'left') {
             textAnchor = 'start';
             textPadding && (x += textPadding[3]);
-        }
-        else if (textAnchor === 'right') {
+        } else if (textAnchor === 'right') {
             textAnchor = 'end';
             textPadding && (x -= textPadding[1]);
-        }
-        else if (textAnchor === 'center') {
+        } else if (textAnchor === 'center') {
             textAnchor = 'middle';
             textPadding && (x += (textPadding[3] - textPadding[1]) / 2);
         }
@@ -88700,12 +88099,10 @@
         if (verticalAlign === 'baseline') {
             dy = -textRect.height + lineHeight;
             textPadding && (dy -= textPadding[2]);
-        }
-        else if (verticalAlign === 'middle') {
+        } else if (verticalAlign === 'middle') {
             dy = (-textRect.height + lineHeight) / 2;
             textPadding && (y += (textPadding[0] - textPadding[2]) / 2);
-        }
-        else {
+        } else {
             textPadding && (dy += textPadding[0]);
         }
 
@@ -88721,8 +88118,7 @@
                     textSvgEl.appendChild(tspan);
                     attr(tspan, 'alignment-baseline', verticalAlign);
                     attr(tspan, 'text-anchor', textAnchor);
-                }
-                else {
+                } else {
                     tspan.innerHTML = '';
                 }
                 attr(tspan, 'x', x);
@@ -88737,8 +88133,7 @@
 
             el.__text = text;
             el.__textFont = font;
-        }
-        else if (el.__tspanList.length) {
+        } else if (el.__tspanList.length) {
             // Update span x and y
             var len = el.__tspanList.length;
             for (var i = 0; i < len; ++i) {
@@ -88754,11 +88149,9 @@
     function getVerticalAlignForSvg(verticalAlign) {
         if (verticalAlign === 'middle') {
             return 'middle';
-        }
-        else if (verticalAlign === 'bottom') {
+        } else if (verticalAlign === 'bottom') {
             return 'baseline';
-        }
-        else {
+        } else {
             return 'hanging';
         }
     }
@@ -88780,7 +88173,8 @@
     // Myers' Diff Algorithm
     // Modified from https://github.com/kpdecker/jsdiff/blob/master/src/diff/base.js
 
-    function Diff() { }
+    function Diff() {
+    }
 
     Diff.prototype = {
         diff: function (oldArr, newArr, equals) {
@@ -88800,7 +88194,7 @@
             var oldLen = oldArr.length;
             var editLength = 1;
             var maxEditLength = newLen + oldLen;
-            var bestPath = [{ newPos: -1, components: [] }];
+            var bestPath = [{newPos: -1, components: []}];
 
             // Seed editLength = 0, i.e. the content starts with the same values
             var oldPos = this.extractCommon(bestPath[0], newArr, oldArr, 0);
@@ -88841,8 +88235,7 @@
                     if (!canAdd || (canRemove && addPath.newPos < removePath.newPos)) {
                         basePath = clonePath(removePath);
                         self.pushComponent(basePath.components, undefined, true);
-                    }
-                    else {
+                    } else {
                         basePath = addPath;   // No need to clone, we've pulled it from the list
                         basePath.newPos++;
                         self.pushComponent(basePath.components, true, undefined);
@@ -88853,8 +88246,7 @@
                     // If we have hit the end of both strings, then we are done
                     if (basePath.newPos + 1 >= newLen && oldPos + 1 >= oldLen) {
                         return buildValues(self, basePath.components, newArr, oldArr);
-                    }
-                    else {
+                    } else {
                         // Otherwise track this path as a potential candidate and continue.
                         bestPath[diagonalPath] = basePath;
                     }
@@ -88876,10 +88268,9 @@
             if (last && last.added === added && last.removed === removed) {
                 // We need to clone here as the component clone operation is just
                 // as shallow array clone
-                components[components.length - 1] = { count: last.count + 1, added: added, removed: removed };
-            }
-            else {
-                components.push({ count: 1, added: added, removed: removed });
+                components[components.length - 1] = {count: last.count + 1, added: added, removed: removed};
+            } else {
+                components.push({count: 1, added: added, removed: removed});
             }
         },
         extractCommon: function (basePath, newArr, oldArr, diagonalPath) {
@@ -88896,7 +88287,7 @@
             }
 
             if (commonCount) {
-                basePath.components.push({ count: commonCount });
+                basePath.components.push({count: commonCount});
             }
 
             basePath.newPos = newPos;
@@ -88929,8 +88320,7 @@
                 if (!component.added) {
                     oldPos += component.count;
                 }
-            }
-            else {
+            } else {
                 var indices = [];
                 for (var i = oldPos; i < oldPos + component.count; i++) {
                     indices.push(i);
@@ -88944,7 +88334,7 @@
     }
 
     function clonePath(path) {
-        return { newPos: path.newPos, components: path.components.slice(0) };
+        return {newPos: path.newPos, components: path.components.slice(0)};
     }
 
     var arrayDiff = new Diff();
@@ -89026,12 +88416,10 @@
                     };
                 }
                 return defs;
-            }
-            else {
+            } else {
                 return null;
             }
-        }
-        else {
+        } else {
             return defs[0];
         }
     };
@@ -89055,8 +88443,7 @@
             if (typeof onUpdate === 'function') {
                 onUpdate(element);
             }
-        }
-        else {
+        } else {
             // No previous dom, create new
             var dom = this.add(element);
             if (dom) {
@@ -89171,14 +88558,11 @@
     Definable.prototype.getSvgProxy = function (displayable) {
         if (displayable instanceof Path) {
             return svgPath;
-        }
-        else if (displayable instanceof ZImage) {
+        } else if (displayable instanceof ZImage) {
             return svgImage;
-        }
-        else if (displayable instanceof Text) {
+        } else if (displayable instanceof Text) {
             return svgText;
-        }
-        else {
+        } else {
             return svgPath;
         }
     };
@@ -89262,8 +88646,7 @@
                             // _dom is no longer in defs, recreate
                             that.addDom(dom);
                         }
-                    }
-                    else {
+                    } else {
                         // New dom
                         dom = that.add(gradient);
                     }
@@ -89289,11 +88672,9 @@
         var dom;
         if (gradient.type === 'linear') {
             dom = this.createElement('linearGradient');
-        }
-        else if (gradient.type === 'radial') {
+        } else if (gradient.type === 'radial') {
             dom = this.createElement('radialGradient');
-        }
-        else {
+        } else {
             zrLog('Illegal gradient type.');
             return null;
         }
@@ -89329,8 +88710,7 @@
             ) {
                 // Gradient type is not changed, update gradient
                 that.updateDom(gradient, gradient._dom);
-            }
-            else {
+            } else {
                 // Remove and re-create if type is changed
                 that.removeDom(gradient);
                 that.add(gradient);
@@ -89352,13 +88732,11 @@
             dom.setAttribute('y1', gradient.y);
             dom.setAttribute('x2', gradient.x2);
             dom.setAttribute('y2', gradient.y2);
-        }
-        else if (gradient.type === 'radial') {
+        } else if (gradient.type === 'radial') {
             dom.setAttribute('cx', gradient.x);
             dom.setAttribute('cy', gradient.y);
             dom.setAttribute('r', gradient.r);
-        }
-        else {
+        } else {
             zrLog('Illegal gradient type.');
             return;
         }
@@ -89366,8 +88744,7 @@
         if (gradient.global) {
             // x1, x2, y1, y2 in range of 0 to canvas width or height
             dom.setAttribute('gradientUnits', 'userSpaceOnUse');
-        }
-        else {
+        } else {
             // x1, x2, y1, y2 in range of 0 to 1
             dom.setAttribute('gradientUnits', 'objectBoundingBox');
         }
@@ -89484,8 +88861,7 @@
                     // been previously removed
                     defs.appendChild(clipPathEl);
                 }
-            }
-            else {
+            } else {
                 // New <clipPath>
                 id = 'zr' + this._zrId + '-clip-' + this.nextId;
                 ++this.nextId;
@@ -89509,10 +88885,10 @@
                  * transform, which is done by multiplying parent's inverse
                  * transform.
                  */
-                // Store old transform
+                    // Store old transform
                 var transform = Array.prototype.slice.call(
-                    clipPath.transform
-                );
+                        clipPath.transform
+                    );
 
                 // Transform back from parent, and brush path
                 mul$1(
@@ -89524,8 +88900,7 @@
 
                 // Set back transform of clipPath
                 clipPath.transform = transform;
-            }
-            else {
+            } else {
                 svgProxy.brush(clipPath);
             }
 
@@ -89546,8 +88921,7 @@
                 // Make the other clipPaths recursively
                 this.updateDom(clipPathEl, clipPaths.slice(1), isText);
             }
-        }
-        else {
+        } else {
             // No clipPath
             if (parentEl) {
                 parentEl.setAttribute('clip-path', 'none');
@@ -89627,8 +89001,7 @@
                     // _shadowDom is no longer in defs, recreate
                     this.addDom(dom);
                 }
-            }
-            else {
+            } else {
                 // New dom
                 dom = this.add(displayable);
             }
@@ -89679,8 +89052,7 @@
             Definable.prototype.update.call(this, displayable, function (style) {
                 that.updateDom(displayable, style._shadowDom);
             });
-        }
-        else {
+        } else {
             // Remove shadow
             this.remove(svgElement, style);
         }
@@ -89708,8 +89080,7 @@
         var domChild = dom.getElementsByTagName('feDropShadow');
         if (domChild.length === 0) {
             domChild = this.createElement('feDropShadow');
-        }
-        else {
+        } else {
             domChild = domChild[0];
         }
 
@@ -89724,14 +89095,12 @@
             offsetY = style.shadowOffsetY || 0;
             blur = style.shadowBlur;
             color = style.shadowColor;
-        }
-        else if (style.textShadowBlur) {
+        } else if (style.textShadowBlur) {
             offsetX = style.textShadowOffsetX || 0;
             offsetY = style.textShadowOffsetY || 0;
             blur = style.textShadowBlur;
             color = style.textShadowColor;
-        }
-        else {
+        } else {
             // Remove shadow
             this.removeDom(dom, style);
             return;
@@ -89793,14 +89162,11 @@
     function getSvgProxy(el) {
         if (el instanceof Path) {
             return svgPath;
-        }
-        else if (el instanceof ZImage) {
+        } else if (el instanceof ZImage) {
             return svgImage;
-        }
-        else if (el instanceof Text) {
+        } else if (el instanceof Text) {
             return svgText;
-        }
-        else {
+        } else {
             return svgPath;
         }
     }
@@ -89979,13 +89345,11 @@
                             : prepend(svgRoot, svgElement);
                         if (svgElement) {
                             insertAfter(svgRoot, textSvgElement, svgElement);
-                        }
-                        else if (prevSvgElement) {
+                        } else if (prevSvgElement) {
                             insertAfter(
                                 svgRoot, textSvgElement, prevSvgElement
                             );
-                        }
-                        else {
+                        } else {
                             prepend(svgRoot, textSvgElement);
                         }
                         // Insert text
@@ -89999,8 +89363,7 @@
                             .addWithoutUpdate(prevSvgElement, displayable);
                         this.clipPathManager.markUsed(displayable);
                     }
-                }
-                else if (!item.removed) {
+                } else if (!item.removed) {
                     for (var k = 0; k < item.count; k++) {
                         var displayable = newVisibleList[item.indices[k]];
                         prevSvgElement
@@ -90055,12 +89418,10 @@
                         };
                     }
                     return defs;
-                }
-                else {
+                } else {
                     return null;
                 }
-            }
-            else {
+            } else {
                 return defs[0];
             }
         },

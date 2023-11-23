@@ -1,7 +1,5 @@
-
-$(document).ready(function() 
-{
-	var color = Chart.helpers.color;
+$(document).ready(function () {
+    var color = Chart.helpers.color;
     var barChartData = {
         labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [{
@@ -49,18 +47,18 @@ $(document).ready(function()
         }]
     };
 
-        var ctx = document.getElementById("canvas1").getContext("2d");
-        window.myBar = new Chart(ctx, {
-            type: 'bar',
-            data: barChartData,
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'HOSPITAL ANNUAL REPORT'
-                },
-            }
-        });
+    var ctx = document.getElementById("canvas1").getContext("2d");
+    window.myBar = new Chart(ctx, {
+        type: 'bar',
+        data: barChartData,
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'HOSPITAL ANNUAL REPORT'
+            },
+        }
+    });
 
 
 });

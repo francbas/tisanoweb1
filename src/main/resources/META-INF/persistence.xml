@@ -3,7 +3,36 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
+    <!--    _____________________________________________________________________________________________________________-->
+    <!--    CONFIGURAZIONE PERSISTANCE UNIT SU DATASOURCE JTA IN DB PRODUCTION -->
     <persistence-unit name="tisano-pu-jta" transaction-type="JTA">
+        <!-- attenzione a implementaz. del persistance provider con jpa 3.0/.1 non supportato da tomcat (jpa 2.0) -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!--
+            1) Le DataSources sia JTA che NON JTA, sono configurati nel abstractContainer che implementa le jackartaEE specifications.
+            In questo esempio si è usato TomEE9: i nomi "tisanoDB" e "tisanoDB2" trovano corrispndenza con i
+            la configurazione presente in {CATALINA_HOME}/conf/tomee.xml.
+            2) Usare in un qualsiasi oggetto "abstractContainer-managed" la dependency injection per ottenere direttamente
+            una istanza di entityManager.
+            3) Per usare la persistenza in applicazioni non "abstractContainer-managed" (es: java SE), decommentare e
+            modificare opportunamente le proprietà del tag 'properties' e la transaction-type in RESOURCE_LOCAL.
+            In questo caso entityManager dovrà essere instanziato attraverso la factory
+            4) COPIARE IL DRIVER .JAR NELLA CARTELLA LIB DEL SERVER - in questo caso si à utilizzato mysql/j connector
+         -->
+        <jta-data-source>mysql-ds-tisano-jta</jta-data-source>
+        <non-jta-data-source>mysql-ds-tisano</non-jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <!--            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>-->
+            <!--            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tisano"/>-->
+            <!--            <property name="jakarta.persistence.jdbc.user" value="dbuser"/>-->
+            <!--            <property name="jakarta.persistence.jdbc.password" value="1234"/>-->
+            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+        </properties>
+    </persistence-unit>
+    <!--    _____________________________________________________________________________________________________________-->
+    <!--    CONFIGURAZIONE PERSISTANCE UNIT SU DATASOURCE JTA IN DB DEV-->
+    <persistence-unit name="tisanotest-pu-jta" transaction-type="JTA">
         <!--        attenzione alla definizione del persistance provider in jpa 3.1 -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <!--
@@ -19,6 +48,8 @@
          -->
         <jta-data-source>mysql-ds-tisanotest-jta</jta-data-source>
         <non-jta-data-source>mysql-ds-tisanotest</non-jta-data-source>
+        <class>org.francescobasile.tisanoweb1.entity.fortest.UtenteTest</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <!--            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>-->
@@ -29,12 +60,35 @@
         </properties>
     </persistence-unit>
 
-    <!--    CONFIGURAZIONE CON DATASOURCE LOCALE DEFINITO IN PROPERTIES E TRANSACTION NON JTA-->
+    <!--    _____________________________________________________________________________________________________________-->
+    <!--    CONFIGURAZIONE CON DATASOURCE LOCALE DEFINITO CON PROPERTIES NON JTA MANAGED PER PRODUCTION-->
     <persistence-unit name="tisano-pu" transaction-type="RESOURCE_LOCAL">
         <description>Default persistance unit per applicazione Tisano locale</description>
         <!--        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tisano"/>
+            <property name="jakarta.persistence.jdbc.user" value="dbuser"/>
+            <property name="jakarta.persistence.jdbc.password" value="1234"/>
+            <!-- Echo all executed SQL to console -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+            <!--            <property name="jakarta.persistence.sql-load-script-source" value="import.sql"/>-->
+        </properties>
+    </persistence-unit>
+    <!--    _____________________________________________________________________________________________________________-->
+    <!--    CONFIGURAZIONE CON DATASOURCE LOCALE DEFINITO CON PROPERTIES NON JTA MANAGED PER DEV -->
+    <persistence-unit name="tisanotest-pu" transaction-type="RESOURCE_LOCAL">
+        <description>Default persistance unit per applicazione Tisano locale</description>
+        <!--        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>org.francescobasile.tisanoweb1.entity.fortest.UtenteTest</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tisanotest"/>

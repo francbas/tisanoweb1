@@ -5,15 +5,15 @@
  *
  **/
 
-var MapsGoogle = function() {
-    var o = function() {
+var MapsGoogle = function () {
+    var o = function () {
             new GMaps({
                 div: "#basic_gmap",
                 lat: 23.0128440,
                 lng: 72.5289980
             })
         },
-        t = function() {
+        t = function () {
             var o = new GMaps({
                 div: "#gmap_marker",
                 lat: 23.0196181,
@@ -27,7 +27,7 @@ var MapsGoogle = function() {
                     database_id: 42,
                     author: "HPNeo"
                 },
-                click: function(o) {
+                click: function (o) {
                     console.log && console.log(o), alert("You clicked in this marker")
                 }
             }), o.addMarker({
@@ -39,12 +39,12 @@ var MapsGoogle = function() {
                 }
             }), o.setZoom(5)
         },
-        n = function() {
+        n = function () {
             var o = new GMaps({
                 div: "#gmap_polylines",
                 lat: 23.0128440,
                 lng: 72.5289980,
-                click: function(o) {
+                click: function (o) {
                     console.log(o)
                 }
             });
@@ -63,36 +63,37 @@ var MapsGoogle = function() {
                 strokeWeight: 6
             })
         },
-        e = function() {
+        e = function () {
             var o = new GMaps({
                 div: "#gmap_geo",
                 lat: 23.0128440,
                 lng: 72.5289980
             });
             GMaps.geolocate({
-                success: function(t) {
+                success: function (t) {
                     o.setCenter(t.coords.latitude, t.coords.longitude)
                 },
-                error: function(o) {
+                error: function (o) {
                     alert("Geolocation failed: " + o.message)
                 },
-                not_supported: function() {
+                not_supported: function () {
                     alert("Your browser does not support geolocation")
                 },
-                always: function() {}
+                always: function () {
+                }
             })
         },
-        a = function() {
+        a = function () {
             var o = new GMaps({
                     div: "#gmap_geocoding",
                     lat: 23.0128440,
                     lng: 72.5289980
                 }),
-                t = function() {
+                t = function () {
                     var t = $.trim($("#gmap_geocoding_address").val());
                     GMaps.geocode({
                         address: t,
-                        callback: function(t, n) {
+                        callback: function (t, n) {
                             if ("OK" == n) {
                                 var e = t[0].geometry.location;
                                 o.setCenter(e.lat(), e.lng()), o.addMarker({
@@ -103,14 +104,14 @@ var MapsGoogle = function() {
                         }
                     })
                 };
-            $(document).on("click","#gmap_geocoding_btn",function(o) { 
+            $(document).on("click", "#gmap_geocoding_btn", function (o) {
                 o.preventDefault(), t()
-            }), $("#gmap_geocoding_address").keypress(function(o) {
+            }), $("#gmap_geocoding_address").keypress(function (o) {
                 var n = o.keyCode ? o.keyCode : o.which;
                 "13" == n && (o.preventDefault(), t())
             })
         },
-        i = function() {
+        i = function () {
             var o = new GMaps({
                     div: "#gmap_polygons",
                     lat: 23.0128440,
@@ -131,19 +132,19 @@ var MapsGoogle = function() {
                 fillOpacity: .6
             })
         },
-        l = function() {
+        l = function () {
             var o = new GMaps({
                 div: "#gmap_routes",
                 lat: 23.0128440,
                 lng: 72.5289980
             });
-            $(document).on("click","#routes_start",function(t) { 
+            $(document).on("click", "#routes_start", function (t) {
                 t.preventDefault(), App.scrollTo($(this), 400), o.travelRoute({
                     origin: [23.0128440, 72.5289980],
                     destination: [23.0048648, 72.5013820],
                     travelMode: "driving",
-                    step: function(t) {
-                        $("#routes_instructions").append("<li>" + t.instructions + "</li>"), $("#routes_instructions li:eq(" + t.step_number + ")").delay(800 * t.step_number).fadeIn(500, function() {
+                    step: function (t) {
+                        $("#routes_instructions").append("<li>" + t.instructions + "</li>"), $("#routes_instructions li:eq(" + t.step_number + ")").delay(800 * t.step_number).fadeIn(500, function () {
                             o.setCenter(t.end_location.lat(), t.end_location.lng()), o.drawPolyline({
                                 path: t.path,
                                 strokeColor: "#131540",
@@ -156,12 +157,12 @@ var MapsGoogle = function() {
             })
         };
     return {
-        init: function() {
+        init: function () {
             o(), t(), e(), a(), n(), i(), l()
         }
     }
 }();
-jQuery(document).ready(function() {
-	'use strict';
+jQuery(document).ready(function () {
+    'use strict';
     MapsGoogle.init()
 });

@@ -1,11 +1,6 @@
 package org.francescobasile.tisanoweb1.service.socket;
 
 
-import jakarta.websocket.CloseReason;
-import jakarta.websocket.Endpoint;
-import jakarta.websocket.EndpointConfig;
-import jakarta.websocket.Session;
-
 public class ChatBoxEndPoint {//extends Endpoint {
 //    @Override
 //    public void onOpen(Session session, EndpointConfig endpointConfig) {

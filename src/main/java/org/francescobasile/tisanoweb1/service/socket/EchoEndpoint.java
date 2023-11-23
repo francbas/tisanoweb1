@@ -1,10 +1,5 @@
 package org.francescobasile.tisanoweb1.service.socket;
 
-import jakarta.websocket.*;
-import jakarta.websocket.server.ServerEndpoint;
-
-import java.io.IOException;
-
 //@ServerEndpoint("/echoendpoint")
 public class EchoEndpoint {
 

@@ -1,9 +1,12 @@
 # Bootstrap Switch
+
 [![Dependency Status](https://david-dm.org/Bttstrp/bootstrap-switch.svg?style=flat)](https://david-dm.org/Bttstrp/bootstrap-switch)
 [![devDependency Status](https://david-dm.org/Bttstrp/bootstrap-switch/dev-status.svg?style=flat)](https://david-dm.org/Bttstrp/bootstrap-switch#info=devDependencies)
 [![NPM Version](http://img.shields.io/npm/v/bootstrap-switch.svg?style=flat)](https://www.npmjs.org/)
 
-Turn checkboxes and radio buttons into toggle switches. Created by [Mattia Larentis](http://github.com/nostalgiaz), maintained by [Emanuele Marchi](http://github.com/lostcrew) and [Peter Stein](http://www.bdmdesign.org) with the help of the community.
+Turn checkboxes and radio buttons into toggle switches. Created by [Mattia Larentis](http://github.com/nostalgiaz),
+maintained by [Emanuele Marchi](http://github.com/lostcrew) and [Peter Stein](http://www.bdmdesign.org) with the help of
+the community.
 
 To get started, check out [https://bttstrp.github.io/bootstrap-switch](https://bttstrp.github.io/bootstrap-switch)!
 
@@ -17,7 +20,8 @@ Several quick start options are available:
 - Install with yarn: `yarn add bootstrap-switch`
 - Install with Composer: `composer require components/bootstrap-switch`
 - Install with Bower: `bower install bootstrap-switch`
-- Install with NuGet: `PM> Install-Package Bootstrap.Switch` ([NuGet package](https://github.com/blachniet/bootstrap-switch-nuget))
+- Install with
+  NuGet: `PM> Install-Package Bootstrap.Switch` ([NuGet package](https://github.com/blachniet/bootstrap-switch-nuget))
 
 Include the dependencies: jQuery, Bootstrap and Bootstrap Switch CSS + Javascript:
 
@@ -53,16 +57,20 @@ IE9+ and all the other modern browsers.
 
 ## Bugs and feature requests
 
-Have a bug or a feature request? Please first search for existing and closed issues. If your problem or idea is not addressed yet, [please open a new issue](https://github.com/Bttstrp/bootstrap-switch/issues/new).
+Have a bug or a feature request? Please first search for existing and closed issues. If your problem or idea is not
+addressed yet, [please open a new issue](https://github.com/Bttstrp/bootstrap-switch/issues/new).
 
-The new issue should contain both a summary of the issue and the browser/OS environment in which it occurs and a link to the playground you prefer with the reduced test case.
+The new issue should contain both a summary of the issue and the browser/OS environment in which it occurs and a link to
+the playground you prefer with the reduced test case.
 If suitable, include the steps required to reproduce the bug.
 
-Please do not use the issue tracker for personal support requests: [Stack Overflow](https://stackoverflow.com/questions/tagged/bootstrap-switch) is a better place to get help.
+Please do not use the issue tracker for personal support
+requests: [Stack Overflow](https://stackoverflow.com/questions/tagged/bootstrap-switch) is a better place to get help.
 
 ### Known issues
 
-- Make sure `.form-control` is not applied to the input. Bootstrap does not support that, refer to [Checkboxes and radios](https://getbootstrap.com/css/#checkboxes-and-radios)
+- Make sure `.form-control` is not applied to the input. Bootstrap does not support that, refer
+  to [Checkboxes and radios](https://getbootstrap.com/css/#checkboxes-and-radios)
 
 ## Integrations
 
